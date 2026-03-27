@@ -3,7 +3,7 @@
 
 A self-contained student study portal for the **2025–2026 Virginia Association of Science Olympiad (VASO) Division A** season, built for Grades 3–4 competitors. All content is sourced directly from the official VA Division A Tournament Rules Manual v9.01.
 
-**Live site:** `https://yourusername.github.io/your-repo-name/`
+**Live site:** `https://science-projects.github.io/vaso2026/`
 
 ---
 
