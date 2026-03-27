@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>🏗️ Tower Building — VA Division A</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Exo+2:wght@700;800&display=swap" rel="stylesheet">
+<style>
+
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Space Grotesk',sans-serif;min-height:100vh;overflow-x:hidden;}
+a{text-decoration:none;}
+img{max-width:100%;}
+
+
+:root{--acc:#F5A623;--acd:#c47d00;--bg:#1A1A2E;--panel:#0D1520;}
+body{background:var(--bg);color:#C0CCE0;}
+body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(245,166,35,.05)0%,transparent 55%),radial-gradient(ellipse at 80% 80%,rgba(245,166,35,.04)0%,transparent 50%);pointer-events:none;z-index:0;}
+
+/* ── Page ── */
+.page{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 24px 80px;}
+
+/* ── Hero ── */
+.hero{padding:52px 0 36px;}
+.hero-eyebrow{display:inline-block;background:rgba(245,166,35,.12);border:1px solid rgba(245,166,35,.3);color:var(--acc);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:4px 14px;border-radius:999px;margin-bottom:16px;}
+.hero h1{font-family:'Exo 2',sans-serif;font-size:clamp(2.2rem,5vw,3.4rem);font-weight:800;color:#fff;line-height:1.08;margin-bottom:10px;}
+.hero h1 span{color:var(--acc);}
+.hero-sub{font-size:1rem;color:rgba(192,204,224,.7);max-width:600px;line-height:1.7;margin-bottom:20px;}
+.hero-badges{display:flex;gap:8px;flex-wrap:wrap;}
+.hbadge{padding:4px 14px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(245,166,35,.12);border:1px solid rgba(245,166,35,.3);color:var(--acc);}
+.hbadge-muted{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);color:rgba(192,204,224,.6);}
+
+/* ── Tab nav ── */
+.tab-nav{display:flex;gap:0;border-bottom:1px solid rgba(255,255,255,.1);margin:0 0 36px;overflow-x:auto;scrollbar-width:none;}
+.tab-nav::-webkit-scrollbar{display:none;}
+.tab-btn{padding:12px 20px;font-size:13px;font-weight:700;color:rgba(192,204,224,.5);background:none;border:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s;font-family:'Space Grotesk',sans-serif;}
+.tab-btn:hover{color:rgba(192,204,224,.85);}
+.tab-btn.active{color:var(--acc);border-bottom-color:var(--acc);}
+.tab-panel{display:none;animation:fadeIn .2s ease;}
+.tab-panel.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── Sections within tabs ── */
+.sec-title{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;color:#fff;margin-bottom:4px;}
+.sec-sub{font-size:.82rem;color:rgba(192,204,224,.4);letter-spacing:.05em;text-transform:uppercase;margin-bottom:20px;}
+.divider{height:1px;background:linear-gradient(90deg,rgba(245,166,35,.3),transparent);margin:28px 0;}
+
+/* ── Stats row ── */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:24px;}
+.stat-box{background:var(--panel);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:14px 12px;text-align:center;}
+.stat-val{font-family:'Exo 2',sans-serif;font-size:1.6rem;font-weight:800;color:var(--acc);line-height:1;}
+.stat-label{font-size:11px;color:rgba(192,204,224,.5);margin-top:5px;line-height:1.3;}
+
+/* ── Callout boxes ── */
+.callout{border-radius:12px;padding:16px 20px;margin-bottom:18px;border-left:4px solid;}
+.c-acc{background:rgba(245,166,35,.07);border-color:var(--acc);}
+.c-acc h4{color:var(--acc);}
+.c-gold{background:rgba(244,196,48,.07);border-color:#F4C430;}
+.c-gold h4{color:#F4C430;}
+.c-red{background:rgba(224,92,64,.07);border-color:#E05C40;}
+.c-red h4{color:#E05C40;}
+.c-green{background:rgba(123,198,126,.07);border-color:#7BC67E;}
+.c-green h4{color:#7BC67E;}
+.callout h4{font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;}
+.callout p,.callout li{font-size:.9rem;line-height:1.7;color:rgba(192,204,224,.8);}
+.callout ul,.callout ol{padding-left:20px;display:flex;flex-direction:column;gap:5px;}
+
+/* ── Table ── */
+.stbl{width:100%;border-collapse:collapse;margin-bottom:16px;}
+.stbl th{background:rgba(245,166,35,.18);color:var(--acc);font-family:'Exo 2',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:10px 14px;text-align:left;border:1px solid rgba(245,166,35,.2);}
+.stbl td{padding:10px 14px;border:1px solid rgba(255,255,255,.07);font-size:.88rem;color:rgba(192,204,224,.8);vertical-align:top;line-height:1.55;}
+.stbl tr:nth-child(even) td{background:rgba(255,255,255,.025);}
+.stbl td:first-child{font-weight:700;color:#fff;width:30%;}
+
+/* ── Steps ── */
+.steps{display:flex;flex-direction:column;gap:14px;}
+.step{display:flex;gap:16px;background:var(--panel);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:18px 20px;}
+.step-num{width:36px;height:36px;flex-shrink:0;border-radius:50%;background:var(--acc);display:flex;align-items:center;justify-content:center;font-family:'Exo 2',sans-serif;font-size:1rem;font-weight:800;color:#fff;}
+.step-body h4{font-size:.98rem;font-weight:700;color:#fff;margin-bottom:4px;}
+.step-time{font-size:.78rem;color:var(--acc);font-weight:600;margin-bottom:6px;}
+.step-body p{font-size:.88rem;color:rgba(192,204,224,.7);line-height:1.6;}
+.step-body ul{padding-left:18px;margin-top:6px;display:flex;flex-direction:column;gap:3px;}
+.step-body li{font-size:.87rem;color:rgba(192,204,224,.65);line-height:1.5;}
+
+/* ── Tips grid ── */
+.tips-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;}
+.tip-card{background:var(--panel);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:18px;position:relative;overflow:hidden;}
+.tip-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc);}
+.tip-icon{font-size:1.5rem;margin-bottom:8px;display:block;}
+.tip-card h4{font-size:.92rem;font-weight:700;color:#fff;margin-bottom:6px;}
+.tip-card p{font-size:.85rem;color:rgba(192,204,224,.6);line-height:1.6;}
+
+/* ── Materials list ── */
+.mat-list{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
+.mat-item{display:flex;align-items:flex-start;gap:14px;background:var(--panel);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:14px 16px;}
+.mat-emoji{font-size:1.5rem;flex-shrink:0;}
+.mat-body h4{font-size:.92rem;font-weight:700;color:#fff;margin-bottom:2px;}
+.mat-body p{font-size:.83rem;color:rgba(192,204,224,.6);line-height:1.5;}
+.mat-qty{margin-left:auto;flex-shrink:0;font-size:.82rem;font-weight:700;padding:3px 10px;border-radius:999px;background:rgba(245,166,35,.14);color:var(--acc);border:1px solid rgba(245,166,35,.3);white-space:nowrap;}
+
+/* ── Shopping list ── */
+.shop-intro{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px 18px;margin-bottom:18px;font-size:.88rem;color:rgba(192,204,224,.65);line-height:1.65;}
+.shop-intro strong{color:#fff;}
+.safety-warn{background:rgba(244,196,48,.07);border:1px solid rgba(244,196,48,.25);border-radius:12px;padding:14px 18px;margin-bottom:18px;}
+.safety-warn h4{font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#F4C430;margin-bottom:8px;}
+.safety-warn p{font-size:.88rem;color:rgba(192,204,224,.75);line-height:1.6;}
+.shop-tbl{width:100%;border-collapse:collapse;margin-bottom:10px;}
+.shop-tbl th{background:rgba(255,255,255,.05);color:rgba(192,204,224,.5);font-size:.73rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:8px 12px;text-align:left;border-bottom:1px solid rgba(255,255,255,.08);}
+.shop-tbl td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.05);font-size:.87rem;color:rgba(192,204,224,.8);vertical-align:top;line-height:1.5;}
+.shop-tbl tr:last-child td{border-bottom:none;}
+.shop-tbl tr.done td{opacity:.4;}.shop-tbl tr.done .si-name{text-decoration:line-through;}
+.si-name{font-weight:600;color:#fff;display:block;margin-bottom:2px;}
+.si-note{font-size:.78rem;color:rgba(192,204,224,.5);}
+.si-dept{font-size:.79rem;color:rgba(192,204,224,.45);}
+.si-price{font-weight:700;color:var(--acc);white-space:nowrap;}
+.cb{width:16px;height:16px;border:1.5px solid rgba(255,255,255,.2);border-radius:3px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;}
+.cb.checked{background:var(--acc);border-color:var(--acc);}
+.cb.checked::after{content:'✓';font-size:10px;color:#fff;font-weight:700;}
+.shop-total{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px 16px;margin-top:12px;}
+.shop-total-label{font-size:.85rem;color:rgba(192,204,224,.55);}
+.shop-total-val{font-family:'Exo 2',sans-serif;font-size:1.4rem;font-weight:800;color:var(--acc);}
+.shop-prog{height:3px;background:rgba(255,255,255,.08);border-radius:2px;margin-top:8px;}
+.shop-prog-fill{height:3px;background:#7BC67E;border-radius:2px;transition:width .3s;}
+.shop-prog-label{font-size:.75rem;color:rgba(192,204,224,.35);margin-top:4px;}
+
+/* ── Slides section ── */
+.slides-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:20px;}
+.slide-card{background:var(--panel);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:20px;text-decoration:none;display:flex;flex-direction:column;gap:10px;transition:all .2s;}
+.slide-card:hover{border-color:rgba(245,166,35,.4);background:rgba(245,166,35,.08);}
+.slide-card-icon{font-size:2rem;}
+.slide-card h4{font-size:.95rem;font-weight:700;color:#fff;}
+.slide-card p{font-size:.83rem;color:rgba(192,204,224,.55);line-height:1.55;flex:1;}
+.slide-card-cta{font-size:.83rem;font-weight:700;color:var(--acc);}
+
+/* ── Checklist ── */
+.checklist{display:flex;flex-direction:column;gap:8px;}
+.chk-item{display:flex;align-items:flex-start;gap:12px;background:var(--panel);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:12px 14px;}
+.chk-box{width:20px;height:20px;flex-shrink:0;border:1.5px solid rgba(255,255,255,.2);border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;margin-top:1px;}
+.chk-box.chk-done{background:var(--acc);border-color:var(--acc);}
+.chk-box.chk-done::after{content:'✓';font-size:11px;color:#fff;font-weight:700;}
+.chk-text{font-size:.9rem;color:rgba(192,204,224,.8);line-height:1.5;}
+.chk-text strong{color:#fff;}
+
+/* ── Footer ── */
+footer{text-align:center;padding:32px 0;border-top:1px solid rgba(255,255,255,.06);}
+footer p{font-size:.8rem;color:rgba(192,204,224,.25);}
+
+@media(max-width:540px){.page{padding:0 14px 60px;}.hero{padding:36px 0 24px;}.tab-btn{padding:10px 14px;font-size:12px;}}
+
+</style>
+
+<style id="theme-vars">
+/* ── Light/Dark mode variables ── */
+:root {
+  --mode-bg1: #1A1A2E;
+  --mode-bg2: rgba(4,43,69,0.7);
+  --mode-nav: rgba(8,8,24,0.97);
+  --mode-nav-border: rgba(255,255,255,0.08);
+  --mode-text: #B8D8E8;
+  --mode-text-strong: #FFFFFF;
+  --mode-text-muted: rgba(184,216,232,0.5);
+  --mode-card-bg: rgba(4,43,69,0.7);
+  --mode-card-border: rgba(255,255,255,0.08);
+  --mode-input-bg: transparent;
+  --mode-input-color: #fff;
+  --mode-table-even: rgba(255,255,255,0.025);
+  --mode-section-bg: rgba(255,255,255,0.03);
+}
+body.light-mode {
+  --mode-bg1: #F0F4F8;
+  --mode-bg2: #FFFFFF;
+  --mode-nav: rgba(255,255,255,0.97);
+  --mode-nav-border: rgba(0,0,0,0.1);
+  --mode-text: #2A3E52;
+  --mode-text-strong: #0D1F30;
+  --mode-text-muted: rgba(42,62,82,0.5);
+  --mode-card-bg: #FFFFFF;
+  --mode-card-border: rgba(0,0,0,0.09);
+  --mode-input-bg: #fff;
+  --mode-input-color: #0D1F30;
+  --mode-table-even: rgba(0,0,0,0.03);
+  --mode-section-bg: rgba(0,0,0,0.03);
+}
+
+/* ── Toggle button ── */
+#theme-toggle {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.75);
+  cursor: pointer;
+  font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  line-height: 1;
+}
+#theme-toggle:hover { background: rgba(255,255,255,0.14); }
+body.light-mode #theme-toggle {
+  border-color: rgba(0,0,0,0.15);
+  background: rgba(0,0,0,0.06);
+  color: rgba(0,0,0,0.6);
+}
+body.light-mode #theme-toggle:hover { background: rgba(0,0,0,0.1); }
+
+/* ── Light mode nav overrides ── */
+body.light-mode .gnav {
+  background: rgba(255,255,255,0.97) !important;
+  border-bottom-color: rgba(0,0,0,0.1) !important;
+}
+body.light-mode .gnav-logo { color: #0D1F30 !important; border-right-color: rgba(0,0,0,0.12) !important; }
+body.light-mode .gnav-logo span { color: rgba(13,31,48,0.5) !important; }
+body.light-mode .gnav-link { color: rgba(13,31,48,0.55) !important; }
+body.light-mode .gnav-link:hover { background: rgba(0,0,0,0.05) !important; color: #0D1F30 !important; }
+body.light-mode .gnav-link.active { background: rgba(0,0,0,0.08) !important; color: #0D1F30 !important; }
+body.light-mode .gnav-burger { color: rgba(0,0,0,0.55) !important; }
+body.light-mode .gnav-mobile { background: #fff; border-top-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .gnav-mlink { color: rgba(13,31,48,0.65) !important; border-bottom-color: rgba(0,0,0,0.06) !important; }
+body.light-mode .gnav-mlink.active { color: #0D1F30 !important; background: rgba(0,0,0,0.05) !important; }
+
+/* ── Light mode body/backgrounds ── */
+body.light-mode { background: #EEF2F7 !important; color: var(--mode-text) !important; }
+body.light-mode .bg-ocean,
+body.light-mode .bg-ocean .wave { filter: opacity(0.12); }
+body.light-mode body::after { opacity: 0.3; }
+
+/* ── Light mode cards and panels ── */
+body.light-mode .project-card,
+body.light-mode .oc-card,
+body.light-mode .res-card,
+body.light-mode .concept-card,
+body.light-mode .topic-card,
+body.light-mode .about-card,
+body.light-mode .tip-card,
+body.light-mode .step,
+body.light-mode .chk-item,
+body.light-mode .mat-item,
+body.light-mode .slide-card,
+body.light-mode .stat-box {
+  background: #FFFFFF !important;
+  border-color: rgba(0,0,0,0.09) !important;
+}
+body.light-mode .project-card:hover,
+body.light-mode .res-card:hover,
+body.light-mode .slide-card:hover { border-color: rgba(0,0,0,0.2) !important; }
+
+/* ── Light mode text ── */
+body.light-mode h1, body.light-mode h2, body.light-mode h3,
+body.light-mode .hero h1, body.light-mode .section-title,
+body.light-mode .sec-title, body.light-mode .pc-title,
+body.light-mode .res-title, body.light-mode .about-card h3,
+body.light-mode .step-body h4, body.light-mode .tip-card h4,
+body.light-mode .mat-body h4 { color: #0D1F30 !important; }
+body.light-mode .hero-sub, body.light-mode .section-subtitle,
+body.light-mode .sec-sub, body.light-mode .hero-sub,
+body.light-mode .pc-desc, body.light-mode .res-desc,
+body.light-mode .about-card p, body.light-mode .about-card li,
+body.light-mode .step-body p, body.light-mode .tip-card p,
+body.light-mode .mat-body p, body.light-mode p { color: rgba(13,31,48,0.65) !important; }
+body.light-mode .hero-eyebrow, body.light-mode .hbadge-muted,
+body.light-mode .hb-muted, body.light-mode .pc-tag,
+body.light-mode .res-pill, body.light-mode .pill { color: rgba(13,31,48,0.5) !important; background: rgba(0,0,0,0.05) !important; border-color: rgba(0,0,0,0.1) !important; }
+
+/* ── Light mode tables ── */
+body.light-mode .stbl th { background: rgba(0,0,0,0.08) !important; }
+body.light-mode .stbl td { border-color: rgba(0,0,0,0.07) !important; color: rgba(13,31,48,0.75) !important; }
+body.light-mode .stbl td:first-child { color: #0D1F30 !important; }
+body.light-mode .stbl tr:nth-child(even) td { background: rgba(0,0,0,0.025) !important; }
+body.light-mode .shop-tbl th { background: rgba(0,0,0,0.05) !important; color: rgba(13,31,48,0.5) !important; border-bottom-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .shop-tbl td { border-bottom-color: rgba(0,0,0,0.06) !important; color: rgba(13,31,48,0.75) !important; }
+body.light-mode .si-name { color: #0D1F30 !important; }
+
+/* ── Light mode callouts ── */
+body.light-mode .callout,
+body.light-mode .shop-intro,
+body.light-mode .safety-warn,
+body.light-mode .c-acc, body.light-mode .c-gold,
+body.light-mode .c-green, body.light-mode .c-aqua,
+body.light-mode .c-bl, body.light-mode .c-gd,
+body.light-mode .callout p, body.light-mode .callout li { color: rgba(13,31,48,0.72) !important; }
+body.light-mode .callout { background: rgba(0,0,0,0.04) !important; }
+body.light-mode .c-acc { background: rgba(0,0,0,0.04) !important; }
+
+/* ── Light mode quiz ── */
+body.light-mode .header { background: #FFFFFF !important; border-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .header h1 { color: #0D1F30 !important; }
+body.light-mode .header .sub { color: rgba(13,31,48,0.6) !important; }
+body.light-mode .name-box { background: rgba(0,0,0,0.03) !important; border-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .name-box input { color: #0D1F30 !important; border-bottom-color: rgba(0,0,0,0.2) !important; }
+body.light-mode .sec-hd { background: rgba(0,0,0,0.05) !important; border-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .sec-hd h3 { color: #0D1F30 !important; }
+body.light-mode .qcard { background: #FFFFFF !important; border-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .q-text { color: #0D1F30 !important; }
+body.light-mode .opt { background: #F8FAFB !important; border-color: rgba(0,0,0,0.1) !important; color: rgba(13,31,48,0.72) !important; }
+body.light-mode .opt:hover { background: rgba(0,0,0,0.05) !important; }
+body.light-mode .tfbtn { background: #F8FAFB !important; border-color: rgba(0,0,0,0.1) !important; color: rgba(13,31,48,0.65) !important; }
+body.light-mode .fill-wrap { color: #0D1F30 !important; }
+body.light-mode .data-block { background: rgba(0,0,0,0.04) !important; border-color: rgba(0,0,0,0.1) !important; color: rgba(13,31,48,0.8) !important; }
+body.light-mode .sa { background: #F8FAFB !important; border-color: rgba(0,0,0,0.12) !important; color: #0D1F30 !important; }
+body.light-mode #score-card { background: #FFFFFF !important; border-color: rgba(0,0,0,0.1) !important; }
+body.light-mode #score-card h2 { color: #0D1F30 !important; }
+body.light-mode #score-msg, body.light-mode #score-pct, body.light-mode #score-name, body.light-mode #score-sa-note { color: rgba(13,31,48,0.6) !important; }
+body.light-mode .prog-outer { background: rgba(0,0,0,0.08) !important; }
+
+/* ── Light mode tab nav ── */
+body.light-mode .tab-nav { border-bottom-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .tab-btn { color: rgba(13,31,48,0.4) !important; }
+body.light-mode .tab-btn:hover { color: rgba(13,31,48,0.75) !important; }
+
+/* ── Light mode hero badges ── */
+body.light-mode .hero-eyebrow,
+body.light-mode .hero-ey { background: rgba(0,0,0,0.05) !important; border-color: rgba(0,0,0,0.12) !important; }
+
+/* ── Light mode section labels ── */
+body.light-mode .section-eyebrow,
+body.light-mode .sec-label { opacity: 0.7; }
+
+/* ── Light mode about scoring boxes ── */
+body.light-mode [style*="background:rgba(245,166,35,.06)"],
+body.light-mode [style*="background:rgba(224,92,64,.06)"],
+body.light-mode [style*="background:rgba(123,94,167,.06)"] { background: rgba(0,0,0,0.04) !important; }
+
+/* ── Light mode footer ── */
+body.light-mode footer { border-top-color: rgba(0,0,0,0.08) !important; }
+body.light-mode footer p { color: rgba(13,31,48,0.3) !important; }
+
+/* ── Light mode dividers ── */
+body.light-mode .divider { background: rgba(0,0,0,0.1) !important; }
+
+/* ── Light mode prog/shopping ── */
+body.light-mode .shop-total { background: rgba(0,0,0,0.04) !important; border-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .shop-total-label { color: rgba(13,31,48,0.5) !important; }
+body.light-mode .shop-prog { background: rgba(0,0,0,0.08) !important; }
+body.light-mode .cb { border-color: rgba(0,0,0,0.2) !important; background: #fff !important; }
+body.light-mode .chk-box { border-color: rgba(0,0,0,0.2) !important; }
+</style>
+</head>
+<body>
+
+
+<nav class="gnav" id="gnav">
+  <div class="gnav-inner">
+    <a class="gnav-logo" href="index.html">⚗️ <span>VA Olympiad</span></a>
+    <div class="gnav-links">
+      <a class="gnav-link" href="index.html" id="nav-home">Home</a>
+      <a class="gnav-link" href="ocean.html" id="nav-ocean">🌊 Ocean Science</a>
+      <a class="gnav-link active" href="tower.html" id="nav-tower">🏗️ Tower</a>
+      <a class="gnav-link" href="bungee.html" id="nav-bungee">🥚 Bungee Egg Drop</a>
+      <a class="gnav-link" href="lander.html" id="nav-lander">🚀 Astronaut Lander</a>
+      <a class="gnav-link" href="data.html" id="nav-data">📊 Data</a>
+    </div>
+    <button id="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode" aria-label="Toggle theme">🌙</button>
+    <button class="gnav-burger" onclick="toggleMenu()" aria-label="menu">☰</button>
+  </div>
+  <div class="gnav-mobile" id="gnav-mobile">
+    <a class="gnav-mlink" href="index.html">Home</a>
+    <a class="gnav-mlink" href="ocean.html">🌊 Ocean Science</a>
+    <a class="gnav-mlink active" href="tower.html">🏗️ Tower</a>
+    <a class="gnav-mlink" href="bungee.html">🥚 Bungee Egg Drop</a>
+    <a class="gnav-mlink" href="lander.html">🚀 Astronaut Lander</a>
+    <a class="gnav-mlink" href="data.html">📊 Data</a>
+  </div>
+</nav>
+<style>
+.gnav{position:sticky;top:0;z-index:300;background:rgba(8,8,24,0.97);border-bottom:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(12px);}
+.gnav-inner{display:flex;align-items:center;max-width:1080px;margin:0 auto;padding:0 24px;height:54px;gap:8px;}
+.gnav-logo{font-size:15px;font-weight:700;color:rgba(255,255,255,0.9);letter-spacing:-.01em;flex-shrink:0;padding:6px 10px 6px 0;border-right:1px solid rgba(255,255,255,0.1);margin-right:4px;}
+.gnav-logo span{color:rgba(255,255,255,0.6);}
+.gnav-links{display:flex;gap:2px;flex:1;}
+.gnav-link{padding:6px 14px;border-radius:8px;font-size:13px;font-weight:600;color:rgba(200,216,232,0.65);transition:all .15s;white-space:nowrap;}
+.gnav-link:hover{background:rgba(255,255,255,0.07);color:#fff;}
+.gnav-link.active{background:rgba(255,255,255,0.1);color:#fff;}
+.gnav-burger{display:none;background:none;border:none;color:rgba(255,255,255,0.7);font-size:20px;cursor:pointer;padding:6px;}
+.gnav-mobile{display:none;flex-direction:column;border-top:1px solid rgba(255,255,255,0.08);}
+.gnav-mobile.open{display:flex;}
+.gnav-mlink{padding:13px 24px;font-size:14px;font-weight:600;color:rgba(200,216,232,0.7);border-bottom:1px solid rgba(255,255,255,0.05);}
+.gnav-mlink.active{color:#fff;background:rgba(255,255,255,0.06);}
+@media(max-width:680px){.gnav-links{display:none;}.gnav-burger{display:block;}}
+</style>
+<script>function toggleMenu(){document.getElementById('gnav-mobile').classList.toggle('open');}</script>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">VA Division A · Build Event</div>
+    <h1>🏗️ <span>Tower Building</span></h1>
+    <p class="hero-sub">Build the tallest freestanding tower using only paper straws and masking tape, capable of supporting a 300-gram mass for 20 seconds.</p>
+    <div class="hero-badges">
+      <span class="hbadge">3rd Grade Only</span>
+      <span class="hbadge hbadge-muted">45-minute session</span>
+      <span class="hbadge hbadge-muted">2 students per team</span>
+    </div>
+  </div>
+
+  <!-- TAB NAV -->
+  <div class="tab-nav" role="tablist">
+    <button class="tab-btn active" onclick="showTab('overview',this)">Overview</button>
+    <button class="tab-btn" onclick="showTab('materials',this)">Materials</button>
+    <button class="tab-btn" onclick="showTab('scoring',this)">Scoring</button>
+    <button class="tab-btn" onclick="showTab('build',this)">Build Strategy</button>
+    <button class="tab-btn" onclick="showTab('tips',this)">Tips</button>
+    <button class="tab-btn" onclick="showTab('slides',this)">Slides</button>
+    <button class="tab-btn" onclick="showTab('shopping',this)">Shopping List</button>
+    <button class="tab-btn" onclick="showTab('checklist',this)">Checklist</button>
+  </div>
+
+  <!-- ── TAB: OVERVIEW ── -->
+  <div class="tab-panel active" id="tab-overview">
+    <div class="sec-title">Event Overview</div>
+    <div class="sec-sub">Official description from the VA Division A Rules Manual</div>
+    <div class="callout c-acc">
+      <h4>📋 The Challenge</h4>
+      <p>Teams will build a strong, stable tower using paper straws and masking tape ONLY to hold a mass of 300 grams for 20 seconds. They will also take a written assessment on the types and building of towers. Final Score = Height Score + Assessment Score (max 100 points).</p>
+    </div>
+    <div class="stats-row"><div class="stat-box"><div class="stat-val">2</div><div class="stat-label">Students per team</div></div><div class="stat-box"><div class="stat-val">45</div><div class="stat-label">Min total session</div></div><div class="stat-box"><div class="stat-val">30</div><div class="stat-label">Straws provided</div></div><div class="stat-box"><div class="stat-val">1 m</div><div class="stat-label">Masking tape</div></div><div class="stat-box"><div class="stat-val">300g</div><div class="stat-label">Load to hold</div></div><div class="stat-box"><div class="stat-val">20 s</div><div class="stat-label">Hold time required</div></div></div>
+    <div class="callout c-gold">
+      <h4>⚠️ Safety — Required to Compete</h4>
+      <ul><li><strong>ANSI Z87+ impact-rated safety glasses</strong> must be worn during any competitor's testing phase</li><li>Must be stamped "Z87+" on the lens — eyeglasses are <strong>not</strong> safety rated</li><li>Teams must bring their own — not provided at event</li><li>No proper eye protection = no-show score</li></ul>
+    </div>
+    <div class="callout c-red"><h4>🚫 Key Restrictions</h4><ul><li>Only paper straws and masking tape may be used</li><li>No sticky tape may touch the flat test surface</li><li>Tower must have a flat platform at the top for the 5×5 cm plywood block</li></ul></div>
+    <div class="callout c-green">
+      <h4>📝 Written Assessment (simultaneous with build)</h4>
+      <ul><li>Short written assessment on types and building of towers</li><li>Taken during the same 45-minute session as the build</li><li>Topics: tower types by function and structure, stability, center of gravity, structural integrity, famous towers (Eiffel, Pisa, CN Tower)</li></ul>
+    </div>
+  </div>
+
+  <!-- ── TAB: MATERIALS ── -->
+  <div class="tab-panel" id="tab-materials">
+    <div class="sec-title">Official Materials Kit</div>
+    <div class="sec-sub">Everything provided at the event — you may not use anything else</div>
+    <div class="callout c-acc">
+      <h4>ℹ️ Important</h4>
+      <p>All materials below are provided FREE at the competition. You do not bring your own build materials. Bring safety glasses and writing utensils only.</p>
+    </div>
+    <div class="mat-list">
+    <div class="mat-item">
+      <span class="mat-emoji">🥤</span>
+      <div class="mat-body"><h4>Paper drinking straws (~20 cm each)</h4><p>May be cut to any length or left whole. Your only structural material.</p></div>
+      <span class="mat-qty">30 straws</span>
+    </div>
+    <div class="mat-item">
+      <span class="mat-emoji">🩹</span>
+      <div class="mat-body"><h4>Masking tape, 2.54 cm (1") wide</h4><p>May be cut to any shape or size. Your only connector material.</p></div>
+      <span class="mat-qty">1 meter</span>
+    </div>
+    <div class="mat-item">
+      <span class="mat-emoji">⚖️</span>
+      <div class="mat-body"><h4>300-gram test mass</h4><p>Placed on top of the wood block during the testing phase.</p></div>
+      <span class="mat-qty">Provided for test</span>
+    </div>
+    <div class="mat-item">
+      <span class="mat-emoji">🪵</span>
+      <div class="mat-body"><h4>Plywood block, 5×5×0.6 cm</h4><p>Placed on top of tower before the mass. Height NOT counted toward tower measurement.</p></div>
+      <span class="mat-qty">1 block</span>
+    </div>
+    <div class="mat-item">
+      <span class="mat-emoji">✂️</span>
+      <div class="mat-body"><h4>Scissors</h4><p>Provided at the event for cutting straws and tape.</p></div>
+      <span class="mat-qty">At event</span>
+    </div></div>
+    <div class="callout c-gold">
+      <h4>🎒 What YOU Must Bring</h4>
+      <ul><li>ANSI Z87+ impact safety glasses (mandatory)</li><li>Writing utensils (pencil/pen)</li><li>Optionally: ruler/straightedge, protractor, scissors</li></ul>
+    </div>
+  </div>
+
+  <!-- ── TAB: SCORING ── -->
+  <div class="tab-panel" id="tab-scoring">
+    <div class="sec-title">Official Scoring Formula</div>
+    <div class="sec-sub">Exact formula from the rules manual</div>
+    <div class="callout c-acc">
+      <h4>📊 Formula</h4>
+      <p style="font-size:1rem;font-weight:700;color:#fff;">FS = (TAS ÷ CAS) × 50 + (THS ÷ CHS) × 50   •   Maximum = 100 points</p>
+    </div>
+    <table class="stbl">
+      <thead><tr><th>Term</th><th>How It's Calculated</th><th>Notes</th></tr></thead>
+      <tbody><tr><td>Final Score (FS)</td><td>Assessment Score (TAS) + Height Score (THS)</td><td>Max 100 points</td></tr><tr><td>Assessment Score (TAS)</td><td>(Your score ÷ Best assessment among all teams) × 50</td><td>Max 50 pts</td></tr><tr><td>Height Score (THS)</td><td>(Your height in mm ÷ Tallest height among all teams) × 50</td><td>Max 50 pts</td></tr><tr><td>Tiebreaker 1</td><td>Time to structural failure — longer hold wins</td><td>After primary score</td></tr><tr><td>Tiebreaker 2</td><td>Fewest unused straws — use nearly all 30</td><td>2nd tiebreaker</td></tr><tr><td>Tiebreaker 3</td><td>Best raw assessment score</td><td>Final tiebreaker</td></tr></tbody>
+    </table>
+    <div class="callout c-gold">
+      <h4>★ Worked Example</h4>
+      <p>Best height = 450mm. Your height = 375mm → THS = (375÷450)×50 = 41.67 pts. Best assessment = 9, you score 4 → TAS = (4÷9)×50 = 22.22 pts. Final Score = 63.89 points.</p>
+    </div>
+    
+  </div>
+
+  <!-- ── TAB: BUILD STRATEGY ── -->
+  <div class="tab-panel" id="tab-build">
+    <div class="sec-title">Build Strategy</div>
+    <div class="sec-sub">Recommended approach for the 45-minute session</div>
+    <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>Assign roles immediately</h4>
+        <div class="step-time">Minutes 0–2</div>
+        <p>One student leads the build; one takes the written test. Both must know the plan before the clock starts. Divide and conquer.</p>
+        <ul><li>Build lead: sketch design, assign straw counts</li><li>Test taker: review tower types and scoring formula</li></ul>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>Plan before touching materials</h4>
+        <div class="step-time">Minutes 2–7</div>
+        <p>Sketch the tower. Decide base shape, number of tiers, and platform design. Count straws and allocate: ~6 for base, ~18 upper tiers, ~4 diagonals, 2 reserve.</p>
+        
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>Build base — triangulate immediately</h4>
+        <div class="step-time">Minutes 7–18</div>
+        <p>Build the bottom tier and add diagonal braces BEFORE going up. A square frame with no diagonal collapses sideways immediately under shear force.</p>
+        <ul><li>At least one diagonal on every rectangular face</li><li>Bundle 2–3 straws at base corners for extra strength</li><li>Base footprint: aim for 10×10 cm minimum</li></ul>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h4>Build in tiers — brace each level</h4>
+        <div class="step-time">Minutes 18–32</div>
+        <p>Add height in ~15 cm stages. Brace every tier before building the next. Check vertical alignment after every tier — correct lean early.</p>
+        <ul><li>Check plumb with a held straw against the tower</li><li>Add matching pieces on opposite sides simultaneously</li></ul>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h4>Build the top platform</h4>
+        <div class="step-time">Minutes 32–38</div>
+        <p>Tape 2–3 straws in a flat cross pattern at the top. The 5×5 cm plywood block must sit flat and stable. Build this in from the start — don't add it as an afterthought.</p>
+        
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <h4>Use all straws + final reinforcement</h4>
+        <div class="step-time">Minutes 38–45</div>
+        <p>Add final diagonal braces with remaining straws — unused straws hurt your tiebreaker position. Check all joints and check plumb one final time before time is called.</p>
+        
+      </div>
+    </div></div>
+  </div>
+
+  <!-- ── TAB: TIPS ── -->
+  <div class="tab-panel" id="tab-tips">
+    <div class="sec-title">Competition Tips</div>
+    <div class="sec-sub">What wins — and what to avoid</div>
+    <div class="tips-grid">
+    <div class="tip-card">
+      <span class="tip-icon">🔺</span>
+      <h4>Triangulate everything</h4>
+      <p>Every rectangular frame MUST have a diagonal. One diagonal straw turns a collapsible rectangle into two rigid triangles. This is the single most important rule in the event.</p>
+    </div>
+    <div class="tip-card">
+      <span class="tip-icon">📏</span>
+      <h4>Short columns buckle less</h4>
+      <p>Halving a column's height makes it ~4× more resistant to buckling. Keep unsupported straw lengths to 15 cm or less. Add lateral bracing at mid-height on tall sections.</p>
+    </div>
+    <div class="tip-card">
+      <span class="tip-icon">🩹</span>
+      <h4>Wrap tape — don't just stick it</h4>
+      <p>Wrapping tape around a joint creates a compression band — far stronger than tape that just covers the surface. Overlap straws 2–3 cm before taping for maximum joint strength.</p>
+    </div>
+    <div class="tip-card">
+      <span class="tip-icon">⬇️</span>
+      <h4>Wide base, narrow top</h4>
+      <p>A pyramidal shape keeps the center of gravity low and the base wide — making the tower much harder to topple when the 300g mass is placed on top.</p>
+    </div>
+    <div class="tip-card">
+      <span class="tip-icon">📐</span>
+      <h4>Check plumb constantly</h4>
+      <p>A lean that looks small at 20 cm looks disqualifying at 50 cm. Use a spare straw or pencil held vertically beside the tower. Fix lean while it's easy — not when it's tall.</p>
+    </div>
+    <div class="tip-card">
+      <span class="tip-icon">📝</span>
+      <h4>Both parts are equal — 50/50</h4>
+      <p>Assessment and height are each worth 50 points. A shorter but stronger tower can beat a taller wobbly one. Know tower types, stability, and famous towers before competition day.</p>
+    </div></div>
+  </div>
+
+  <!-- ── TAB: SLIDES ── -->
+  <div class="tab-panel" id="tab-slides">
+    <div class="sec-title">Study Slides</div>
+    <div class="sec-sub">Open or download study materials for this event</div>
+    <div class="slides-grid">
+      <a class="slide-card" href="slides/Tower_Building_ProjectSlides.pdf" target="_blank">
+        <span class="slide-card-icon">📐</span>
+        <h4>Project Slides (PDF)</h4>
+        <p>Official rules, scoring formula, materials kit, build strategy, and competition tips — 6 slides.</p>
+        <span class="slide-card-cta">Open PDF ↗</span>
+      </a>
+      
+      <a class="slide-card" href="slides/Tower_Building_StudySlides.pdf" target="_blank">
+        <span class="slide-card-icon">📚</span>
+        <h4>Study Slides (PDF)</h4>
+        <p>Deeper content slides: engineering principles, written test topics, and vocabulary reference.</p>
+        <span class="slide-card-cta">Open PDF ↗</span>
+      </a>
+      <a class="slide-card" href="pptx/Tower_Building_ProjectSlides.pptx" download>
+        <span class="slide-card-icon">💾</span>
+        <h4>Project Slides (.pptx)</h4>
+        <p>Editable PowerPoint version. Customize for class presentations or print as handouts.</p>
+        <span class="slide-card-cta">Download .pptx ⬇</span>
+      </a>
+      
+      <a class="slide-card" href="tests/Tower_Building_Test.html">
+        <span class="slide-card-icon">✏️</span>
+        <h4>Practice Test</h4>
+        <p>Interactive auto-graded test covering the written assessment topics for this event.</p>
+        <span class="slide-card-cta">Take test →</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ── TAB: SHOPPING ── -->
+  <div class="tab-panel" id="tab-shopping">
+    <div class="sec-title">Walmart Practice Shopping List</div>
+    <div class="sec-sub">For home practice only — all materials provided at the competition</div>
+    <div class="shop-intro">All materials are provided free at the competition event. This list is for home practice sessions. Quantities support <strong>~5 practice runs per team</strong>.</div>
+    <div class="safety-warn">
+      <h4>⚠ Safety Gear — Not Provided at the Event</h4>
+      <p>Teams must bring their own safety eyewear. Without it you receive a no-show score and cannot compete. Buy before competition day.</p>
+    </div>
+    <table class="shop-tbl">
+      <thead><tr><th style="width:28px;"></th><th style="color:#F4C430;">Safety gear (bring yourself)</th><th>Where at Walmart</th><th>Est. price</th></tr></thead>
+      <tbody>
+    <tr id="sr-s0">
+      <td style="width:32px;padding:10px 8px 10px 12px;"><div class="cb" onclick="toggle(this,'s0')"></div></td>
+      <td><span class="si-name">ANSI Z87+ impact safety glasses (kids' size)</span><span class="si-note">Must show "Z87+" on lens. Vision center or sporting goods. Eyeglasses are not rated.</span></td>
+      <td class="si-dept">Vision center / Sporting goods</td>
+      <td class="si-price">~$12</td>
+    </tr></tbody>
+    </table>
+    <table class="shop-tbl" style="margin-top:18px;">
+      <thead><tr><th style="width:28px;"></th><th>Practice materials</th><th>Walmart aisle</th><th>Est. price</th></tr></thead>
+      <tbody>
+    <tr id="sr-p0">
+      <td style="width:32px;padding:10px 8px 10px 12px;"><div class="cb" onclick="toggle(this,'p0')"></div></td>
+      <td><span class="si-name">Paper drinking straws, jumbo (~20 cm)</span><span class="si-note">Multi-pack. Bendy straws work. Buy 2 packs — straws go fast in practice.</span></td>
+      <td class="si-dept">Kitchen / Party</td>
+      <td class="si-price">~$6</td>
+    </tr>
+    <tr id="sr-p1">
+      <td style="width:32px;padding:10px 8px 10px 12px;"><div class="cb" onclick="toggle(this,'p1')"></div></td>
+      <td><span class="si-name">Masking tape, 1" (2.54 cm) wide</span><span class="si-note">Each practice run uses 1 meter. Buy 2 rolls.</span></td>
+      <td class="si-dept">Hardware / Office</td>
+      <td class="si-price">~$6</td>
+    </tr>
+    <tr id="sr-p2">
+      <td style="width:32px;padding:10px 8px 10px 12px;"><div class="cb" onclick="toggle(this,'p2')"></div></td>
+      <td><span class="si-name">300-gram weight (bag of coins or rice)</span><span class="si-note">Exactly 300g. Use a kitchen scale to measure a bag of coins or rice.</span></td>
+      <td class="si-dept">Kitchen / Hardware</td>
+      <td class="si-price">~$5</td>
+    </tr>
+    <tr id="sr-p3">
+      <td style="width:32px;padding:10px 8px 10px 12px;"><div class="cb" onclick="toggle(this,'p3')"></div></td>
+      <td><span class="si-name">Thin craft wood or cardboard, 5×5 cm</span><span class="si-note">Flat rigid platform. Cut from a craft wood sheet or stiff cardboard.</span></td>
+      <td class="si-dept">Crafts</td>
+      <td class="si-price">~$3</td>
+    </tr>
+    <tr id="sr-p4">
+      <td style="width:32px;padding:10px 8px 10px 12px;"><div class="cb" onclick="toggle(this,'p4')"></div></td>
+      <td><span class="si-name">Ruler or tape measure</span><span class="si-note">Optional per rules — for measuring practice tower heights.</span></td>
+      <td class="si-dept">School supplies</td>
+      <td class="si-price">~$1</td>
+    </tr></tbody>
+    </table>
+    <div style="font-size:.78rem;color:rgba(192,204,224,.35);margin-top:6px;font-style:italic;">Items marked "shared" are covered by another event's purchase.</div>
+    <div class="shop-prog"><div class="shop-prog-fill" id="shop-prog-fill" style="width:0%;"></div></div>
+    <div class="shop-prog-label" id="shop-prog-label">0 of 6 items checked</div>
+    <div class="shop-total">
+      <div><div class="shop-total-label">Estimated subtotal (materials only)</div></div>
+      <div class="shop-total-val" id="shop-total-val">~$33</div>
+    </div>
+  </div>
+
+  <!-- ── TAB: CHECKLIST ── -->
+  <div class="tab-panel" id="tab-checklist">
+    <div class="sec-title">Pre-Competition Checklist</div>
+    <div class="sec-sub">Verify every item before time is called</div>
+    <div class="checklist">
+      
+      <div class="chk-item">
+        <div class="chk-box" onclick="this.classList.toggle('chk-done');this.textContent=this.classList.contains('chk-done')?'':''"></div>
+        <span class="chk-text"><strong>ANSI Z87+ safety glasses</strong> packed and ready</span>
+      </div>
+      <div class="chk-item">
+        <div class="chk-box" onclick="this.classList.toggle('chk-done');this.textContent=this.classList.contains('chk-done')?'':''"></div>
+        <span class="chk-text"><strong>Writing utensils</strong> packed for the written test</span>
+      </div>
+      <div class="chk-item">
+        <div class="chk-box" onclick="this.classList.toggle('chk-done');this.textContent=this.classList.contains('chk-done')?'':''"></div>
+        <span class="chk-text">Every rectangular frame has <strong>at least one diagonal brace</strong></span>
+      </div>
+      <div class="chk-item">
+        <div class="chk-box" onclick="this.classList.toggle('chk-done');this.textContent=this.classList.contains('chk-done')?'':''"></div>
+        <span class="chk-text">Tower is <strong>plumb (vertical)</strong> — checked on two sides</span>
+      </div>
+      <div class="chk-item">
+        <div class="chk-box" onclick="this.classList.toggle('chk-done');this.textContent=this.classList.contains('chk-done')?'':''"></div>
+        <span class="chk-text">Top platform is <strong>flat and wide enough</strong> for the 5×5 cm block</span>
+      </div>
+      <div class="chk-item">
+        <div class="chk-box" onclick="this.classList.toggle('chk-done');this.textContent=this.classList.contains('chk-done')?'':''"></div>
+        <span class="chk-text"><strong>No tape is touching the flat table surface</strong></span>
+      </div>
+      <div class="chk-item">
+        <div class="chk-box" onclick="this.classList.toggle('chk-done');this.textContent=this.classList.contains('chk-done')?'':''"></div>
+        <span class="chk-text">All support parts rest <strong>on top of the flat surface</strong></span>
+      </div>
+      <div class="chk-item">
+        <div class="chk-box" onclick="this.classList.toggle('chk-done');this.textContent=this.classList.contains('chk-done')?'':''"></div>
+        <span class="chk-text">Nearly all <strong>30 straws have been used</strong> (unused = tiebreaker penalty)</span>
+      </div>
+      <div class="chk-item">
+        <div class="chk-box" onclick="this.classList.toggle('chk-done');this.textContent=this.classList.contains('chk-done')?'':''"></div>
+        <span class="chk-text">Know the <strong>scoring formula</strong>: FS = (TAS÷CAS)×50 + (THS÷CHS)×50</span>
+      </div>
+      <div class="chk-item">
+        <div class="chk-box" onclick="this.classList.toggle('chk-done');this.textContent=this.classList.contains('chk-done')?'':''"></div>
+        <span class="chk-text">Reviewed <strong>tower types and famous towers</strong> for the written test</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer><p>Tower Building — VA Division A 2025–2026 &nbsp;·&nbsp; <a href="index.html" style="color:rgba(192,204,224,.35);">← Back to portal</a></p></footer>
+
+<script>
+function showTab(id,btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:document.querySelector('.tab-nav').offsetTop-60,behavior:'smooth'});
+}
+// Handle hash navigation
+if(location.hash){
+  const map={'#overview':'overview','#materials':'materials','#scoring':'scoring','#build':'build','#tips':'tips','#slides':'slides','#shopping':'shopping','#checklist':'checklist'};
+  const t=map[location.hash];
+  if(t){const btn=document.querySelector(`.tab-btn[onclick*="'${t}'"]`);if(btn){showTab(t,btn);}}
+}
+
+// Shopping list
+const prices={s0:12,p0:6,p1:6,p2:5,p3:3,p4:1};
+const total=6;
+function toggle(el,id){
+  el.classList.toggle('checked');
+  const row=document.getElementById('sr-'+id);
+  if(row)row.classList.toggle('done',el.classList.contains('checked'));
+  let n=0,sum=0;
+  document.querySelectorAll('.cb.checked').forEach(cb=>{
+    const fn=cb.getAttribute('onclick')||'';
+    const m=fn.match(/'([^']+)'/);
+    if(m){n++;sum+=prices[m[1]]||0;}
+  });
+  document.getElementById('shop-prog-fill').style.width=Math.round(n/total*100)+'%';
+  document.getElementById('shop-prog-label').textContent=n+' of '+total+' items checked';
+  document.getElementById('shop-total-val').textContent='~$'+sum;
+}
+</script>
+
+<script id="theme-logic">
+(function() {
+  function applyTheme(mode) {
+    const btn = document.getElementById('theme-toggle');
+    if (mode === 'light') {
+      document.body.classList.add('light-mode');
+      if (btn) btn.textContent = '🌙';
+    } else {
+      document.body.classList.remove('light-mode');
+      if (btn) btn.textContent = '☀️';
+    }
+  }
+  // Apply on load
+  const saved = localStorage.getItem('va-theme') || 'dark';
+  applyTheme(saved);
+  
+  window.toggleTheme = function() {
+    const isLight = document.body.classList.contains('light-mode');
+    const newMode = isLight ? 'dark' : 'light';
+    localStorage.setItem('va-theme', newMode);
+    applyTheme(newMode);
+  };
+})();
+</script>
+</body>
+</html>

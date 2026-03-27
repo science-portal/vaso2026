@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VA Division A — Science Olympiad 2025–2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Share+Tech+Mono&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080d1a;
+    --bg2: #0c1326;
+    --grid: rgba(0,180,255,0.055);
+    --blue: #00b4ff;
+    --amber: #ffb400;
+    --green: #00e096;
+    --red: #ff4d6d;
+    --purple: #a78bfa;
+    --text: #cdd9f0;
+    --text-dim: #5a7099;
+    --card: rgba(255,255,255,0.03);
+    --card-border: rgba(0,180,255,0.12);
+    --card-hover: rgba(0,180,255,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 40px 40px;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8,13,26,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--card-border);
+    padding: 0 2rem;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 0.1em;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .nav-logo span { color: var(--blue); }
+  .nav-logo-badge {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6rem;
+    background: var(--amber);
+    color: #000;
+    padding: 2px 6px;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+  }
+  .nav-right {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .nav-right a {
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-right a:hover { color: var(--blue); }
+
+  /* ── HERO ── */
+  .hero {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5rem 2rem 3.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  @media (max-width: 800px) {
+    .hero { grid-template-columns: 1fr; padding: 3rem 1.5rem 2rem; gap: 2rem; }
+  }
+  .hero-eyebrow {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--blue);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: var(--blue);
+  }
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5.5rem;
+    line-height: 0.92;
+    letter-spacing: 0.03em;
+    color: #fff;
+    margin-bottom: 1.2rem;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--amber);
+    display: block;
+  }
+  .hero-sub {
+    font-size: 1rem;
+    color: var(--text-dim);
+    line-height: 1.75;
+    font-weight: 300;
+    max-width: 440px;
+    margin-bottom: 2rem;
+  }
+  .hero-cta-row { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+  .cta-btn {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    border: 1px solid;
+    transition: all 0.2s;
+    display: inline-block;
+  }
+  .cta-primary { border-color: var(--amber); color: var(--amber); }
+  .cta-primary:hover { background: var(--amber); color: #000; }
+  .cta-secondary { border-color: rgba(255,255,255,0.15); color: var(--text-dim); }
+  .cta-secondary:hover { border-color: var(--blue); color: var(--blue); }
+
+  /* hero stats panel */
+  .hero-stats-panel {
+    background: var(--bg2);
+    border: 1px solid var(--card-border);
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem;
+    color: #fff;
+    line-height: 1;
+    display: block;
+  }
+  .hero-stat-val.blue { color: var(--blue); }
+  .hero-stat-val.amber { color: var(--amber); }
+  .hero-stat-val.green { color: var(--green); }
+  .hero-stat-val.purple { color: var(--purple); }
+  .hero-stat-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+    display: block;
+  }
+  .hero-stat-divider {
+    grid-column: 1 / -1;
+    border: none;
+    border-top: 1px solid var(--card-border);
+    margin: 0;
+  }
+  .hero-dates {
+    grid-column: 1 / -1;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    line-height: 2;
+  }
+  .hero-dates strong { color: var(--amber); }
+
+  /* ── SECTION ── */
+  .content { max-width: 1200px; margin: 0 auto; padding: 0 2rem 5rem; }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--card-border);
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.06em;
+    color: #fff;
+  }
+  .section-subtitle {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .section-meta {
+    margin-left: auto;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── EVENT CARDS ── */
+  .events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+  .event-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    padding: 1.3rem;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .event-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: transparent;
+    transition: background 0.2s;
+  }
+  .event-card:hover {
+    background: var(--card-hover);
+    border-color: var(--blue);
+    transform: translateY(-2px);
+  }
+  .event-card:hover::before { background: var(--blue); }
+  .event-card.featured {
+    border-color: var(--amber);
+    background: rgba(255,180,0,0.04);
+    grid-column: span 1;
+  }
+  .event-card.featured::before { background: var(--amber); }
+  .event-card.featured:hover { border-color: var(--amber); background: rgba(255,180,0,0.08); }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.7rem;
+  }
+  .card-icon {
+    font-size: 1.4rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .card-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.58rem;
+    padding: 2px 6px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid;
+  }
+  .tag-build { color: var(--amber); border-color: rgba(255,180,0,0.3); background: rgba(255,180,0,0.06); }
+  .tag-written { color: var(--blue); border-color: rgba(0,180,255,0.3); background: rgba(0,180,255,0.06); }
+  .tag-grade3 { color: var(--purple); border-color: rgba(167,139,250,0.3); background: rgba(167,139,250,0.06); }
+  .tag-new { color: var(--green); border-color: rgba(0,224,150,0.3); background: rgba(0,224,150,0.06); }
+  .tag-featured { color: var(--amber); border-color: var(--amber); background: rgba(255,180,0,0.1); }
+
+  .card-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.15rem;
+    letter-spacing: 0.06em;
+    color: #fff;
+    margin-bottom: 0.3rem;
+    line-height: 1.1;
+  }
+  .event-card.featured .card-name { color: var(--amber); }
+  .card-desc {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    line-height: 1.55;
+    font-weight: 300;
+  }
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.9rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .card-link {
+    color: var(--blue);
+    font-size: 0.65rem;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .event-card:hover .card-link { opacity: 1; }
+  .event-card.featured .card-link { opacity: 1; color: var(--amber); }
+
+  /* coming soon overlay */
+  .event-card.soon {
+    opacity: 0.55;
+    cursor: default;
+    pointer-events: none;
+  }
+  .soon-badge {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.58rem;
+    color: var(--text-dim);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 2px 6px;
+    letter-spacing: 0.1em;
+  }
+
+  /* ── INFO STRIP ── */
+  .info-strip {
+    background: linear-gradient(135deg, rgba(0,180,255,0.05) 0%, rgba(255,180,0,0.03) 100%);
+    border: 1px solid var(--card-border);
+    border-left: 3px solid var(--amber);
+    padding: 1rem 1.5rem;
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .info-strip-icon { font-size: 1.2rem; flex-shrink: 0; }
+  .info-strip-text { flex: 1; font-size: 0.88rem; color: var(--text); line-height: 1.65; font-weight: 300; }
+  .info-strip-text strong { color: var(--amber); font-weight: 600; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--card-border);
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+  }
+  footer a { color: var(--blue); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* ── DECORATIVE DIVIDER ── */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 2.5rem 0 2rem;
+  }
+  .divider-line { flex: 1; height: 1px; background: var(--card-border); }
+  .divider-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--text-dim);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .live-dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: pulse 2s ease infinite;
+    margin-right: 4px;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <span>VASO</span> DIV A · 2025–2026
+    <span class="nav-logo-badge">STUDY HUB</span>
+  </div>
+  <div class="nav-right">
+    <a href="#build-events">Build Events</a>
+    <a href="#written-events">Written Events</a>
+    <a href="https://vaso.org" target="_blank">VASO ↗</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <div class="hero-eyebrow">Virginia Science Olympiad</div>
+    <h1>Division A<em>Science Olympiad</em></h1>
+    <p class="hero-sub">
+      Your hub for event rules, study guides, and practice tests for the 2025–2026 Virginia Division A Science Olympiad season.
+    </p>
+    <div class="hero-cta-row">
+      <a href="#build-events" class="cta-btn cta-primary">View All Events</a>
+      <a href="bridge_building.html" class="cta-btn cta-secondary">Bridge Building →</a>
+    </div>
+  </div>
+
+  <div class="hero-stats-panel">
+    <div class="hero-stat">
+      <span class="hero-stat-val blue">13</span>
+      <span class="hero-stat-label">Build Events</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-val amber">12</span>
+      <span class="hero-stat-label">Written Events</span>
+    </div>
+    <hr class="hero-stat-divider">
+    <div class="hero-stat">
+      <span class="hero-stat-val green">2</span>
+      <span class="hero-stat-label">Tournaments</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-val purple">4</span>
+      <span class="hero-stat-label">Sub-Divisions</span>
+    </div>
+    <hr class="hero-stat-divider">
+    <div class="hero-dates">
+      <strong>APR 18, 2026</strong> — Tournament 1 (Blueprint / Infrared)<br>
+      <strong>APR 25, 2026</strong> — Tournament 2 (Chlorophyll / Dark Matter)<br>
+      Oakton High School &amp; Lake Braddock Secondary
+    </div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <div class="info-strip">
+    <div class="info-strip-icon">📌</div>
+    <div class="info-strip-text">
+      <strong>2025–2026 Season Update:</strong> Tournaments have shifted to spring. Two large tournaments are planned for <strong>April 18</strong> and <strong>April 25</strong>. Teams compete for half a day (morning or afternoon) in one of four color sub-tournaments: Red, Blue, Green, or Purple. Click on any event below to access its full instructions, study guide, and practice test.
+    </div>
+  </div>
+
+  <!-- BUILD EVENTS -->
+  <a name="build-events"></a>
+  <div class="section-header">
+    <div class="section-title">Build Events</div>
+    <div class="section-subtitle">Coach Scheduled · 45 Minutes · ANSI Z87+ Required</div>
+    <div class="section-meta">2 PARTICIPANTS PER TEAM</div>
+  </div>
+
+  <div class="events-grid">
+
+    <!-- FEATURED: Bridge Building -->
+    <a href="bridge_building.html" class="event-card featured">
+      <div class="card-top">
+        <span class="card-icon">🌉</span>
+        <div class="card-tags">
+          <span class="tag tag-build">Build</span>
+          <span class="tag tag-featured">Study Guide ✓</span>
+        </div>
+      </div>
+      <div class="card-name">Bridge Building</div>
+      <div class="card-desc">Build the tallest truss bridge from straws and tape to span a 30 cm gap while holding a 300g or 500g mass for 30 seconds. Concurrent written assessment on bridge types and forces.</div>
+      <div class="card-footer">
+        <span>25 min build · Written test</span>
+        <span class="card-link">OPEN STUDY GUIDE →</span>
+      </div>
+    </a>
+
+    <!-- Astronaut Lander -->
+    <div class="event-card soon">
+      <div class="card-top">
+        <span class="card-icon">🚀</span>
+        <div class="card-tags"><span class="tag tag-build">Build</span><span class="soon-badge">Coming Soon</span></div>
+      </div>
+      <div class="card-name">Astronaut Lander</div>
+      <div class="card-desc">Design and build a device to safely land a simulated astronaut within a target zone. Written assessment on forces and spaceflight.</div>
+      <div class="card-footer"><span>25 min build · Written test</span></div>
+    </div>
+
+    <!-- Bungee Egg Drop -->
+    <div class="event-card soon">
+      <div class="card-top">
+        <span class="card-icon">🥚</span>
+        <div class="card-tags"><span class="tag tag-build">Build</span><span class="soon-badge">Coming Soon</span></div>
+      </div>
+      <div class="card-name">Bungee Egg Drop</div>
+      <div class="card-desc">Design a bungee cord system to protect a raw egg dropped from a two-story stairwell, stopping as close to the floor as possible without breaking.</div>
+      <div class="card-footer"><span>25 min build · Written test</span></div>
+    </div>
+
+    <!-- Gravity Vehicle -->
+    <div class="event-card soon">
+      <div class="card-top">
+        <span class="card-icon">🚗</span>
+        <div class="card-tags"><span class="tag tag-build">Build</span><span class="soon-badge">Coming Soon</span></div>
+      </div>
+      <div class="card-name">Gravity Vehicle</div>
+      <div class="card-desc">Build a gravity-powered vehicle that travels a set distance as accurately as possible. Assessment covers forces and motion.</div>
+      <div class="card-footer"><span>25 min build · Written test</span></div>
+    </div>
+
+    <!-- Pentathlon -->
+    <div class="event-card soon">
+      <div class="card-top">
+        <span class="card-icon">⚡</span>
+        <div class="card-tags"><span class="tag tag-build">Build</span><span class="soon-badge">Coming Soon</span></div>
+      </div>
+      <div class="card-name">Pentathlon</div>
+      <div class="card-desc">Complete five varied science challenges including measurement, observation, and hands-on tasks within the allotted time.</div>
+      <div class="card-footer"><span>45 min · Multiple tasks</span></div>
+    </div>
+
+    <!-- Ping Pong Parachute -->
+    <div class="event-card soon">
+      <div class="card-top">
+        <span class="card-icon">🪂</span>
+        <div class="card-tags"><span class="tag tag-build">Build</span><span class="soon-badge">Coming Soon</span></div>
+      </div>
+      <div class="card-name">Ping Pong Parachute</div>
+      <div class="card-desc">Design and build a parachute system to lower a ping pong ball to land as close as possible to a target.</div>
+      <div class="card-footer"><span>25 min build · Written test</span></div>
+    </div>
+
+    <!-- Propeller Car -->
+    <div class="event-card soon">
+      <div class="card-top">
+        <span class="card-icon">🌀</span>
+        <div class="card-tags"><span class="tag tag-build">Build</span><span class="soon-badge">Coming Soon</span></div>
+      </div>
+      <div class="card-name">Propeller Car</div>
+      <div class="card-desc">Build a propeller-powered car from provided materials that travels a target distance as accurately as possible.</div>
+      <div class="card-footer"><span>25 min build · Written test</span></div>
+    </div>
+
+    <!-- Sail Car -->
+    <div class="event-card soon">
+      <div class="card-top">
+        <span class="card-icon">⛵</span>
+        <div class="card-tags"><span class="tag tag-build">Build</span><span class="soon-badge">Coming Soon</span></div>
+      </div>
+      <div class="card-name">Sail Car</div>
+      <div class="card-desc">Construct a wind-powered car that travels as far as possible using a fan as the wind source.</div>
+      <div class="card-footer"><span>25 min build · Written test</span></div>
+    </div>
+
+    <!-- Storm the Castle -->
+    <div class="event-card soon">
+      <div class="card-top">
+        <span class="card-icon">🏰</span>
+        <div class="card-tags"><span class="tag tag-build">Build</span><span class="soon-badge">Coming Soon</span></div>
+      </div>
+      <div class="card-name">Storm the Castle</div>
+      <div class="card-desc">Build a catapult to launch a projectile as close as possible to a target while answering questions on simple machines and forces.</div>
+      <div class="card-footer"><span>25 min build · Written test</span></div>
+    </div>
+
+    <!-- Wind Power -->
+    <div class="event-card soon">
+      <div class="card-top">
+        <span class="card-icon">💨</span>
+        <div class="card-tags"><span class="tag tag-build">Build</span><span class="soon-badge">Coming Soon</span></div>
+      </div>
+      <div class="card-name">Wind Power</div>
+      <div class="card-desc">Design and build a wind turbine from provided materials that generates the most electrical power in a timed test.</div>
+      <div class="card-footer"><span>25 min build · Written test</span></div>
+    </div>
+
+  </div>
+
+  <!-- 3RD GRADE BUILD EVENTS -->
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-label">3rd Grade Only — Build Events</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="events-grid">
+    <div class="event-card soon">
+      <div class="card-top">
+        <span class="card-icon">🚁</span>
+        <div class="card-tags"><span class="tag tag-build">Build</span><span class="tag tag-grade3">3rd Grade</span></div>
+      </div>
+      <div class="card-name">Chopper Challenge</div>
+      <div class="card-desc">Build a paper helicopter (autorotating device) that stays aloft as long as possible when dropped from height.</div>
+      <div class="card-footer"><span>25 min build · Written test</span></div>
+    </div>
+    <div class="event-card soon">
+      <div class="card-top">
+        <span class="card-icon">🗼</span>
+        <div class="card-tags"><span class="tag tag-build">Build</span><span class="tag tag-grade3">3rd Grade</span></div>
+      </div>
+      <div class="card-name">Tower Building</div>
+      <div class="card-desc">Build the tallest freestanding structure from provided materials while answering assessment questions on structural engineering.</div>
+      <div class="card-footer"><span>25 min build · Written test</span></div>
+    </div>
+    <div class="event-card soon">
+      <div class="card-top">
+        <span class="card-icon">🚢</span>
+        <div class="card-tags"><span class="tag tag-build">Build</span><span class="tag tag-grade3">3rd Grade</span></div>
+      </div>
+      <div class="card-name">Build a Barge</div>
+      <div class="card-desc">Design and construct a barge from foil and other materials that floats and holds the most weight before sinking.</div>
+      <div class="card-footer"><span>25 min build · Written test</span></div>
+    </div>
+  </div>
+
+  <!-- WRITTEN EVENTS -->
+  <a name="written-events"></a>
+  <div class="section-header" style="margin-top:1rem;">
+    <div class="section-title">Written Events</div>
+    <div class="section-subtitle">On Team Schedule · 30 Minutes</div>
+    <div class="section-meta">2 PARTICIPANTS PER TEAM</div>
+  </div>
+
+  <div class="events-grid">
+
+    <div class="event-card soon">
+      <div class="card-top">
+        <span class="card-icon">🧠</span>
+        <div class="card-tags"><span class="tag tag-written">Written</span></div>
+      </div>
+      <div class="card-name">Anatomy — Nervous System</div>
+      <div class="card-desc">Written assessment covering the structure and function of the human nervous system including the brain, spinal cord, and peripheral nervous system.</div>
+      <div class="card-footer"><span>30 min · Written test</span></div>
+    </div>
+
+    <div class="event-card soon">
+      <div class="card-top">
+        <span class="card-icon">🦠</span>
+        <div class="card-tags"><span class="tag tag-written">Written</span></div>
+      </div>
+      <div class="card-name">Extremophiles</div>
+      <div class="card-desc">Answer questions about organisms that thrive in extreme environmental conditions — high temperature, salinity, pH, pressure, and radiation.</div>
+      <div class="card-footer"><span>30 min · Written test</span></div>
+    </div>
+
+    <div class="event-card soon">
+      <div class="card-top">
+        <span class="card-icon">📊</span>
+        <div class="card-tags"><span class="tag tag-written">Written</span></div>
+      </div>
+      <div class="card-name">Data Investigations</div>
+      <div class="card-desc">Interpret, analyze, and draw conclusions from given data sets. Tests skills in graphing, statistics, and scientific reasoning.</div>
+      <div class="card-footer"><span>30 min · Written test</span></div>
+    </div>
+
+    <div class="event-card soon">
+      <div class="card-top">
+        <span class="card-icon">⚗️</span>
+        <div class="card-tags"><span class="tag tag-written">Written</span></div>
+      </div>
+      <div class="card-name">Molecular Bonding</div>
+      <div class="card-desc">Demonstrate knowledge of chemical bonds, molecular structures, Lewis dot diagrams, and properties of compounds.</div>
+      <div class="card-footer"><span>30 min · Written test</span></div>
+    </div>
+
+    <div class="event-card soon">
+      <div class="card-top">
+        <span class="card-icon">🔍</span>
+        <div class="card-tags"><span class="tag tag-written">Written</span></div>
+      </div>
+      <div class="card-name">Super Sleuths</div>
+      <div class="card-desc">Analyze crime scene evidence to identify suspects. Tests knowledge of forensic science, evidence analysis, and scientific reasoning.</div>
+      <div class="card-footer"><span>30 min · Written test</span></div>
+    </div>
+
+    <div class="event-card soon">
+      <div class="card-top">
+        <span class="card-icon">⚡</span>
+        <div class="card-tags"><span class="tag tag-written">Written</span></div>
+      </div>
+      <div class="card-name">Shock Value</div>
+      <div class="card-desc">Answer questions about electricity, circuits, static electricity, and electromagnetic phenomena.</div>
+      <div class="card-footer"><span>30 min · Written test</span></div>
+    </div>
+
+    <div class="event-card soon">
+      <div class="card-top">
+        <span class="card-icon">🎵</span>
+        <div class="card-tags"><span class="tag tag-written">Written</span></div>
+      </div>
+      <div class="card-name">Sounds of Music</div>
+      <div class="card-desc">Demonstrate understanding of the physics of sound — frequency, wavelength, amplitude, pitch, and how musical instruments produce sound.</div>
+      <div class="card-footer"><span>30 min · Written test</span></div>
+    </div>
+
+    <div class="event-card soon">
+      <div class="card-top">
+        <span class="card-icon">🌌</span>
+        <div class="card-tags"><span class="tag tag-written">Written</span></div>
+      </div>
+      <div class="card-name">Solar System</div>
+      <div class="card-desc">Answer questions on planets, moons, asteroids, comets, and the structure of our solar system including orbital mechanics.</div>
+      <div class="card-footer"><span>30 min · Written test</span></div>
+    </div>
+
+    <div class="event-card soon">
+      <div class="card-top">
+        <span class="card-icon">🌪️</span>
+        <div class="card-tags"><span class="tag tag-written">Written</span></div>
+      </div>
+      <div class="card-name">Weather — Storms</div>
+      <div class="card-desc">Demonstrate knowledge of extreme weather events, meteorological terms, storm formation, and weather instruments. Includes a hands-on instrument creation.</div>
+      <div class="card-footer"><span>30 min · Written + hands-on</span></div>
+    </div>
+
+  </div>
+
+  <!-- 3RD GRADE WRITTEN -->
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-label">3rd Grade Only — Written Events</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="events-grid">
+    <div class="event-card soon">
+      <div class="card-top">
+        <span class="card-icon">🔢</span>
+        <div class="card-tags"><span class="tag tag-written">Written</span><span class="tag tag-grade3">3rd Grade</span></div>
+      </div>
+      <div class="card-name">Fast Facts</div>
+      <div class="card-desc">A rapid-fire quiz covering a broad range of science topics. Tests recall and knowledge breadth across multiple science disciplines.</div>
+      <div class="card-footer"><span>30 min · Written test</span></div>
+    </div>
+    <div class="event-card soon">
+      <div class="card-top">
+        <span class="card-icon">🪐</span>
+        <div class="card-tags"><span class="tag tag-written">Written</span><span class="tag tag-grade3">3rd Grade</span></div>
+      </div>
+      <div class="card-name">Solar System (3rd Grade)</div>
+      <div class="card-desc">3rd grade level questions on our solar system, planets, moons, and space exploration appropriate for early elementary students.</div>
+      <div class="card-footer"><span>30 min · Written test</span></div>
+    </div>
+    <div class="event-card soon">
+      <div class="card-top">
+        <span class="card-icon">🌊</span>
+        <div class="card-tags"><span class="tag tag-written">Written</span><span class="tag tag-grade3">3rd Grade</span></div>
+      </div>
+      <div class="card-name">Oceans</div>
+      <div class="card-desc">Written assessment on ocean science including marine ecosystems, ocean zones, tides, currents, and marine life adaptations.</div>
+      <div class="card-footer"><span>30 min · Written test</span></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div>VA DIVISION A SCIENCE OLYMPIAD · 2025–2026 · STUDY HUB</div>
+  <div>
+    <a href="https://vaso.org" target="_blank">VASO.ORG</a> ·
+    <a href="https://scioly.org" target="_blank">SCIOLY.ORG</a> ·
+    Based on official rules manual v9.01
+  </div>
+</footer>
+
+</body>
+</html>

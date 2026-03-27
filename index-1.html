@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>VA Division A Science Olympiad — Student Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Exo+2:wght@700;800&display=swap" rel="stylesheet">
+<style>
+
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Space Grotesk',sans-serif;min-height:100vh;overflow-x:hidden;}
+a{text-decoration:none;}
+img{max-width:100%;}
+
+:root{--gold:#F4C430;--aqua:#18C5D9;--teal:#0A7E8C;--navy:#03111C;--silver:#B8D8E8;}
+body{background:var(--navy);color:var(--silver);}
+
+/* ── Ocean animated BG ── */
+.bg-ocean{position:fixed;inset:0;z-index:0;background:linear-gradient(180deg,#021525 0%,#042B45 55%,#065A82 100%);overflow:hidden;}
+.wave{position:absolute;width:200%;height:180px;bottom:0;background:rgba(24,197,217,0.06);border-radius:50% 50% 0 0/80px 80px 0 0;animation:waveMove linear infinite;}
+.wave:nth-child(1){animation-duration:14s;}
+.wave:nth-child(2){animation-duration:20s;bottom:40px;opacity:.5;animation-direction:reverse;}
+.wave:nth-child(3){animation-duration:26s;bottom:80px;opacity:.35;}
+@keyframes waveMove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.bubble{position:fixed;border-radius:50%;background:rgba(24,197,217,0.09);border:1px solid rgba(24,197,217,0.18);animation:rise linear infinite;pointer-events:none;z-index:0;}
+@keyframes rise{from{transform:translateY(105vh);opacity:.8}to{transform:translateY(-10vh);opacity:0}}
+
+/* ── Page layout ── */
+.page{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:0 24px 80px;}
+
+/* ── Hero ── */
+.hero{text-align:center;padding:72px 20px 56px;}
+.hero-eyebrow{display:inline-block;background:rgba(24,197,217,0.12);border:1px solid rgba(24,197,217,0.3);color:var(--aqua);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:5px 18px;border-radius:999px;margin-bottom:20px;}
+.hero h1{font-family:'Exo 2',sans-serif;font-size:clamp(2.4rem,6vw,4rem);font-weight:800;color:#fff;line-height:1.06;margin-bottom:16px;}
+.hero h1 em{color:var(--aqua);font-style:normal;}
+.hero-sub{font-size:1.1rem;color:var(--silver);max-width:580px;margin:0 auto 32px;line-height:1.7;opacity:.8;}
+.hero-badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.badge{padding:5px 16px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
+.badge-aqua{background:rgba(24,197,217,0.12);border:1px solid rgba(24,197,217,0.35);color:var(--aqua);}
+.badge-gold{background:rgba(244,196,48,0.12);border:1px solid rgba(244,196,48,0.35);color:var(--gold);}
+.badge-red{background:rgba(224,92,64,0.12);border:1px solid rgba(224,92,64,0.35);color:#e05c40;}
+
+/* ── Section ── */
+.section{margin-bottom:64px;}
+.section-eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px;padding-left:2px;}
+.section-title{font-family:'Exo 2',sans-serif;font-size:1.8rem;font-weight:800;color:#fff;margin-bottom:8px;}
+.section-subtitle{font-size:.95rem;color:rgba(184,216,232,.6);margin-bottom:28px;line-height:1.6;}
+.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(24,197,217,0.2),transparent);margin:16px 0 40px;}
+
+/* ── Project cards ── */
+.project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;}
+.project-card{background:rgba(4,43,69,0.7);border:1px solid rgba(255,255,255,0.08);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;text-decoration:none;transition:transform .22s,box-shadow .22s,border-color .22s;backdrop-filter:blur(8px);}
+.project-card:hover{transform:translateY(-6px);box-shadow:0 20px 48px rgba(0,0,0,.5);}
+.project-card:hover .pc-arrow{transform:translateX(4px);}
+.pc-banner{height:7px;}
+.pc-body{padding:28px 26px 24px;flex:1;display:flex;flex-direction:column;}
+.pc-icon{font-size:2.8rem;margin-bottom:16px;display:block;}
+.pc-grade{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;}
+.pc-title{font-family:'Exo 2',sans-serif;font-size:1.5rem;font-weight:800;color:#fff;line-height:1.15;margin-bottom:12px;}
+.pc-desc{font-size:.9rem;color:rgba(184,216,232,.7);line-height:1.65;flex:1;margin-bottom:20px;}
+.pc-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:20px;}
+.pc-tag{font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,.6);}
+.pc-cta{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-radius:12px;font-family:'Exo 2',sans-serif;font-size:.95rem;font-weight:700;color:#fff;}
+.pc-arrow{font-size:1rem;transition:transform .2s;}
+
+/* ── Ocean written event card ── */
+.ocean-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
+.oc-card{background:rgba(4,43,69,0.6);border:1px solid rgba(24,197,217,0.15);border-radius:16px;padding:20px 22px;text-decoration:none;display:block;transition:all .2s;}
+.oc-card:hover{border-color:rgba(24,197,217,0.4);background:rgba(4,43,69,0.85);}
+.oc-icon{font-size:1.6rem;margin-bottom:8px;display:block;}
+.oc-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--aqua);margin-bottom:6px;}
+.oc-title{font-size:1rem;font-weight:700;color:#fff;margin-bottom:6px;}
+.oc-desc{font-size:.84rem;color:rgba(184,216,232,.6);line-height:1.55;}
+.oc-arrow{margin-top:12px;font-size:.85rem;font-weight:700;color:var(--aqua);}
+
+/* ── About section ── */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.about-card{background:rgba(4,43,69,0.5);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px 26px;}
+.about-card h3{font-family:'Exo 2',sans-serif;font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.about-card p{font-size:.88rem;color:rgba(184,216,232,.65);line-height:1.7;}
+.about-card ul{padding-left:18px;display:flex;flex-direction:column;gap:6px;}
+.about-card li{font-size:.88rem;color:rgba(184,216,232,.65);line-height:1.55;}
+.about-card li strong{color:rgba(255,255,255,.85);}
+.about-full{grid-column:1/-1;}
+
+/* ── Footer ── */
+footer{text-align:center;padding:32px 24px;position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.06);}
+footer p{font-size:.82rem;color:rgba(184,216,232,.3);line-height:1.8;}
+footer a{color:rgba(24,197,217,.5);text-decoration:none;}
+footer a:hover{color:var(--aqua);}
+
+@media(max-width:640px){
+  .about-grid{grid-template-columns:1fr;}
+  .hero h1{font-size:2.2rem;}
+  .page{padding:0 16px 60px;}
+}
+</style>
+
+<style id="theme-vars">
+/* ── Light/Dark mode variables ── */
+:root {
+  --mode-bg1: #1A1A2E;
+  --mode-bg2: rgba(4,43,69,0.7);
+  --mode-nav: rgba(8,8,24,0.97);
+  --mode-nav-border: rgba(255,255,255,0.08);
+  --mode-text: #B8D8E8;
+  --mode-text-strong: #FFFFFF;
+  --mode-text-muted: rgba(184,216,232,0.5);
+  --mode-card-bg: rgba(4,43,69,0.7);
+  --mode-card-border: rgba(255,255,255,0.08);
+  --mode-input-bg: transparent;
+  --mode-input-color: #fff;
+  --mode-table-even: rgba(255,255,255,0.025);
+  --mode-section-bg: rgba(255,255,255,0.03);
+}
+body.light-mode {
+  --mode-bg1: #F0F4F8;
+  --mode-bg2: #FFFFFF;
+  --mode-nav: rgba(255,255,255,0.97);
+  --mode-nav-border: rgba(0,0,0,0.1);
+  --mode-text: #2A3E52;
+  --mode-text-strong: #0D1F30;
+  --mode-text-muted: rgba(42,62,82,0.5);
+  --mode-card-bg: #FFFFFF;
+  --mode-card-border: rgba(0,0,0,0.09);
+  --mode-input-bg: #fff;
+  --mode-input-color: #0D1F30;
+  --mode-table-even: rgba(0,0,0,0.03);
+  --mode-section-bg: rgba(0,0,0,0.03);
+}
+
+/* ── Toggle button ── */
+#theme-toggle {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.75);
+  cursor: pointer;
+  font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  line-height: 1;
+}
+#theme-toggle:hover { background: rgba(255,255,255,0.14); }
+body.light-mode #theme-toggle {
+  border-color: rgba(0,0,0,0.15);
+  background: rgba(0,0,0,0.06);
+  color: rgba(0,0,0,0.6);
+}
+body.light-mode #theme-toggle:hover { background: rgba(0,0,0,0.1); }
+
+/* ── Light mode nav overrides ── */
+body.light-mode .gnav {
+  background: rgba(255,255,255,0.97) !important;
+  border-bottom-color: rgba(0,0,0,0.1) !important;
+}
+body.light-mode .gnav-logo { color: #0D1F30 !important; border-right-color: rgba(0,0,0,0.12) !important; }
+body.light-mode .gnav-logo span { color: rgba(13,31,48,0.5) !important; }
+body.light-mode .gnav-link { color: rgba(13,31,48,0.55) !important; }
+body.light-mode .gnav-link:hover { background: rgba(0,0,0,0.05) !important; color: #0D1F30 !important; }
+body.light-mode .gnav-link.active { background: rgba(0,0,0,0.08) !important; color: #0D1F30 !important; }
+body.light-mode .gnav-burger { color: rgba(0,0,0,0.55) !important; }
+body.light-mode .gnav-mobile { background: #fff; border-top-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .gnav-mlink { color: rgba(13,31,48,0.65) !important; border-bottom-color: rgba(0,0,0,0.06) !important; }
+body.light-mode .gnav-mlink.active { color: #0D1F30 !important; background: rgba(0,0,0,0.05) !important; }
+
+/* ── Light mode body/backgrounds ── */
+body.light-mode { background: #EEF2F7 !important; color: var(--mode-text) !important; }
+body.light-mode .bg-ocean,
+body.light-mode .bg-ocean .wave { filter: opacity(0.12); }
+body.light-mode body::after { opacity: 0.3; }
+
+/* ── Light mode cards and panels ── */
+body.light-mode .project-card,
+body.light-mode .oc-card,
+body.light-mode .res-card,
+body.light-mode .concept-card,
+body.light-mode .topic-card,
+body.light-mode .about-card,
+body.light-mode .tip-card,
+body.light-mode .step,
+body.light-mode .chk-item,
+body.light-mode .mat-item,
+body.light-mode .slide-card,
+body.light-mode .stat-box {
+  background: #FFFFFF !important;
+  border-color: rgba(0,0,0,0.09) !important;
+}
+body.light-mode .project-card:hover,
+body.light-mode .res-card:hover,
+body.light-mode .slide-card:hover { border-color: rgba(0,0,0,0.2) !important; }
+
+/* ── Light mode text ── */
+body.light-mode h1, body.light-mode h2, body.light-mode h3,
+body.light-mode .hero h1, body.light-mode .section-title,
+body.light-mode .sec-title, body.light-mode .pc-title,
+body.light-mode .res-title, body.light-mode .about-card h3,
+body.light-mode .step-body h4, body.light-mode .tip-card h4,
+body.light-mode .mat-body h4 { color: #0D1F30 !important; }
+body.light-mode .hero-sub, body.light-mode .section-subtitle,
+body.light-mode .sec-sub, body.light-mode .hero-sub,
+body.light-mode .pc-desc, body.light-mode .res-desc,
+body.light-mode .about-card p, body.light-mode .about-card li,
+body.light-mode .step-body p, body.light-mode .tip-card p,
+body.light-mode .mat-body p, body.light-mode p { color: rgba(13,31,48,0.65) !important; }
+body.light-mode .hero-eyebrow, body.light-mode .hbadge-muted,
+body.light-mode .hb-muted, body.light-mode .pc-tag,
+body.light-mode .res-pill, body.light-mode .pill { color: rgba(13,31,48,0.5) !important; background: rgba(0,0,0,0.05) !important; border-color: rgba(0,0,0,0.1) !important; }
+
+/* ── Light mode tables ── */
+body.light-mode .stbl th { background: rgba(0,0,0,0.08) !important; }
+body.light-mode .stbl td { border-color: rgba(0,0,0,0.07) !important; color: rgba(13,31,48,0.75) !important; }
+body.light-mode .stbl td:first-child { color: #0D1F30 !important; }
+body.light-mode .stbl tr:nth-child(even) td { background: rgba(0,0,0,0.025) !important; }
+body.light-mode .shop-tbl th { background: rgba(0,0,0,0.05) !important; color: rgba(13,31,48,0.5) !important; border-bottom-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .shop-tbl td { border-bottom-color: rgba(0,0,0,0.06) !important; color: rgba(13,31,48,0.75) !important; }
+body.light-mode .si-name { color: #0D1F30 !important; }
+
+/* ── Light mode callouts ── */
+body.light-mode .callout,
+body.light-mode .shop-intro,
+body.light-mode .safety-warn,
+body.light-mode .c-acc, body.light-mode .c-gold,
+body.light-mode .c-green, body.light-mode .c-aqua,
+body.light-mode .c-bl, body.light-mode .c-gd,
+body.light-mode .callout p, body.light-mode .callout li { color: rgba(13,31,48,0.72) !important; }
+body.light-mode .callout { background: rgba(0,0,0,0.04) !important; }
+body.light-mode .c-acc { background: rgba(0,0,0,0.04) !important; }
+
+/* ── Light mode quiz ── */
+body.light-mode .header { background: #FFFFFF !important; border-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .header h1 { color: #0D1F30 !important; }
+body.light-mode .header .sub { color: rgba(13,31,48,0.6) !important; }
+body.light-mode .name-box { background: rgba(0,0,0,0.03) !important; border-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .name-box input { color: #0D1F30 !important; border-bottom-color: rgba(0,0,0,0.2) !important; }
+body.light-mode .sec-hd { background: rgba(0,0,0,0.05) !important; border-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .sec-hd h3 { color: #0D1F30 !important; }
+body.light-mode .qcard { background: #FFFFFF !important; border-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .q-text { color: #0D1F30 !important; }
+body.light-mode .opt { background: #F8FAFB !important; border-color: rgba(0,0,0,0.1) !important; color: rgba(13,31,48,0.72) !important; }
+body.light-mode .opt:hover { background: rgba(0,0,0,0.05) !important; }
+body.light-mode .tfbtn { background: #F8FAFB !important; border-color: rgba(0,0,0,0.1) !important; color: rgba(13,31,48,0.65) !important; }
+body.light-mode .fill-wrap { color: #0D1F30 !important; }
+body.light-mode .data-block { background: rgba(0,0,0,0.04) !important; border-color: rgba(0,0,0,0.1) !important; color: rgba(13,31,48,0.8) !important; }
+body.light-mode .sa { background: #F8FAFB !important; border-color: rgba(0,0,0,0.12) !important; color: #0D1F30 !important; }
+body.light-mode #score-card { background: #FFFFFF !important; border-color: rgba(0,0,0,0.1) !important; }
+body.light-mode #score-card h2 { color: #0D1F30 !important; }
+body.light-mode #score-msg, body.light-mode #score-pct, body.light-mode #score-name, body.light-mode #score-sa-note { color: rgba(13,31,48,0.6) !important; }
+body.light-mode .prog-outer { background: rgba(0,0,0,0.08) !important; }
+
+/* ── Light mode tab nav ── */
+body.light-mode .tab-nav { border-bottom-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .tab-btn { color: rgba(13,31,48,0.4) !important; }
+body.light-mode .tab-btn:hover { color: rgba(13,31,48,0.75) !important; }
+
+/* ── Light mode hero badges ── */
+body.light-mode .hero-eyebrow,
+body.light-mode .hero-ey { background: rgba(0,0,0,0.05) !important; border-color: rgba(0,0,0,0.12) !important; }
+
+/* ── Light mode section labels ── */
+body.light-mode .section-eyebrow,
+body.light-mode .sec-label { opacity: 0.7; }
+
+/* ── Light mode about scoring boxes ── */
+body.light-mode [style*="background:rgba(245,166,35,.06)"],
+body.light-mode [style*="background:rgba(224,92,64,.06)"],
+body.light-mode [style*="background:rgba(123,94,167,.06)"] { background: rgba(0,0,0,0.04) !important; }
+
+/* ── Light mode footer ── */
+body.light-mode footer { border-top-color: rgba(0,0,0,0.08) !important; }
+body.light-mode footer p { color: rgba(13,31,48,0.3) !important; }
+
+/* ── Light mode dividers ── */
+body.light-mode .divider { background: rgba(0,0,0,0.1) !important; }
+
+/* ── Light mode prog/shopping ── */
+body.light-mode .shop-total { background: rgba(0,0,0,0.04) !important; border-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .shop-total-label { color: rgba(13,31,48,0.5) !important; }
+body.light-mode .shop-prog { background: rgba(0,0,0,0.08) !important; }
+body.light-mode .cb { border-color: rgba(0,0,0,0.2) !important; background: #fff !important; }
+body.light-mode .chk-box { border-color: rgba(0,0,0,0.2) !important; }
+</style>
+</head>
+<body>
+<div class="bg-ocean"><div class="wave"></div><div class="wave"></div><div class="wave"></div></div>
+<script>
+[14,22,10,28,18,12,24,16,30,8,20].forEach((sz,i)=>{
+  const b=document.createElement('div');b.className='bubble';
+  b.style.cssText=`width:${sz}px;height:${sz}px;left:${[5,13,22,31,42,51,60,69,78,86,93][i]}%;animation-duration:${[10,14,8,16,11,9,15,12,7,18,13][i]}s;animation-delay:${[0,3,6,1,8,4,2,7,5,1,9][i]}s`;
+  document.body.appendChild(b);
+});
+</script>
+
+
+<nav class="gnav" id="gnav">
+  <div class="gnav-inner">
+    <a class="gnav-logo" href="index.html">⚗️ <span>VA Olympiad</span></a>
+    <div class="gnav-links">
+      <a class="gnav-link active" href="index.html" id="nav-home">Home</a>
+      <a class="gnav-link" href="ocean.html" id="nav-ocean">🌊 Ocean Science</a>
+      <a class="gnav-link" href="tower.html" id="nav-tower">🏗️ Tower</a>
+      <a class="gnav-link" href="bungee.html" id="nav-bungee">🥚 Bungee Egg Drop</a>
+      <a class="gnav-link" href="lander.html" id="nav-lander">🚀 Astronaut Lander</a>
+      <a class="gnav-link" href="data.html" id="nav-data">📊 Data</a>
+    </div>
+    <button id="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode" aria-label="Toggle theme">🌙</button>
+    <button class="gnav-burger" onclick="toggleMenu()" aria-label="menu">☰</button>
+  </div>
+  <div class="gnav-mobile" id="gnav-mobile">
+    <a class="gnav-mlink active" href="index.html">Home</a>
+    <a class="gnav-mlink" href="ocean.html">🌊 Ocean Science</a>
+    <a class="gnav-mlink" href="tower.html">🏗️ Tower</a>
+    <a class="gnav-mlink" href="bungee.html">🥚 Bungee Egg Drop</a>
+    <a class="gnav-mlink" href="lander.html">🚀 Astronaut Lander</a>
+    <a class="gnav-mlink" href="data.html">📊 Data</a>
+  </div>
+</nav>
+<style>
+.gnav{position:sticky;top:0;z-index:300;background:rgba(8,8,24,0.97);border-bottom:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(12px);}
+.gnav-inner{display:flex;align-items:center;max-width:1080px;margin:0 auto;padding:0 24px;height:54px;gap:8px;}
+.gnav-logo{font-size:15px;font-weight:700;color:rgba(255,255,255,0.9);letter-spacing:-.01em;flex-shrink:0;padding:6px 10px 6px 0;border-right:1px solid rgba(255,255,255,0.1);margin-right:4px;}
+.gnav-logo span{color:rgba(255,255,255,0.6);}
+.gnav-links{display:flex;gap:2px;flex:1;}
+.gnav-link{padding:6px 14px;border-radius:8px;font-size:13px;font-weight:600;color:rgba(200,216,232,0.65);transition:all .15s;white-space:nowrap;}
+.gnav-link:hover{background:rgba(255,255,255,0.07);color:#fff;}
+.gnav-link.active{background:rgba(255,255,255,0.1);color:#fff;}
+.gnav-burger{display:none;background:none;border:none;color:rgba(255,255,255,0.7);font-size:20px;cursor:pointer;padding:6px;}
+.gnav-mobile{display:none;flex-direction:column;border-top:1px solid rgba(255,255,255,0.08);}
+.gnav-mobile.open{display:flex;}
+.gnav-mlink{padding:13px 24px;font-size:14px;font-weight:600;color:rgba(200,216,232,0.7);border-bottom:1px solid rgba(255,255,255,0.05);}
+.gnav-mlink.active{color:#fff;background:rgba(255,255,255,0.06);}
+@media(max-width:680px){.gnav-links{display:none;}.gnav-burger{display:block;}}
+</style>
+<script>function toggleMenu(){document.getElementById('gnav-mobile').classList.toggle('open');}</script>
+
+<div class="page">
+
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <div class="hero-eyebrow">VA Division A · 2025–2026 Season</div>
+    <h1>Science Olympiad<br><em>Student Portal</em></h1>
+    <p class="hero-sub">Official study slides, project instructions, practice tests, and Walmart shopping lists for every build event — all in one place.</p>
+    <div class="hero-badges">
+      <span class="badge badge-aqua">Grades 3–4</span>
+      <span class="badge badge-gold">🏆 Competition Prep</span>
+      <span class="badge badge-red">Official VA Rules</span>
+    </div>
+  </div>
+
+  <!-- ── BUILD EVENTS ── -->
+  <div class="section" id="build-events">
+    <div class="section-eyebrow" style="color:var(--gold);">⚙️ Build Events</div>
+    <div class="section-title">Choose Your Project</div>
+    <div class="section-subtitle">Each project page has official rules, study slides, scoring formula, build strategy, shopping list, and practice test — all in one place.</div>
+
+    <div class="project-grid">
+
+      <!-- Tower -->
+      <a class="project-card" href="tower.html" style="border-color:rgba(245,166,35,0.25);">
+        <div class="pc-banner" style="background:linear-gradient(90deg,#c47d00,#F5A623);"></div>
+        <div class="pc-body">
+          <span class="pc-icon">🏗️</span>
+          <div class="pc-grade" style="color:#F5A623;">3rd Grade Only</div>
+          <div class="pc-title">Tower Building</div>
+          <p class="pc-desc">Build the tallest freestanding tower using only 30 paper straws and 1 meter of masking tape, capable of supporting 300 grams for 20 seconds.</p>
+          <div class="pc-tags">
+            <span class="pc-tag">30 straws + 1m tape</span>
+            <span class="pc-tag">300g load</span>
+            <span class="pc-tag">Score = Height + Assessment</span>
+          </div>
+          <div class="pc-cta" style="background:linear-gradient(135deg,#c47d00,#F5A623);color:#0D0D00;">
+            Open Tower Project <span class="pc-arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Bungee -->
+      <a class="project-card" href="bungee.html" style="border-color:rgba(224,92,64,0.25);">
+        <div class="pc-banner" style="background:linear-gradient(90deg,#a03020,#E05C40);"></div>
+        <div class="pc-body">
+          <span class="pc-icon">🥚</span>
+          <div class="pc-grade" style="color:#E05C40;">Grades 3–4</div>
+          <div class="pc-title">Bungee Egg Drop</div>
+          <p class="pc-desc">Design a rubber band bungee system to stop a raw egg as close as possible to the Artificial Horizon without going past it — dropped from a two-story stairwell.</p>
+          <div class="pc-tags">
+            <span class="pc-tag">Rubber bands + 50cm tape</span>
+            <span class="pc-tag">Artificial Horizon target</span>
+            <span class="pc-tag">D3 goggles required</span>
+          </div>
+          <div class="pc-cta" style="background:linear-gradient(135deg,#a03020,#E05C40);">
+            Open Bungee Project <span class="pc-arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Lander -->
+      <a class="project-card" href="lander.html" style="border-color:rgba(123,94,167,0.25);">
+        <div class="pc-banner" style="background:linear-gradient(90deg,#4a2e7a,#7B5EA7);"></div>
+        <div class="pc-body">
+          <span class="pc-icon">🚀</span>
+          <div class="pc-grade" style="color:#9b79c7;">Grades 3–4</div>
+          <div class="pc-title">Astronaut Lander</div>
+          <p class="pc-desc">Build a landing device that keeps a marshmallow astronaut safely inside its paper cup capsule after dropping from a two-story stairwell. Maximize flight time.</p>
+          <div class="pc-tags">
+            <span class="pc-tag">Paper cup capsule (mandatory)</span>
+            <span class="pc-tag">Coffee filter parachute</span>
+            <span class="pc-tag">Score = Time + Assessment</span>
+          </div>
+          <div class="pc-cta" style="background:linear-gradient(135deg,#4a2e7a,#7B5EA7);">
+            Open Lander Project <span class="pc-arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── WRITTEN EVENTS ── -->
+  <div class="section" id="written-events">
+    <div class="section-eyebrow" style="color:var(--aqua);">📝 Written Event</div>
+    <div class="section-title">Ocean Science</div>
+    <div class="section-subtitle">3rd grade written event with study slides, practice tests, and a full curriculum guide at both introductory and Olympiad levels.</div>
+    <div class="project-grid" style="grid-template-columns:minmax(300px,480px);">
+      <a class="project-card" href="ocean.html" style="border-color:rgba(24,197,217,0.25);">
+        <div class="pc-banner" style="background:linear-gradient(90deg,var(--teal),var(--aqua));"></div>
+        <div class="pc-body">
+          <span class="pc-icon">🌊</span>
+          <div class="pc-grade" style="color:var(--aqua);">3rd Grade Written Event</div>
+          <div class="pc-title">Ocean Science</div>
+          <p class="pc-desc">Study slides, practice tests, topic guide, curriculum plan, and full vocabulary list — at both introductory and advanced Olympiad levels.</p>
+          <div class="pc-tags">
+            <span class="pc-tag">Intro + Olympiad levels</span>
+            <span class="pc-tag">Practice tests</span>
+            <span class="pc-tag">22 vocab terms</span>
+          </div>
+          <div class="pc-cta" style="background:linear-gradient(135deg,var(--teal),var(--aqua));color:#00101a;">
+            Open Ocean Science <span class="pc-arrow">→</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── ABOUT ── -->
+  <div class="section" id="about">
+    <div class="section-eyebrow" style="color:rgba(184,216,232,.5);">ℹ️ About</div>
+    <div class="section-title">About This Portal</div>
+    <div class="section-subtitle">Everything you need to know about the program, this resource, and how to use it.</div>
+
+    <div class="about-grid">
+
+      <div class="about-card">
+        <h3>🏆 What Is Science Olympiad?</h3>
+        <p>Science Olympiad is a national STEM competition where student teams compete in events covering biology, earth science, chemistry, physics, technology, and engineering. Virginia Association of Science Olympiad (VASO) runs the Division A program for elementary students in Grades 3–4.</p>
+      </div>
+
+      <div class="about-card">
+        <h3>📅 2025–2026 VA Division A Events</h3>
+        <ul>
+          <li><strong>Build events (45 min):</strong> Tower Building (3rd grade), Bungee Egg Drop, Astronaut Lander, Bridge Building, Ping Pong Parachute, Gravity Vehicle, and more</li>
+          <li><strong>Written events (30 min):</strong> Oceans (3rd grade), Anatomy, Data Investigations, Extremophiles, Solar System, and more</li>
+          <li><strong>Tournaments:</strong> Blueprint, Infrared, Chlorophyll, Dark Matter — held at Oakton HS or Lake Braddock</li>
+        </ul>
+      </div>
+
+      <div class="about-card">
+        <h3>📦 How to Use This Portal</h3>
+        <ul>
+          <li><strong>Pick your project</strong> from the cards above — each has its own full page</li>
+          <li><strong>Read the official instructions first</strong> — rules, materials, and exact scoring from the VA manual</li>
+          <li><strong>Study the slides</strong> — at least twice before competition day</li>
+          <li><strong>Use the shopping list</strong> to buy practice materials from Walmart</li>
+          <li><strong>Take practice tests</strong> and review wrong answers before competition</li>
+          <li><strong>Bring required safety glasses</strong> — no glasses = no-show score</li>
+        </ul>
+      </div>
+
+      <div class="about-card">
+        <h3>⚠️ Safety Requirements</h3>
+        <ul>
+          <li><strong>Tower Building + Astronaut Lander:</strong> ANSI Z87+ impact-rated safety glasses. Must be stamped "Z87+" on the lens. Eyeglasses do not count.</li>
+          <li><strong>Bungee Egg Drop:</strong> ANSI Z87 D3 splash/droplet-rated goggles (full seal). Must show "D3" rating. Regular glasses or impact-only glasses do NOT qualify.</li>
+          <li>All team members must wear eye protection during any competitor's testing phase — not just their own.</li>
+          <li>Safety gear is <strong>not provided</strong> at the event. Buy before competition day.</li>
+        </ul>
+      </div>
+
+      <div class="about-card about-full">
+        <h3>📋 Official Scoring Overview — All Build Events</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:12px;">
+          <div style="background:rgba(245,166,35,.06);border:1px solid rgba(245,166,35,.2);border-radius:10px;padding:14px 16px;">
+            <div style="font-size:13px;font-weight:700;color:#F5A623;margin-bottom:6px;">🏗️ Tower Building</div>
+            <div style="font-size:.85rem;color:rgba(184,216,232,.65);line-height:1.6;">FS = Assessment (50 pts) + Height (50 pts)<br>Tiebreakers: time to failure → unused straws → assessment score</div>
+          </div>
+          <div style="background:rgba(224,92,64,.06);border:1px solid rgba(224,92,64,.2);border-radius:10px;padding:14px 16px;">
+            <div style="font-size:13px;font-weight:700;color:#E05C40;margin-bottom:6px;">🥚 Bungee Egg Drop</div>
+            <div style="font-size:.85rem;color:rgba(184,216,232,.65);line-height:1.6;">FS = Assessment (50 pts) + Best Drop Score (50 pts)<br>Closer to Artificial Horizon = higher drop score</div>
+          </div>
+          <div style="background:rgba(123,94,167,.06);border:1px solid rgba(123,94,167,.2);border-radius:10px;padding:14px 16px;">
+            <div style="font-size:13px;font-weight:700;color:#9b79c7;margin-bottom:6px;">🚀 Astronaut Lander</div>
+            <div style="font-size:.85rem;color:rgba(184,216,232,.65);line-height:1.6;">FS = Assessment (50 pts) + Flight Time (50 pts)<br>Marshmallow exits cup = Tier 2 (−20%)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-card about-full">
+        <h3>📚 About These Study Materials</h3>
+        <p>This portal was created to help VA Division A students prepare for the 2025–2026 Science Olympiad season. All rules, materials, and scoring formulas are drawn directly from the <strong style="color:rgba(255,255,255,.8);">2025–2026 VA Division A Tournament Rules Manual</strong>. Study slides, practice tests, and shopping lists are supplementary preparation resources — all official materials are provided at the actual competition event. Per the rules manual, Division A does not release previous tests. Practice tests here are study aids created for preparation purposes only.</p>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>VA Division A Science Olympiad · Student Portal · 2025–2026 Season</p>
+  <p style="margin-top:6px;">All rules and materials sourced from the official VA Division A Tournament Rules Manual. &nbsp;·&nbsp; <a href="#about">About this portal</a></p>
+</footer>
+
+
+<script id="theme-logic">
+(function() {
+  function applyTheme(mode) {
+    const btn = document.getElementById('theme-toggle');
+    if (mode === 'light') {
+      document.body.classList.add('light-mode');
+      if (btn) btn.textContent = '🌙';
+    } else {
+      document.body.classList.remove('light-mode');
+      if (btn) btn.textContent = '☀️';
+    }
+  }
+  // Apply on load
+  const saved = localStorage.getItem('va-theme') || 'dark';
+  applyTheme(saved);
+  
+  window.toggleTheme = function() {
+    const isLight = document.body.classList.contains('light-mode');
+    const newMode = isLight ? 'dark' : 'light';
+    localStorage.setItem('va-theme', newMode);
+    applyTheme(newMode);
+  };
+})();
+</script>
+</body>
+</html>
