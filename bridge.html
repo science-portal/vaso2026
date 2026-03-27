@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>🌉 Bridge Building — VA Division A</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Exo+2:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--acc:#00B4FF;--acd:#0080b0;--bg:#080D1A;--panel:#0C1326;}
+*{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:#CBD8E8;min-height:100vh;overflow-x:hidden;}
+a{text-decoration:none;}
+body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(0,180,255,.05)0%,transparent 50%);pointer-events:none;z-index:0;}
+.page{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 24px 80px;}
+/* Hero */
+.hero{padding:52px 0 36px;}
+.hero-eyebrow{display:inline-block;background:rgba(0,180,255,.12);border:1px solid rgba(0,180,255,.3);color:var(--acc);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:4px 14px;border-radius:999px;margin-bottom:16px;}
+.hero h1{font-family:'Exo 2',sans-serif;font-size:clamp(2.2rem,5vw,3.4rem);font-weight:800;color:#fff;line-height:1.08;margin-bottom:10px;}
+.hero h1 span{color:var(--acc);}
+.hero-sub{font-size:1rem;color:rgba(192,204,224,.7);max-width:600px;line-height:1.7;margin-bottom:20px;}
+.hbadges{display:flex;gap:8px;flex-wrap:wrap;}
+.hbadge{padding:4px 14px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(0,180,255,.12);border:1px solid rgba(0,180,255,.3);color:var(--acc);}
+.hbadge-muted{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);color:rgba(192,204,224,.5);}
+/* Tabs */
+.tab-nav{display:flex;gap:0;border-bottom:1px solid rgba(255,255,255,.1);margin:0 0 36px;overflow-x:auto;scrollbar-width:none;}
+.tab-nav::-webkit-scrollbar{display:none;}
+.tab-btn{padding:12px 20px;font-size:13px;font-weight:700;color:rgba(192,204,224,.5);background:none;border:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s;font-family:'Space Grotesk',sans-serif;}
+.tab-btn:hover{color:rgba(192,204,224,.85);}
+.tab-btn.active{color:var(--acc);border-bottom-color:var(--acc);}
+.tab-panel{display:none;animation:fadeIn .2s ease;}
+.tab-panel.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+/* Section */
+.sec-title{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;color:#fff;margin-bottom:4px;}
+.sec-sub{font-size:.82rem;color:rgba(192,204,224,.4);letter-spacing:.05em;text-transform:uppercase;margin-bottom:20px;}
+.divider{height:1px;background:linear-gradient(90deg,rgba(0,180,255,.3),transparent);margin:28px 0;}
+/* Callouts */
+.callout{border-radius:12px;padding:16px 20px;margin-bottom:18px;border-left:4px solid;}
+.c-acc{background:rgba(0,180,255,.07);border-color:var(--acc);}.c-acc h4{color:var(--acc);}
+.c-gold{background:rgba(244,196,48,.07);border-color:#F4C430;}.c-gold h4{color:#F4C430;}
+.c-red{background:rgba(224,92,64,.07);border-color:#E05C40;}.c-red h4{color:#E05C40;}
+.c-green{background:rgba(123,198,126,.07);border-color:#7BC67E;}.c-green h4{color:#7BC67E;}
+.callout h4{font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;}
+.callout p,.callout li{font-size:.9rem;line-height:1.7;color:rgba(192,204,224,.8);}
+.callout ul,.callout ol{padding-left:20px;display:flex;flex-direction:column;gap:5px;}
+/* Stats */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:24px;}
+.stat-box{background:var(--panel);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:14px 12px;text-align:center;}
+.stat-val{font-family:'Exo 2',sans-serif;font-size:1.6rem;font-weight:800;color:var(--acc);line-height:1;}
+.stat-label{font-size:11px;color:rgba(192,204,224,.5);margin-top:5px;line-height:1.3;}
+/* Table */
+.stbl{width:100%;border-collapse:collapse;margin-bottom:16px;}
+.stbl th{background:rgba(0,180,255,.18);color:var(--acc);font-family:'Exo 2',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:10px 14px;text-align:left;border:1px solid rgba(0,180,255,.2);}
+.stbl td{padding:10px 14px;border:1px solid rgba(255,255,255,.07);font-size:.88rem;color:rgba(192,204,224,.8);vertical-align:top;line-height:1.55;}
+.stbl tr:nth-child(even) td{background:rgba(255,255,255,.025);}
+.stbl td:first-child{font-weight:700;color:#fff;width:30%;}
+/* Steps */
+.steps{display:flex;flex-direction:column;gap:14px;}
+.step{display:flex;gap:16px;background:var(--panel);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:18px 20px;}
+.step-num{width:36px;height:36px;flex-shrink:0;border-radius:50%;background:var(--acc);display:flex;align-items:center;justify-content:center;font-family:'Exo 2',sans-serif;font-size:1rem;font-weight:800;color:#fff;}
+.step-body h4{font-size:.98rem;font-weight:700;color:#fff;margin-bottom:4px;}
+.step-time{font-size:.78rem;color:var(--acc);font-weight:600;margin-bottom:6px;}
+.step-body p{font-size:.88rem;color:rgba(192,204,224,.7);line-height:1.6;}
+.step-body ul{padding-left:18px;margin-top:6px;display:flex;flex-direction:column;gap:3px;}
+.step-body li{font-size:.87rem;color:rgba(192,204,224,.65);line-height:1.5;}
+/* Tips */
+.tips-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;}
+.tip-card{background:var(--panel);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:18px;position:relative;overflow:hidden;}
+.tip-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc);}
+.tip-icon{font-size:1.5rem;margin-bottom:8px;display:block;}
+.tip-card h4{font-size:.92rem;font-weight:700;color:#fff;margin-bottom:6px;}
+.tip-card p{font-size:.85rem;color:rgba(192,204,224,.6);line-height:1.6;}
+/* Materials */
+.mat-list{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
+.mat-item{display:flex;align-items:flex-start;gap:14px;background:var(--panel);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:14px 16px;}
+.mat-emoji{font-size:1.5rem;flex-shrink:0;}
+.mat-body h4{font-size:.92rem;font-weight:700;color:#fff;margin-bottom:2px;}
+.mat-body p{font-size:.83rem;color:rgba(192,204,224,.6);line-height:1.5;}
+.mat-qty{margin-left:auto;flex-shrink:0;font-size:.82rem;font-weight:700;padding:3px 10px;border-radius:999px;background:rgba(0,180,255,.14);color:var(--acc);border:1px solid rgba(0,180,255,.3);white-space:nowrap;}
+/* Slides */
+.slides-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:20px;}
+.slide-card{background:var(--panel);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:10px;transition:all .2s;}
+.slide-card:hover{border-color:rgba(0,180,255,.4);background:rgba(0,180,255,.08);}
+.slide-card-icon{font-size:2rem;}
+.slide-card h4{font-size:.95rem;font-weight:700;color:#fff;}
+.slide-card p{font-size:.83rem;color:rgba(192,204,224,.55);line-height:1.55;flex:1;}
+.slide-card-cta{font-size:.83rem;font-weight:700;color:var(--acc);}
+/* Shopping */
+.shop-intro{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px 18px;margin-bottom:18px;font-size:.88rem;color:rgba(192,204,224,.65);line-height:1.65;}
+.shop-intro strong{color:#fff;}
+.safety-warn{background:rgba(244,196,48,.07);border:1px solid rgba(244,196,48,.25);border-radius:12px;padding:14px 18px;margin-bottom:18px;}
+.safety-warn h4{font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#F4C430;margin-bottom:8px;}
+.safety-warn p{font-size:.88rem;color:rgba(192,204,224,.75);line-height:1.6;}
+.shop-tbl{width:100%;border-collapse:collapse;margin-bottom:10px;}
+.shop-tbl th{background:rgba(255,255,255,.05);color:rgba(192,204,224,.5);font-size:.73rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:8px 12px;text-align:left;border-bottom:1px solid rgba(255,255,255,.08);}
+.shop-tbl td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.05);font-size:.87rem;color:rgba(192,204,224,.8);vertical-align:top;line-height:1.5;}
+.shop-tbl tr:last-child td{border-bottom:none;}
+.shop-tbl tr.done td{opacity:.4;}.shop-tbl tr.done .si-name{text-decoration:line-through;}
+.si-name{font-weight:600;color:#fff;display:block;margin-bottom:2px;}
+.si-note{font-size:.78rem;color:rgba(192,204,224,.5);}
+.si-dept{font-size:.79rem;color:rgba(192,204,224,.45);}
+.si-price{font-weight:700;color:var(--acc);white-space:nowrap;}
+.cb{width:16px;height:16px;border:1.5px solid rgba(255,255,255,.2);border-radius:3px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;}
+.cb.checked{background:var(--acc);border-color:var(--acc);}
+.cb.checked::after{content:'✓';font-size:10px;color:#fff;font-weight:700;}
+.shop-total{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px 16px;margin-top:12px;}
+.shop-total-label{font-size:.85rem;color:rgba(192,204,224,.55);}
+.shop-total-val{font-family:'Exo 2',sans-serif;font-size:1.4rem;font-weight:800;color:var(--acc);}
+.shop-prog{height:3px;background:rgba(255,255,255,.08);border-radius:2px;margin-top:8px;}
+.shop-prog-fill{height:3px;background:#7BC67E;border-radius:2px;transition:width .3s;}
+.shop-prog-label{font-size:.75rem;color:rgba(192,204,224,.35);margin-top:4px;}
+/* Checklist */
+.checklist{display:flex;flex-direction:column;gap:8px;}
+.chk-item{display:flex;align-items:flex-start;gap:12px;background:var(--panel);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:12px 14px;}
+.chk-box{width:20px;height:20px;flex-shrink:0;border:1.5px solid rgba(255,255,255,.2);border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;margin-top:1px;}
+.chk-box.chk-done{background:var(--acc);border-color:var(--acc);}
+.chk-box.chk-done::after{content:'✓';font-size:11px;color:#fff;font-weight:700;}
+.chk-text{font-size:.9rem;color:rgba(192,204,224,.8);line-height:1.5;}
+.chk-text strong{color:#fff;}
+/* Quiz */
+.qcard{background:var(--panel);border:1px solid rgba(255,255,255,.07);border-top:none;padding:18px 24px;transition:background .2s;}
+.qcard.correct{background:rgba(46,204,113,.06);border-left:4px solid #2ECC71;}
+.qcard.wrong{background:rgba(231,76,60,.06);border-left:4px solid #E74C3C;}
+.q-num{font-size:.7rem;font-weight:700;color:var(--acc);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
+.q-text{font-size:.97rem;font-weight:600;color:#fff;margin-bottom:13px;line-height:1.5;}
+.opts{display:flex;flex-direction:column;gap:6px;}
+.opt{display:flex;align-items:flex-start;gap:11px;padding:9px 13px;border:1.5px solid rgba(255,255,255,.1);border-radius:9px;cursor:pointer;font-size:.9rem;color:rgba(192,204,224,.8);background:rgba(255,255,255,.02);transition:all .15s;user-select:none;line-height:1.45;}
+.opt:hover{border-color:var(--acc);background:rgba(0,180,255,.07);}
+.opt.sel{border-color:var(--acc);background:rgba(0,180,255,.12);color:#fff;}
+.opt.c-ok{border-color:#2ECC71!important;background:rgba(46,204,113,.1)!important;color:#7fffc4!important;}
+.opt.c-no{border-color:#E74C3C!important;background:rgba(231,76,60,.1)!important;color:#ffaaaa!important;}
+.opt input{display:none;}
+.dot{width:17px;height:17px;flex-shrink:0;border-radius:50%;border:2px solid rgba(255,255,255,.2);margin-top:2px;transition:all .15s;}
+.sel .dot{background:var(--acc);border-color:var(--acc);}
+.c-ok .dot{background:#2ECC71;border-color:#2ECC71;}
+.c-no .dot{background:#E74C3C;border-color:#E74C3C;}
+.tf{display:flex;gap:10px;}
+.tfbtn{flex:1;padding:11px;border:1.5px solid rgba(255,255,255,.12);border-radius:10px;background:rgba(255,255,255,.02);color:rgba(192,204,224,.7);font-family:'Space Grotesk',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .15s;}
+.tfbtn:hover{border-color:var(--acc);color:#fff;}
+.tfbtn.sel{border-color:var(--acc);background:rgba(0,180,255,.14);color:var(--acc);}
+.tfbtn.c-ok{border-color:#2ECC71!important;background:rgba(46,204,113,.1)!important;color:#7fffc4!important;}
+.tfbtn.c-no{border-color:#E74C3C!important;background:rgba(231,76,60,.1)!important;color:#ffaaaa!important;}
+.fill-wrap{font-size:.95rem;font-weight:500;color:#fff;display:flex;align-items:baseline;flex-wrap:wrap;gap:5px 7px;line-height:2.1;}
+.blank{border:none;border-bottom:2px solid rgba(0,180,255,.4);background:transparent;color:var(--acc);font-family:'Space Grotesk',sans-serif;font-size:.95rem;font-weight:700;width:160px;padding:3px 4px;outline:none;}
+.blank.c-ok{border-bottom-color:#2ECC71;color:#2ECC71;}
+.blank.c-no{border-bottom-color:#E74C3C;color:#E74C3C;}
+.sec-hd{background:rgba(0,180,255,.1);border:1px solid rgba(0,180,255,.2);border-top:none;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;}
+.sec-hd h3{font-family:'Exo 2',sans-serif;font-size:.92rem;font-weight:800;color:#fff;}
+.pts{font-size:.72rem;font-weight:700;color:var(--acc);background:rgba(0,180,255,.1);border:1px solid rgba(0,180,255,.25);padding:2px 9px;border-radius:999px;}
+.test-header{background:rgba(255,255,255,.04);border:1px solid rgba(0,180,255,.2);border-top:4px solid var(--acc);border-radius:14px 14px 0 0;padding:24px 28px 18px;margin-top:4px;}
+.test-header h2{font-family:'Exo 2',sans-serif;font-size:1.6rem;font-weight:800;color:#fff;margin-bottom:6px;}
+.test-header .sub{font-size:.9rem;color:rgba(192,204,224,.65);margin-bottom:14px;}
+.prog-bar{background:rgba(255,255,255,.08);border-radius:999px;height:6px;overflow:hidden;}
+.prog-fill{height:100%;background:var(--acc);border-radius:999px;width:0%;transition:width .4s;}
+.prog-meta{display:flex;justify-content:space-between;font-size:.72rem;color:rgba(192,204,224,.45);margin-top:4px;}
+.name-row{background:rgba(255,255,255,.03);border:1px solid rgba(0,180,255,.15);border-top:none;padding:12px 24px;}
+.name-row label{font-size:.72rem;font-weight:700;color:var(--acc);letter-spacing:.08em;display:block;margin-bottom:4px;}
+.name-row input{background:transparent;border:none;border-bottom:2px solid rgba(0,180,255,.3);width:100%;padding:5px 0;font-family:'Space Grotesk',sans-serif;font-size:.98rem;color:#fff;outline:none;}
+.sub-wrap{margin:20px 0 8px;text-align:center;}
+.sub-btn{background:var(--acc);color:#04080E;border:none;padding:13px 44px;border-radius:50px;font-family:'Exo 2',sans-serif;font-size:1.05rem;font-weight:800;cursor:pointer;transition:all .2s;}
+.sub-btn:hover{transform:translateY(-2px);}
+#score-card{display:none;background:rgba(255,255,255,.04);border:1px solid rgba(0,180,255,.25);border-top:4px solid var(--acc);border-radius:14px;padding:34px 28px;text-align:center;margin:18px 0;animation:fadeIn .4s ease;}
+#score-card h2{font-family:'Exo 2',sans-serif;font-size:1.4rem;color:#fff;margin-bottom:8px;}
+#score-num{font-family:'Exo 2',sans-serif;font-size:4.5rem;font-weight:800;color:var(--acc);line-height:1;margin:10px 0 5px;}
+#score-pct,#score-msg,#score-name{font-size:.9rem;color:rgba(192,204,224,.65);margin-top:4px;}
+.retry-btn{margin-top:18px;background:transparent;color:var(--acc);border:1.5px solid var(--acc);padding:8px 28px;border-radius:50px;font-family:'Exo 2',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;}
+/* Truss cards */
+.truss-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:20px;}
+.truss-card{background:var(--panel);border:1px solid rgba(0,180,255,.15);border-radius:12px;padding:16px;transition:border-color .2s;}
+.truss-card:hover{border-color:rgba(0,180,255,.4);}
+.truss-name{font-family:'Exo 2',sans-serif;font-size:1rem;font-weight:800;color:var(--acc);margin-bottom:4px;}
+.truss-card p{font-size:.83rem;color:rgba(192,204,224,.6);line-height:1.6;}
+.truss-tag{display:inline-block;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:999px;margin-bottom:8px;}
+.tt-tension{background:rgba(0,224,150,.12);color:#00E096;border:1px solid rgba(0,224,150,.3);}
+.tt-compression{background:rgba(255,180,0,.12);color:#FFB400;border:1px solid rgba(255,180,0,.3);}
+.tt-mixed{background:rgba(0,180,255,.12);color:var(--acc);border:1px solid rgba(0,180,255,.3);}
+/* formula */
+.formula{background:rgba(0,0,0,.3);border:1px solid rgba(0,180,255,.2);border-radius:10px;padding:14px 18px;font-family:monospace;font-size:1rem;color:#F4C430;margin:10px 0 16px;line-height:1.9;}
+/* Light mode */
+body.light-mode{background:#EEF2F7!important;color:#1A2A3A!important;}
+body.light-mode .gnav{background:rgba(255,255,255,.97)!important;border-bottom-color:rgba(0,0,0,.1)!important;}
+body.light-mode .gnav-logo,body.light-mode .gnav-link,body.light-mode .gnav-mlink{color:#0D1F30!important;}
+body.light-mode .gnav-link.active,body.light-mode .gnav-mlink.active{background:rgba(0,0,0,.08)!important;}
+body.light-mode .gnav-mobile{background:#fff!important;border-top-color:rgba(0,0,0,.08)!important;}
+body.light-mode .mat-item{background:#fff!important;border-color:rgba(0,0,0,.09)!important;}
+body.light-mode .step{background:#fff!important;border-color:rgba(0,0,0,.09)!important;}
+body.light-mode .tip-card{background:#fff!important;border-color:rgba(0,0,0,.09)!important;}
+body.light-mode .qcard{background:#fff!important;border-color:rgba(0,0,0,.08)!important;}
+body.light-mode .stat-box{background:#fff!important;border-color:rgba(0,0,0,.09)!important;}
+body.light-mode .chk-item{background:#fff!important;border-color:rgba(0,0,0,.09)!important;}
+body.light-mode .truss-card{background:#fff!important;border-color:rgba(0,0,0,.12)!important;}
+body.light-mode .slide-card{background:#fff!important;border-color:rgba(0,0,0,.09)!important;}
+body.light-mode .tab-nav{border-bottom-color:rgba(0,0,0,.1)!important;}
+body.light-mode .tab-btn{color:rgba(13,31,48,.45)!important;}
+body.light-mode .tab-btn:hover{color:rgba(13,31,48,.8)!important;}
+body.light-mode .q-text{color:#0D1F30!important;}
+body.light-mode .step-body h4{color:#0D1F30!important;}
+body.light-mode .tip-card h4{color:#0D1F30!important;}
+body.light-mode .mat-body h4{color:#0D1F30!important;}
+body.light-mode .truss-name{color:var(--acc)!important;}
+body.light-mode .step-body p{color:rgba(13,31,48,.72)!important;}
+body.light-mode .step-body li{color:rgba(13,31,48,.72)!important;}
+body.light-mode .tip-card p{color:rgba(13,31,48,.72)!important;}
+body.light-mode .mat-body p{color:rgba(13,31,48,.72)!important;}
+body.light-mode .callout p{color:rgba(13,31,48,.72)!important;}
+body.light-mode .callout li{color:rgba(13,31,48,.72)!important;}
+body.light-mode .truss-card p{color:rgba(13,31,48,.72)!important;}
+body.light-mode .chk-text{color:rgba(13,31,48,.72)!important;}
+body.light-mode .hero-sub{color:rgba(13,31,48,.72)!important;}
+body.light-mode .sec-sub{color:rgba(13,31,48,.55)!important;}
+body.light-mode .sec-title{color:#0D1F30!important;}
+body.light-mode h1,body.light-mode h2,body.light-mode h3,body.light-mode h4{color:#0D1F30!important;}
+body.light-mode .callout{background:rgba(0,0,0,.04)!important;}
+body.light-mode .opt{background:#f8fafb!important;border-color:rgba(0,0,0,.1)!important;color:rgba(13,31,48,.72)!important;}
+body.light-mode .tfbtn{background:#f8fafb!important;border-color:rgba(0,0,0,.1)!important;color:rgba(13,31,48,.65)!important;}
+body.light-mode .fill-wrap{color:#0D1F30!important;}
+body.light-mode .stbl td{color:rgba(13,31,48,.75)!important;}
+body.light-mode .stbl td:first-child{color:#0D1F30!important;}
+body.light-mode .shop-intro{background:rgba(0,0,0,.03)!important;border-color:rgba(0,0,0,.08)!important;}
+body.light-mode .shop-total{background:rgba(0,0,0,.04)!important;border-color:rgba(0,0,0,.08)!important;}
+body.light-mode .shop-tbl td{color:rgba(13,31,48,.75)!important;border-bottom-color:rgba(0,0,0,.06)!important;}
+body.light-mode .si-name{color:#0D1F30!important;}
+body.light-mode .shop-prog{background:rgba(0,0,0,.08)!important;}
+body.light-mode .test-header,body.light-mode #score-card{background:#fff!important;border-color:rgba(0,0,0,.1)!important;}
+body.light-mode .test-header h2,body.light-mode #score-card h2{color:#0D1F30!important;}
+body.light-mode .name-row{background:rgba(0,0,0,.03)!important;border-color:rgba(0,0,0,.08)!important;}
+body.light-mode .name-row input{color:#0D1F30!important;}
+body.light-mode .prog-bar{background:rgba(0,0,0,.08)!important;}
+body.light-mode .truss-card{border-color:rgba(0,0,0,.12)!important;}
+footer{text-align:center;padding:32px 0;border-top:1px solid rgba(255,255,255,.06);}
+footer p{font-size:.8rem;color:rgba(192,204,224,.25);}
+footer a{color:rgba(0,180,255,.4);}
+body.light-mode footer{border-top-color:rgba(0,0,0,.08)!important;}
+body.light-mode footer p{color:rgba(13,31,48,.3)!important;}
+@media(max-width:540px){.page{padding:0 14px 60px;}.hero{padding:36px 0 24px;}.tab-btn{padding:10px 14px;font-size:12px;}}
+</style>
+</head>
+<body>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}
+body{font-family:'Space Grotesk',sans-serif;background:#080D1A;color:#CBD8E8;min-height:100vh;overflow-x:hidden;}
+a{text-decoration:none;}
+body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(0,180,255,.05)0%,transparent 50%);pointer-events:none;z-index:0;}
+.gnav{position:sticky;top:0;z-index:300;background:rgba(8,8,24,0.97);border-bottom:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(12px);}
+.gnav-inner{display:flex;align-items:center;max-width:1080px;margin:0 auto;padding:0 20px;height:54px;gap:6px;}
+.gnav-logo{font-size:14px;font-weight:700;color:rgba(255,255,255,.9);flex-shrink:0;padding:0 10px 0 0;border-right:1px solid rgba(255,255,255,.1);margin-right:4px;text-decoration:none;font-family:'Space Grotesk',sans-serif;}
+.gnav-logo span{color:rgba(255,255,255,.55);}
+.gnav-links{display:flex;gap:2px;flex:1;overflow-x:auto;scrollbar-width:none;}
+.gnav-links::-webkit-scrollbar{display:none;}
+.gnav-link{padding:5px 10px;border-radius:7px;font-size:12px;font-weight:600;color:rgba(200,216,232,.6);white-space:nowrap;text-decoration:none;transition:all .15s;font-family:'Space Grotesk',sans-serif;}
+.gnav-link:hover{background:rgba(255,255,255,.07);color:#fff;}
+.gnav-link.active{background:rgba(255,255,255,.1);color:#fff;}
+.gnav-burger{display:none;background:none;border:none;color:rgba(255,255,255,.7);font-size:20px;cursor:pointer;padding:4px;}
+.gnav-mobile{display:none;flex-direction:column;border-top:1px solid rgba(255,255,255,.08);}
+.gnav-mobile.open{display:flex;}
+.gnav-mlink{padding:12px 20px;font-size:13px;font-weight:600;color:rgba(200,216,232,.7);border-bottom:1px solid rgba(255,255,255,.05);text-decoration:none;}
+.gnav-mlink.active{color:#fff;background:rgba(255,255,255,.06);}
+#theme-toggle{width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:rgba(255,255,255,.75);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;line-height:1;}
+#theme-toggle:hover{background:rgba(255,255,255,.14);}
+body.light-mode #theme-toggle{border-color:rgba(0,0,0,.15);background:rgba(0,0,0,.06);color:rgba(0,0,0,.6);}
+@media(max-width:700px){.gnav-links{display:none;}.gnav-burger{display:block;}}
+</style>
+<script>function toggleMenu(){document.getElementById('gnav-mobile').classList.toggle('open');}</script>
+<nav class="gnav"><div class="gnav-inner">
+  <a class="gnav-logo" href="index.html">⚗️ <span>VA Olympiad</span></a>
+  <div class="gnav-links">
+    <a class="gnav-link" href="index.html">Home</a>
+    <a class="gnav-link active" href="bridge.html">🌉 Bridge</a>
+    <a class="gnav-link" href="tower.html">🏗️ Tower</a>
+    <a class="gnav-link" href="lander.html">🚀 Lander</a>
+    <a class="gnav-link" href="bungee.html">🥚 Bungee</a>
+    <a class="gnav-link" href="ocean.html">🌊 Ocean</a>
+    <a class="gnav-link" href="data.html">📊 Data</a>
+    <a class="gnav-link" href="nervous.html">🧠 Nervous</a>
+    <a class="gnav-link" href="shock.html">⚡ Shock</a>
+  </div>
+  <button class="gnav-burger" onclick="toggleMenu()" aria-label="menu">☰</button>
+  <button id="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode" aria-label="Toggle theme">🌙</button>
+</div>
+<div class="gnav-mobile" id="gnav-mobile">
+  <a class="gnav-mlink" href="index.html">Home</a>
+  <a class="gnav-mlink active" href="bridge.html">🌉 Bridge Building</a>
+  <a class="gnav-mlink" href="tower.html">🏗️ Tower Building</a>
+  <a class="gnav-mlink" href="lander.html">🚀 Astronaut Lander</a>
+  <a class="gnav-mlink" href="bungee.html">🥚 Bungee Egg Drop</a>
+  <a class="gnav-link" href="ocean.html">🌊 Ocean Science</a>
+  <a class="gnav-mlink" href="data.html">📊 Data Investigations</a>
+  <a class="gnav-mlink" href="nervous.html">🧠 Nervous System</a>
+  <a class="gnav-mlink" href="shock.html">⚡ Shock Value</a>
+</div></nav>
+
+<div class="page">
+  <div class="hero">
+    <div class="hero-eyebrow">VA Division A · Build Event</div>
+    <h1>🌉 <span>Bridge Building</span></h1>
+    <p class="hero-sub">Build the tallest truss bridge using only paper straws and masking tape to span a 30 cm gap — holding a 300g or 500g mass for 30 seconds. Score = height + written assessment.</p>
+    <div class="hbadges">
+      <span class="hbadge">Grades 3–4</span>
+      <span class="hbadge hbadge-muted">45-minute session</span>
+      <span class="hbadge hbadge-muted">2 students per team</span>
+      <span class="hbadge hbadge-muted">ANSI Z87+ required</span>
+    </div>
+  </div>
+
+  <div class="tab-nav" role="tablist">
+    <button class="tab-btn active"  onclick="showTab('overview',this)">Overview</button>
+    <button class="tab-btn"         onclick="showTab('materials',this)">Materials</button>
+    <button class="tab-btn"         onclick="showTab('scoring',this)">Scoring</button>
+    <button class="tab-btn"         onclick="showTab('study',this)">Study Guide</button>
+    <button class="tab-btn"         onclick="showTab('build',this)">Build Strategy</button>
+    <button class="tab-btn"         onclick="showTab('tips',this)">Tips</button>
+    <button class="tab-btn"         onclick="showTab('slides',this)">Slides</button>
+    <button class="tab-btn"         onclick="showTab('shopping',this)">Shopping List</button>
+    <button class="tab-btn"         onclick="showTab('checklist',this)">Checklist</button>
+    <button class="tab-btn"         onclick="showTab('test',this)">Practice Test</button>
+  </div>
+
+  <!-- ── OVERVIEW ── -->
+  <div class="tab-panel active" id="tab-overview">
+    <div class="sec-title">Event Overview</div>
+    <div class="sec-sub">Official description — VA Division A Rules Manual</div>
+    <div class="callout c-acc">
+      <h4>📋 The Challenge</h4>
+      <p>Build the tallest truss bridge possible using only the provided paper straws and masking tape to span a 30.0 cm gap between two support structures, while holding a 300g or 500g mass at the center for 30 seconds. A concurrent written assessment covers bridge types, structural forces, and construction techniques.</p>
+    </div>
+    <div class="stats-row">
+      <div class="stat-box"><div class="stat-val">2</div><div class="stat-label">Students per team</div></div>
+      <div class="stat-box"><div class="stat-val">25</div><div class="stat-label">Min build + test</div></div>
+      <div class="stat-box"><div class="stat-val">30</div><div class="stat-label">cm span required</div></div>
+      <div class="stat-box"><div class="stat-val">10</div><div class="stat-label">cm min width</div></div>
+      <div class="stat-box"><div class="stat-val">500g</div><div class="stat-label">Max load test</div></div>
+      <div class="stat-box"><div class="stat-val">30 s</div><div class="stat-label">Hold time</div></div>
+    </div>
+    <div class="callout c-gold">
+      <h4>⚠️ Safety — Required to Compete</h4>
+      <ul>
+        <li><strong>ANSI Z87+ impact-rated safety glasses</strong> must be worn during the entire competition</li>
+        <li>Must be stamped "Z87+" on the lens — regular eyeglasses do NOT qualify</li>
+        <li>Teams must bring their own — not provided at event</li>
+        <li>No proper eye protection = no-show score</li>
+      </ul>
+    </div>
+    <div class="callout c-red">
+      <h4>🚫 Key Restrictions</h4>
+      <ul>
+        <li>Bridge must be built <strong>entirely</strong> from provided straws and tape — no other materials</li>
+        <li>Bridge must be at least <strong>10.0 cm wide</strong> at the center point (outside to outside)</li>
+        <li>No internal cross-members that block the 5×5 cm loading block from passing through the full length</li>
+        <li>No sticky tape may touch the top or sides of the support structures</li>
+        <li>Using materials not listed = placement below all other teams</li>
+      </ul>
+    </div>
+    <div class="callout c-green">
+      <h4>📝 Written Assessment</h4>
+      <p>Answered simultaneously during the 25-minute build phase. Topics: types of truss bridges, structural forces (tension vs. compression), building techniques, and method of joints analysis.</p>
+    </div>
+  </div>
+
+  <!-- ── MATERIALS ── -->
+  <div class="tab-panel" id="tab-materials">
+    <div class="sec-title">Official Materials Kit</div>
+    <div class="sec-sub">Everything provided at the event — you may not use anything else</div>
+    <div class="callout c-acc">
+      <h4>ℹ️ Important</h4>
+      <p>All materials below are provided free at the competition. You do not bring your own build materials. Bring only safety glasses and writing utensils.</p>
+    </div>
+    <div class="mat-list">
+      <div class="mat-item"><span class="mat-emoji">🥤</span><div class="mat-body"><h4>Paper drinking straws (~20 cm each)</h4><p>May be cut to any length, crimped, or slid inside each other. Your only structural material.</p></div><span class="mat-qty">30 straws</span></div>
+      <div class="mat-item"><span class="mat-emoji">🩹</span><div class="mat-body"><h4>Masking tape, 2.54 cm (1") wide</h4><p>May be cut to any shape or size. Your only connection material.</p></div><span class="mat-qty">1 meter</span></div>
+      <div class="mat-item"><span class="mat-emoji">📦</span><div class="mat-body"><h4>Two support structures (~5×9.5×30.5 cm)</h4><p>Placed 30.0 cm apart on a flat surface. Bridge rests across both — no tape may touch their tops or sides.</p></div><span class="mat-qty">2 provided</span></div>
+      <div class="mat-item"><span class="mat-emoji">🪵</span><div class="mat-body"><h4>Loading block (5×5×0.6 cm, 20g)</h4><p>Placed on the top chord at the center before the test mass. Must be able to pass through the bridge in any orientation — no internal cross-members may block it.</p></div><span class="mat-qty">1 block</span></div>
+      <div class="mat-item"><span class="mat-emoji">⚖️</span><div class="mat-body"><h4>300-gram and 500-gram test masses</h4><p>300g is tested first. If held for 30s, 500g is tested next (earns ×1.2 height bonus).</p></div><span class="mat-qty">Both provided</span></div>
+    </div>
+    <div class="callout c-gold">
+      <h4>🎒 What You Must Bring</h4>
+      <ul>
+        <li>ANSI Z87+ impact-rated safety glasses (mandatory — one pair per student)</li>
+        <li>Writing utensils (pencil/pen for the written test)</li>
+        <li>Optionally: ruler or straight edge, one pair of scissors per team member</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── SCORING ── -->
+  <div class="tab-panel" id="tab-scoring">
+    <div class="sec-title">Official Scoring Formula</div>
+    <div class="sec-sub">Exact formula from the rules manual</div>
+    <div class="callout c-acc">
+      <h4>📊 Formula</h4>
+      <p style="font-size:1rem;font-weight:700;color:#fff;">Team Score = 0.5 × (THS ÷ CHS) + 0.5 × (TAS ÷ CAS) × [multipliers]</p>
+    </div>
+    <div class="formula">
+      THS = Team Height Score (your bridge center height in mm)<br>
+      CHS = Competition Height Score (tallest bridge among all teams)<br>
+      TAS = Team Assessment Score (your written test score)<br>
+      CAS = Competition Assessment Score (highest written test score)
+    </div>
+    <table class="stbl">
+      <thead><tr><th>Situation</th><th>Effect on Score</th></tr></thead>
+      <tbody>
+        <tr><td>500g held for 30s ✅</td><td>Height score × <strong style="color:#7BC67E;">1.2 bonus</strong></td></tr>
+        <tr><td>Width &lt; 10.0 cm at center ❌</td><td>Height score × <strong style="color:#E05C40;">0.5 penalty</strong></td></tr>
+        <tr><td>Loading block can't pass through ❌</td><td>Height score × <strong style="color:#E05C40;">0.5 penalty</strong></td></tr>
+        <tr><td>Bridge can't span 30 cm ❌</td><td>Height score = <strong style="color:#E05C40;">0</strong></td></tr>
+        <tr><td>Tiebreaker 1</td><td>Most unused complete straws remaining</td></tr>
+        <tr><td>Tiebreaker 2</td><td>Longer time to failure in 500g test</td></tr>
+        <tr><td>Tiebreaker 3</td><td>Longer time to failure in 300g test</td></tr>
+      </tbody>
+    </table>
+    <div class="callout c-gold">
+      <h4>★ Worked Example</h4>
+      <p>Your bridge height = 320mm, tallest = 400mm → height ratio = 0.80. Your test = 8/10, best = 10 → assessment ratio = 0.80. Base score = 0.5×0.80 + 0.5×0.80 = 0.80. With 500g bonus: 0.5×(0.80×1.2) + 0.5×0.80 = 0.48 + 0.40 = 0.88</p>
+    </div>
+  </div>
+
+  <!-- ── STUDY GUIDE ── -->
+  <div class="tab-panel" id="tab-study">
+    <div class="sec-title">Study Guide — Truss Bridges</div>
+    <div class="sec-sub">Know these topics for the written assessment</div>
+
+    <div class="callout c-acc">
+      <h4>What Is a Truss Bridge?</h4>
+      <p>A truss bridge uses a framework of interconnected triangles to carry loads. The triangular geometry makes it rigid and distributes forces efficiently. Each member carries either tension (pulling apart) or compression (pushing together) — never bending, in an ideal truss.</p>
+    </div>
+
+    <div class="divider"></div>
+    <div class="sec-title" style="font-size:1.1rem;">Types of Truss Bridges</div>
+    <p style="font-size:.88rem;color:rgba(192,204,224,.55);margin-bottom:16px;">Know which way the diagonals lean — this is the most-tested distinction.</p>
+    <div class="truss-grid">
+      <div class="truss-card"><span class="truss-tag tt-tension">Diagonals in TENSION</span><div class="truss-name">Pratt Truss</div><p>Diagonals slope toward the center. Verticals in compression, diagonals in tension. Most common design — very efficient for medium spans.</p></div>
+      <div class="truss-card"><span class="truss-tag tt-compression">Diagonals in COMPRESSION</span><div class="truss-name">Howe Truss</div><p>Opposite of Pratt — diagonals slope away from center. Verticals in tension, diagonals in compression. Historically used with iron diagonals.</p></div>
+      <div class="truss-card"><span class="truss-tag tt-mixed">Alternating</span><div class="truss-name">Warren Truss</div><p>Alternating diagonal members with no verticals (basic form). Forms equilateral triangles. Simple and lightweight — a common competition choice.</p></div>
+      <div class="truss-card"><span class="truss-tag tt-tension">Curved top chord</span><div class="truss-name">Parker Truss</div><p>A Pratt variant with a curved (polygonal) top chord, making the bridge deeper at center where bending moments are greatest.</p></div>
+      <div class="truss-card"><span class="truss-tag tt-compression">Arch in compression</span><div class="truss-name">Bowstring Truss</div><p>Arched top chord acts like a bow under compression. Straight bottom chord acts as the bowstring in tension. Elegant and efficient.</p></div>
+      <div class="truss-card"><span class="truss-tag tt-mixed">Complex</span><div class="truss-name">K-Truss</div><p>Named for K-shaped panels with two diagonals meeting each vertical at mid-height. Used for tall, long-span bridges. Recognizable K pattern.</p></div>
+      <div class="truss-card"><span class="truss-tag tt-mixed">Road through truss</span><div class="truss-name">Through Truss</div><p>Traffic passes between the top and bottom chords. Provides overhead structure above the roadway. Common in older railroad bridges.</p></div>
+      <div class="truss-card"><span class="truss-tag tt-mixed">Road on top</span><div class="truss-name">Deck Truss</div><p>Traffic travels on top of the truss. Maximum clearance below. Opposite of a through truss. Used where underclearance matters.</p></div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="sec-title" style="font-size:1.1rem;">Forces in Truss Members</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:16px 0 20px;">
+      <div class="callout c-green" style="margin:0;">
+        <h4>TENSION — pulling apart</h4>
+        <ul>
+          <li>Forces pull the member apart — it stretches</li>
+          <li>Bottom chord of a loaded bridge = tension</li>
+          <li>Pratt truss diagonals = tension</li>
+          <li>Straw failures in tension happen at joints — tape carefully</li>
+          <li>Tension members can be thinner (straws are fine)</li>
+        </ul>
+      </div>
+      <div class="callout c-gold" style="margin:0;">
+        <h4>COMPRESSION — pushing together</h4>
+        <ul>
+          <li>Forces push the member together — it buckles</li>
+          <li>Top chord of a loaded bridge = compression</li>
+          <li>Howe truss diagonals = compression</li>
+          <li>Straw failures in compression = buckling (bending sideways)</li>
+          <li>Bundle 2–3 straws or slide one inside another to resist</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sec-title" style="font-size:1.1rem;margin-top:8px;">Analysis Methods</div>
+    <table class="stbl" style="margin-top:14px;">
+      <thead><tr><th>Method</th><th>How It Works</th><th>When to Use</th></tr></thead>
+      <tbody>
+        <tr><td>Method of Joints</td><td>Apply ΣFx=0 and ΣFy=0 at each joint. Start at a joint with only 2 unknowns.</td><td>Finding forces in all members</td></tr>
+        <tr><td>Method of Sections</td><td>Cut through ≤3 members with an imaginary line. Apply equilibrium to one half.</td><td>Finding forces in specific members only</td></tr>
+      </tbody>
+    </table>
+
+    <div class="divider"></div>
+    <div class="sec-title" style="font-size:1.1rem;">Key Vocabulary</div>
+    <table class="stbl" style="margin-top:14px;">
+      <thead><tr><th>Term</th><th>Definition</th></tr></thead>
+      <tbody>
+        <tr><td>Truss</td><td>A framework of interconnected triangles forming the load-bearing structure of a bridge.</td></tr>
+        <tr><td>Top chord</td><td>Upper horizontal member — usually in compression under a center load.</td></tr>
+        <tr><td>Bottom chord</td><td>Lower horizontal member — usually in tension.</td></tr>
+        <tr><td>Diagonal</td><td>Angled member connecting top and bottom chords. Direction determines truss type.</td></tr>
+        <tr><td>Vertical</td><td>Perpendicular member between chords. Tension or compression depending on truss type.</td></tr>
+        <tr><td>Joint / Node</td><td>Connection point where members meet. Forces assumed to act only at joints.</td></tr>
+        <tr><td>Tension</td><td>Force pulling a member apart — member elongates.</td></tr>
+        <tr><td>Compression</td><td>Force squeezing a member — member shortens or buckles.</td></tr>
+        <tr><td>Buckling</td><td>When a slender compression member suddenly bends sideways and fails.</td></tr>
+        <tr><td>THS</td><td>Team Height Score — your bridge's center height in mm.</td></tr>
+        <tr><td>CHS</td><td>Competition Height Score — tallest bridge among all teams.</td></tr>
+        <tr><td>Loading block</td><td>5×5×0.6 cm block placed on top chord at center before the test mass.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── BUILD STRATEGY ── -->
+  <div class="tab-panel" id="tab-build">
+    <div class="sec-title">Build Strategy</div>
+    <div class="sec-sub">Recommended approach for the 25-minute build + test session</div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Assign roles immediately</h4><div class="step-time">Minutes 0–1</div><p>One student takes the written test solo. One student leads the build. Both must know the design plan, the 10 cm width rule, and the loading block clearance requirement before the clock starts.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Sketch and count straws</h4><div class="step-time">Minutes 1–4</div><p>Decide your truss type (Warren is beginner-friendly; Pratt maximizes height efficiency). Allocate: ~4 bottom chord, ~4 top chord, ~8 verticals/diagonals per side, rest for reinforcement and reserve.</p><ul><li>Target height: as tall as possible while keeping width ≥10 cm</li><li>Unused straws = Tiebreaker 1 — plan to use nearly all of them</li></ul></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Build the first truss face flat</h4><div class="step-time">Minutes 4–12</div><p>Lay straws on a flat surface to form one side of the truss. Tape all joints before lifting. A flat build is faster and more precise than building in the air.</p><ul><li>Top chord: reinforce by sliding one straw inside another for compression resistance</li><li>Tape joints from multiple angles — most failures happen at connections</li></ul></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Build second face + add width</h4><div class="step-time">Minutes 12–18</div><p>Mirror the first side. Connect both sides with cross-members at top and bottom to create a 3D bridge. Width must be ≥10.0 cm outside edge to outside edge.</p><ul><li>Measure width now — easier to fix before it's fully assembled</li><li>X-pattern cross-bracing on the faces resists twisting (racking)</li></ul></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-body"><h4>Verify loading block path</h4><div class="step-time">Minutes 18–22</div><p>The 5×5 cm loading block must be able to pass through the entire length of the bridge in any orientation. Check this explicitly — violations cost a 0.5× height penalty.</p></div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-body"><h4>Measure height + final reinforcement</h4><div class="step-time">Minutes 22–25</div><p>Check center height. Reinforce any loose joints. Add final cross-bracing with remaining straws. Aim to use all or nearly all straws — unused straws are Tiebreaker 1.</p></div></div>
+    </div>
+  </div>
+
+  <!-- ── TIPS ── -->
+  <div class="tab-panel" id="tab-tips">
+    <div class="sec-title">Competition Tips</div>
+    <div class="sec-sub">What wins bridge building competitions</div>
+    <div class="tips-grid">
+      <div class="tip-card"><span class="tip-icon">🔺</span><h4>Height is 50% of your score</h4><p>Build as tall as possible. A 400mm bridge scores 33% better than a 300mm bridge on the height component alone. Every millimeter counts — don't stop early.</p></div>
+      <div class="tip-card"><span class="tip-icon">📏</span><h4>Measure width twice</h4><p>Width &lt;10 cm at center = 0.5× penalty on your entire height score. Measure before and after connecting both sides. It's the most expensive mistake to make.</p></div>
+      <div class="tip-card"><span class="tip-icon">🔗</span><h4>Reinforce compression members</h4><p>The top chord carries compression — it's the most likely part to buckle. Slide one straw inside another, or bundle 2–3 straws, to dramatically increase buckling resistance.</p></div>
+      <div class="tip-card"><span class="tip-icon">🩹</span><h4>Wrap tape at every joint</h4><p>Wrap tape around each joint rather than just sticking it on the surface. A compression band around a connection is far stronger. Most failures happen at joints, not member mid-spans.</p></div>
+      <div class="tip-card"><span class="tip-icon">📦</span><h4>Check the loading block path</h4><p>The 5×5 cm loading block must pass fully through your bridge. Add internal cross-members only outside the loading block's path — don't block it or you lose 50% of height score.</p></div>
+      <div class="tip-card"><span class="tip-icon">⚖️</span><h4>Go for the 500g bonus</h4><p>A ×1.2 multiplier on your height score is significant. If your bridge held 300g with room to spare, it likely can hold 500g. Design for the bonus — it can be the difference between 1st and 3rd.</p></div>
+      <div class="tip-card"><span class="tip-icon">🥤</span><h4>Save straws for tiebreakers</h4><p>Unused complete straws win Tiebreaker 1. Don't cut straws unless necessary. Plan your design so you use nearly all straws but keep 2–3 whole ones if possible.</p></div>
+      <div class="tip-card"><span class="tip-icon">📝</span><h4>Assessment is 50% too</h4><p>Height and assessment each contribute equally. Know Pratt vs. Howe vs. Warren diagonals cold. Know tension vs. compression. Know the Method of Joints formula. Study before competition day.</p></div>
+    </div>
+  </div>
+
+  <!-- ── SLIDES ── -->
+  <div class="tab-panel" id="tab-slides">
+    <div class="sec-title">Study Slides</div>
+    <div class="sec-sub">Open or download study materials for this event</div>
+    <div class="slides-grid">
+      <a class="slide-card" href="slides/Bridge_Building_StudySlides.pdf" target="_blank">
+        <span class="slide-card-icon">📐</span>
+        <h4>Study Slides (PDF)</h4>
+        <p>8 slides: official rules, scoring formula, truss components, all 6+ truss types, tension vs. compression, build strategy, and key vocabulary.</p>
+        <span class="slide-card-cta">Open PDF ↗</span>
+      </a>
+      <a class="slide-card" href="pptx/Bridge_Building_StudySlides.pptx" download>
+        <span class="slide-card-icon">💾</span>
+        <h4>Study Slides (.pptx)</h4>
+        <p>Editable PowerPoint version. Customize for class presentations or print as handouts for study sessions.</p>
+        <span class="slide-card-cta">Download .pptx ⬇</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ── SHOPPING LIST ── -->
+  <div class="tab-panel" id="tab-shopping">
+    <div class="sec-title">Walmart Practice Shopping List</div>
+    <div class="sec-sub">For home practice only — all materials provided at the competition</div>
+    <div class="shop-intro">All materials are provided free at the competition event. This list is for home practice sessions. Quantities support <strong>~5 practice runs per team</strong>.</div>
+    <div class="safety-warn">
+      <h4>⚠ Safety Gear — Not Provided at the Event</h4>
+      <p>Teams must bring their own ANSI Z87+ impact safety glasses. Without them you receive a no-show score and cannot compete. Buy before competition day.</p>
+    </div>
+    <table class="shop-tbl">
+      <thead><tr><th style="width:28px;"></th><th style="color:#F4C430;">Safety gear (bring yourself)</th><th>Where at Walmart</th><th>Est. price</th></tr></thead>
+      <tbody>
+        <tr id="sr-s0"><td style="width:32px;padding:10px 8px 10px 12px;"><div class="cb" onclick="toggleShop(this,'s0')"></div></td><td><span class="si-name">ANSI Z87+ impact safety glasses (kids' size)</span><span class="si-note">Must show "Z87+" stamped on the lens. Vision center or sporting goods aisle. Eyeglasses are NOT rated.</span></td><td class="si-dept">Vision center / Sporting goods</td><td class="si-price">~$12</td></tr>
+      </tbody>
+    </table>
+    <table class="shop-tbl" style="margin-top:18px;">
+      <thead><tr><th style="width:28px;"></th><th>Practice materials</th><th>Walmart aisle</th><th>Est. price</th></tr></thead>
+      <tbody>
+        <tr id="sr-p0"><td style="padding:10px 8px 10px 12px;"><div class="cb" onclick="toggleShop(this,'p0')"></div></td><td><span class="si-name">Paper drinking straws, jumbo (~20 cm)</span><span class="si-note">Multi-pack. Bendy/flexible straws also work. Buy 2 packs — each practice run uses up to 30 straws.</span></td><td class="si-dept">Kitchen / Party</td><td class="si-price">~$6</td></tr>
+        <tr id="sr-p1"><td style="padding:10px 8px 10px 12px;"><div class="cb" onclick="toggleShop(this,'p1')"></div></td><td><span class="si-name">Masking tape, 1" (2.54 cm) wide</span><span class="si-note">Each practice run uses 1 meter. Buy 2 rolls — you go through it quickly.</span></td><td class="si-dept">Hardware / Office</td><td class="si-price">~$6</td></tr>
+        <tr id="sr-p2"><td style="padding:10px 8px 10px 12px;"><div class="cb" onclick="toggleShop(this,'p2')"></div></td><td><span class="si-name">300g and 500g test weights</span><span class="si-note">Fill small zipper bags with coins and weigh on a kitchen scale. A roll of quarters = ~226g. Combine for 300g and 500g.</span></td><td class="si-dept">Kitchen / Hardware</td><td class="si-price">~$5</td></tr>
+        <tr id="sr-p3"><td style="padding:10px 8px 10px 12px;"><div class="cb" onclick="toggleShop(this,'p3')"></div></td><td><span class="si-name">5×5 cm piece of thin craft wood or cardboard</span><span class="si-note">The loading block. Cut from a craft wood sheet. Must be flat, rigid, and exactly 5×5 cm to simulate the competition block.</span></td><td class="si-dept">Crafts</td><td class="si-price">~$3</td></tr>
+        <tr id="sr-p4"><td style="padding:10px 8px 10px 12px;"><div class="cb" onclick="toggleShop(this,'p4')"></div></td><td><span class="si-name">Two sturdy books or blocks (support structures)</span><span class="si-note">For practice: stack books to create two flat supports exactly 30.0 cm apart. Measure carefully.</span></td><td class="si-dept">At home / Library</td><td class="si-price">~$0</td></tr>
+        <tr id="sr-p5"><td style="padding:10px 8px 10px 12px;"><div class="cb" onclick="toggleShop(this,'p5')"></div></td><td><span class="si-name">Ruler or tape measure</span><span class="si-note">For checking bridge height, span accuracy (must be exactly 30 cm), and center width (must be ≥10 cm).</span></td><td class="si-dept">School supplies / Hardware</td><td class="si-price">~$2</td></tr>
+        <tr id="sr-p6"><td style="padding:10px 8px 10px 12px;"><div class="cb" onclick="toggleShop(this,'p6')"></div></td><td><span class="si-name">Kitchen scale</span><span class="si-note">For accurately measuring 300g and 500g test weights from household items like coins or bags of rice.</span></td><td class="si-dept">Kitchen</td><td class="si-price">~$8</td></tr>
+      </tbody>
+    </table>
+    <div class="shop-prog"><div class="shop-prog-fill" id="shop-prog-fill" style="width:0%;"></div></div>
+    <div class="shop-prog-label" id="shop-prog-label">0 of 8 items checked</div>
+    <div class="shop-total">
+      <div><div class="shop-total-label">Estimated subtotal (materials only)</div></div>
+      <div class="shop-total-val" id="shop-total-val">~$42</div>
+    </div>
+  </div>
+
+  <!-- ── CHECKLIST ── -->
+  <div class="tab-panel" id="tab-checklist">
+    <div class="sec-title">Pre-Competition Checklist</div>
+    <div class="sec-sub">Verify every item before time is called</div>
+    <div class="checklist">
+      <div class="chk-item"><div class="chk-box" onclick="chk(this)"></div><span class="chk-text"><strong>Safety glasses (ANSI Z87+)</strong> packed and ready for both students</span></div>
+      <div class="chk-item"><div class="chk-box" onclick="chk(this)"></div><span class="chk-text"><strong>Writing utensils</strong> packed for the written test</span></div>
+      <div class="chk-item"><div class="chk-box" onclick="chk(this)"></div><span class="chk-text">Bridge <strong>spans exactly 30.0 cm</strong> between the two support structures</span></div>
+      <div class="chk-item"><div class="chk-box" onclick="chk(this)"></div><span class="chk-text">Center width is <strong>at least 10.0 cm</strong> (outside edge to outside edge) — measured, not estimated</span></div>
+      <div class="chk-item"><div class="chk-box" onclick="chk(this)"></div><span class="chk-text"><strong>Loading block (5×5 cm) can pass through</strong> the bridge in any orientation — no internal members block it</span></div>
+      <div class="chk-item"><div class="chk-box" onclick="chk(this)"></div><span class="chk-text"><strong>No tape touches</strong> the top or sides of the support structures</span></div>
+      <div class="chk-item"><div class="chk-box" onclick="chk(this)"></div><span class="chk-text">Top chord is <strong>reinforced against buckling</strong> (bundled or double-straw construction)</span></div>
+      <div class="chk-item"><div class="chk-box" onclick="chk(this)"></div><span class="chk-text">All joints have <strong>tape wrapped</strong> around them (not just stuck to the surface)</span></div>
+      <div class="chk-item"><div class="chk-box" onclick="chk(this)"></div><span class="chk-text">Most of the <strong>30 straws have been used</strong> — unused whole straws are Tiebreaker 1</span></div>
+      <div class="chk-item"><div class="chk-box" onclick="chk(this)"></div><span class="chk-text">Know the <strong>scoring formula</strong>: Score = 0.5×(THS÷CHS) + 0.5×(TAS÷CAS)</span></div>
+      <div class="chk-item"><div class="chk-box" onclick="chk(this)"></div><span class="chk-text">Reviewed <strong>Pratt vs. Howe vs. Warren</strong> diagonal directions for the written test</span></div>
+      <div class="chk-item"><div class="chk-box" onclick="chk(this)"></div><span class="chk-text">Reviewed <strong>tension vs. compression</strong> and which chord/members carry each</span></div>
+    </div>
+  </div>
+
+  <!-- ── PRACTICE TEST ── -->
+  <div class="tab-panel" id="tab-test">
+    <div class="test-header">
+      <h2>🌉 Bridge Building Practice Test</h2>
+      <div class="sub">VA Division A · Build Event · <span style="color:#00B4FF;font-weight:700;">35 points</span></div>
+      <div class="prog-bar"><div class="prog-fill" id="prog-fill"></div></div>
+      <div class="prog-meta"><span id="prog-label">0 answered</span><span id="prog-pct">0%</span></div>
+    </div>
+    <div class="name-row"><label>NAME</label><input id="sname" type="text" placeholder="Enter your name..." autocomplete="off"></div>
+
+    <div class="sec-hd"><h3>⭕ Part 1 — Multiple Choice</h3><span class="pts">15 pts · 1 pt each</span></div>
+    
+    <div class="qcard" id="qc-b1"><div class="q-num">Question 1</div><div class="q-text">In a Pratt Truss, which members carry tension?</div><div class="opts"><label class="opt"><input type="radio" name="b1" value="A"><span class="dot"></span>Vertical members</label><label class="opt"><input type="radio" name="b1" value="B"><span class="dot"></span>Diagonal members</label><label class="opt"><input type="radio" name="b1" value="C"><span class="dot"></span>Top chord</label><label class="opt"><input type="radio" name="b1" value="D"><span class="dot"></span>Both chords equally</label></div></div>
+    <div class="qcard" id="qc-b2"><div class="q-num">Question 2</div><div class="q-text">What penalty applies if your bridge is less than 10.0 cm wide at the center?</div><div class="opts"><label class="opt"><input type="radio" name="b2" value="A"><span class="dot"></span>Height score is reduced by 20%</label><label class="opt"><input type="radio" name="b2" value="B"><span class="dot"></span>Height score is multiplied by 0.5</label><label class="opt"><input type="radio" name="b2" value="C"><span class="dot"></span>The bridge scores zero</label><label class="opt"><input type="radio" name="b2" value="D"><span class="dot"></span>You are disqualified from the event</label></div></div>
+    <div class="qcard" id="qc-b3"><div class="q-num">Question 3</div><div class="q-text">What bonus multiplier applies to the height score if the bridge holds the 500g mass for 30 seconds?</div><div class="opts"><label class="opt"><input type="radio" name="b3" value="A"><span class="dot"></span>1.1×</label><label class="opt"><input type="radio" name="b3" value="B"><span class="dot"></span>1.2×</label><label class="opt"><input type="radio" name="b3" value="C"><span class="dot"></span>1.5×</label><label class="opt"><input type="radio" name="b3" value="D"><span class="dot"></span>2.0×</label></div></div>
+    <div class="qcard" id="qc-b4"><div class="q-num">Question 4</div><div class="q-text">In the Bridge Building scoring formula, CHS stands for:</div><div class="opts"><label class="opt"><input type="radio" name="b4" value="A"><span class="dot"></span>Calculated Height Standard</label><label class="opt"><input type="radio" name="b4" value="B"><span class="dot"></span>Competition Height Score — the tallest bridge among all teams</label><label class="opt"><input type="radio" name="b4" value="C"><span class="dot"></span>Center Height Score — your bridge's measured height</label><label class="opt"><input type="radio" name="b4" value="D"><span class="dot"></span>Chord Height Sum</label></div></div>
+    <div class="qcard" id="qc-b5"><div class="q-num">Question 5</div><div class="q-text">Which truss type has alternating diagonal members and no verticals in its basic form?</div><div class="opts"><label class="opt"><input type="radio" name="b5" value="A"><span class="dot"></span>Pratt Truss</label><label class="opt"><input type="radio" name="b5" value="B"><span class="dot"></span>Howe Truss</label><label class="opt"><input type="radio" name="b5" value="C"><span class="dot"></span>Warren Truss</label><label class="opt"><input type="radio" name="b5" value="D"><span class="dot"></span>Bowstring Truss</label></div></div>
+    <div class="qcard" id="qc-b6"><div class="q-num">Question 6</div><div class="q-text">A member that is being squeezed or compressed is said to be in:</div><div class="opts"><label class="opt"><input type="radio" name="b6" value="A"><span class="dot"></span>Tension</label><label class="opt"><input type="radio" name="b6" value="B"><span class="dot"></span>Compression</label><label class="opt"><input type="radio" name="b6" value="C"><span class="dot"></span>Shear</label><label class="opt"><input type="radio" name="b6" value="D"><span class="dot"></span>Torsion</label></div></div>
+    <div class="qcard" id="qc-b7"><div class="q-num">Question 7</div><div class="q-text">What must be able to pass through the full length of the bridge in any orientation?</div><div class="opts"><label class="opt"><input type="radio" name="b7" value="A"><span class="dot"></span>The test mass (300g)</label><label class="opt"><input type="radio" name="b7" value="B"><span class="dot"></span>The 5×5 cm loading block</label><label class="opt"><input type="radio" name="b7" value="C"><span class="dot"></span>The support structure</label><label class="opt"><input type="radio" name="b7" value="D"><span class="dot"></span>The Event Supervisor's ruler</label></div></div>
+    <div class="qcard" id="qc-b8"><div class="q-num">Question 8</div><div class="q-text">What is the first tiebreaker if two teams have equal scores?</div><div class="opts"><label class="opt"><input type="radio" name="b8" value="A"><span class="dot"></span>Longest time to failure in the 300g test</label><label class="opt"><input type="radio" name="b8" value="B"><span class="dot"></span>Tallest bridge height</label><label class="opt"><input type="radio" name="b8" value="C"><span class="dot"></span>Most unused complete straws remaining</label><label class="opt"><input type="radio" name="b8" value="D"><span class="dot"></span>Best written assessment score</label></div></div>
+    <div class="qcard" id="qc-b9"><div class="q-num">Question 9</div><div class="q-text">In a Howe Truss, which members are in compression?</div><div class="opts"><label class="opt"><input type="radio" name="b9" value="A"><span class="dot"></span>Vertical members</label><label class="opt"><input type="radio" name="b9" value="B"><span class="dot"></span>Diagonal members</label><label class="opt"><input type="radio" name="b9" value="C"><span class="dot"></span>Bottom chord</label><label class="opt"><input type="radio" name="b9" value="D"><span class="dot"></span>Both chords</label></div></div>
+    <div class="qcard" id="qc-b10"><div class="q-num">Question 10</div><div class="q-text">What is the minimum bridge width required at the center point?</div><div class="opts"><label class="opt"><input type="radio" name="b10" value="A"><span class="dot"></span>5.0 cm</label><label class="opt"><input type="radio" name="b10" value="B"><span class="dot"></span>8.0 cm</label><label class="opt"><input type="radio" name="b10" value="C"><span class="dot"></span>10.0 cm</label><label class="opt"><input type="radio" name="b10" value="D"><span class="dot"></span>15.0 cm</label></div></div>
+    <div class="qcard" id="qc-b11"><div class="q-num">Question 11</div><div class="q-text">The Method of Joints analyzes truss forces by:</div><div class="opts"><label class="opt"><input type="radio" name="b11" value="A"><span class="dot"></span>Cutting through three members and applying equilibrium to one half</label><label class="opt"><input type="radio" name="b11" value="B"><span class="dot"></span>Applying ΣFx=0 and ΣFy=0 at each joint in sequence</label><label class="opt"><input type="radio" name="b11" value="C"><span class="dot"></span>Measuring deflection at the center of the bridge</label><label class="opt"><input type="radio" name="b11" value="D"><span class="dot"></span>Calculating the weight of each member</label></div></div>
+    <div class="qcard" id="qc-b12"><div class="q-num">Question 12</div><div class="q-text">Which bridge type has an arched top chord in compression and a straight bottom chord in tension?</div><div class="opts"><label class="opt"><input type="radio" name="b12" value="A"><span class="dot"></span>Pratt Truss</label><label class="opt"><input type="radio" name="b12" value="B"><span class="dot"></span>K-Truss</label><label class="opt"><input type="radio" name="b12" value="C"><span class="dot"></span>Bowstring Truss</label><label class="opt"><input type="radio" name="b12" value="D"><span class="dot"></span>Through Truss</label></div></div>
+    <div class="qcard" id="qc-b13"><div class="q-num">Question 13</div><div class="q-text">What happens to the height score if the bridge cannot span the 30 cm gap?</div><div class="opts"><label class="opt"><input type="radio" name="b13" value="A"><span class="dot"></span>Height score is halved</label><label class="opt"><input type="radio" name="b13" value="B"><span class="dot"></span>Height score is multiplied by 0.5</label><label class="opt"><input type="radio" name="b13" value="C"><span class="dot"></span>Height score equals zero</label><label class="opt"><input type="radio" name="b13" value="D"><span class="dot"></span>The team uses the assessment score only</label></div></div>
+    <div class="qcard" id="qc-b14"><div class="q-num">Question 14</div><div class="q-text">The bottom chord of a loaded truss bridge typically carries:</div><div class="opts"><label class="opt"><input type="radio" name="b14" value="A"><span class="dot"></span>Compression</label><label class="opt"><input type="radio" name="b14" value="B"><span class="dot"></span>Tension</label><label class="opt"><input type="radio" name="b14" value="C"><span class="dot"></span>No force</label><label class="opt"><input type="radio" name="b14" value="D"><span class="dot"></span>Equal tension and compression</label></div></div>
+    <div class="qcard" id="qc-b15"><div class="q-num">Question 15</div><div class="q-text">If your assessment score is 8 and the best score among all teams is 10, what is your assessment ratio for scoring?</div><div class="opts"><label class="opt"><input type="radio" name="b15" value="A"><span class="dot"></span>0.5</label><label class="opt"><input type="radio" name="b15" value="B"><span class="dot"></span>0.8</label><label class="opt"><input type="radio" name="b15" value="C"><span class="dot"></span>0.08</label><label class="opt"><input type="radio" name="b15" value="D"><span class="dot"></span>8.0</label></div></div>
+
+    <div class="sec-hd"><h3>✅ Part 2 — True or False</h3><span class="pts">10 pts · 1 pt each</span></div>
+    
+    <div class="qcard" id="qc-tf31"><div class="q-num">Question 16</div><div class="q-text">In a Pratt Truss, the diagonal members slope toward the center of the bridge.</div><div class="tf"><button class="tfbtn" onclick="doTF(31,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(31,'FALSE',this)">❌ FALSE</button></div></div>
+    <div class="qcard" id="qc-tf32"><div class="q-num">Question 17</div><div class="q-text">The top chord of a bridge under a center load is typically in tension.</div><div class="tf"><button class="tfbtn" onclick="doTF(32,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(32,'FALSE',this)">❌ FALSE</button></div></div>
+    <div class="qcard" id="qc-tf33"><div class="q-num">Question 18</div><div class="q-text">Unused complete straws at the end of the event are the first tiebreaker.</div><div class="tf"><button class="tfbtn" onclick="doTF(33,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(33,'FALSE',this)">❌ FALSE</button></div></div>
+    <div class="qcard" id="qc-tf34"><div class="q-num">Question 19</div><div class="q-text">The loading block must only be able to enter from one end of the bridge.</div><div class="tf"><button class="tfbtn" onclick="doTF(34,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(34,'FALSE',this)">❌ FALSE</button></div></div>
+    <div class="qcard" id="qc-tf35"><div class="q-num">Question 20</div><div class="q-text">Both the height score and the assessment score contribute equally to the final score.</div><div class="tf"><button class="tfbtn" onclick="doTF(35,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(35,'FALSE',this)">❌ FALSE</button></div></div>
+    <div class="qcard" id="qc-tf36"><div class="q-num">Question 21</div><div class="q-text">Regular prescription eyeglasses qualify as ANSI Z87+ safety glasses.</div><div class="tf"><button class="tfbtn" onclick="doTF(36,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(36,'FALSE',this)">❌ FALSE</button></div></div>
+    <div class="qcard" id="qc-tf37"><div class="q-num">Question 22</div><div class="q-text">In a Warren Truss, the basic form has no vertical members.</div><div class="tf"><button class="tfbtn" onclick="doTF(37,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(37,'FALSE',this)">❌ FALSE</button></div></div>
+    <div class="qcard" id="qc-tf38"><div class="q-num">Question 23</div><div class="q-text">If a bridge fails the width check, the height score is set to zero.</div><div class="tf"><button class="tfbtn" onclick="doTF(38,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(38,'FALSE',this)">❌ FALSE</button></div></div>
+    <div class="qcard" id="qc-tf39"><div class="q-num">Question 24</div><div class="q-text">Reinforcing the top chord by bundling straws helps resist buckling under compression.</div><div class="tf"><button class="tfbtn" onclick="doTF(39,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(39,'FALSE',this)">❌ FALSE</button></div></div>
+    <div class="qcard" id="qc-tf40"><div class="q-num">Question 25</div><div class="q-text">A Deck Truss has the roadway passing between the top and bottom chords.</div><div class="tf"><button class="tfbtn" onclick="doTF(40,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(40,'FALSE',this)">❌ FALSE</button></div></div>
+
+    <div class="sec-hd"><h3>📝 Part 3 — Fill in the Blank</h3><span class="pts">10 pts · 2 pts each</span></div>
+    <div class="qcard" id="qc-bf1"><div class="q-num">Question 26</div><div class="fill-wrap">The truss type where diagonals slope toward the center and carry tension is called the <input class="blank" id="bf1" placeholder="__________"> Truss.</div></div>
+    <div class="qcard" id="qc-bf2"><div class="q-num">Question 27</div><div class="fill-wrap">The bridge scoring bonus multiplier for holding the 500g mass for 30 seconds is <input class="blank" id="bf2" placeholder="___">.</div></div>
+    <div class="qcard" id="qc-bf3"><div class="q-num">Question 28</div><div class="fill-wrap">A slender compression member that suddenly bends sideways and fails is said to have <input class="blank" id="bf3" placeholder="__________">.</div></div>
+    <div class="qcard" id="qc-bf4"><div class="q-num">Question 29</div><div class="fill-wrap">The minimum required bridge width at the center point is <input class="blank" id="bf4" placeholder="___"> cm.</div></div>
+    <div class="qcard" id="qc-bf5"><div class="q-num">Question 30</div><div class="fill-wrap">The truss analysis technique using ΣFx=0 and ΣFy=0 at each connection point is called the Method of <input class="blank" id="bf5" placeholder="__________">.</div></div>
+
+    <div class="sub-wrap"><button class="sub-btn" onclick="submitBridge()">Submit Answers</button></div>
+    <div id="score-card">
+      <h2>Test Complete! 🌉</h2>
+      <div id="score-num">--</div>
+      <div id="score-pct"></div>
+      <div id="score-emoji" style="font-size:2.2rem;margin-top:8px;"></div>
+      <div id="score-msg" style="margin-top:6px;"></div>
+      <div id="score-name"></div>
+      <button class="retry-btn" onclick="location.reload()">Try Again</button>
+    </div>
+  </div>
+
+</div><!-- end .page -->
+
+<footer><p>Bridge Building — VA Division A 2025–2026 &nbsp;·&nbsp; <a href="index.html">Back to portal</a></p></footer>
+
+<script>
+function showTab(id,btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');btn.classList.add('active');
+  window.scrollTo({top:document.querySelector('.tab-nav').offsetTop-60,behavior:'smooth'});
+}
+function chk(el){el.classList.toggle('chk-done');el.textContent=el.classList.contains('chk-done')?'':'';}
+
+/* Shopping list */
+const PRICES={s0:12,p0:6,p1:6,p2:5,p3:3,p4:0,p5:2,p6:8};
+const TOTAL_ITEMS=8;
+function toggleShop(el,id){
+  el.classList.toggle('checked');
+  const row=document.getElementById('sr-'+id);if(row)row.classList.toggle('done',el.classList.contains('checked'));
+  let n=0,sum=0;
+  document.querySelectorAll('.cb.checked').forEach(cb=>{
+    const fn=cb.getAttribute('onclick')||'';const m=fn.match(/'([^']+)'/);
+    if(m){n++;sum+=PRICES[m[1]]||0;}
+  });
+  document.getElementById('shop-prog-fill').style.width=Math.round(n/TOTAL_ITEMS*100)+'%';
+  document.getElementById('shop-prog-label').textContent=n+' of '+TOTAL_ITEMS+' items checked';
+  document.getElementById('shop-total-val').textContent='~$'+sum;
+}
+
+/* Quiz */
+const MC={b1:'B',b2:'B',b3:'B',b4:'B',b5:'C',b6:'B',b7:'B',b8:'C',b9:'B',b10:'C',b11:'B',b12:'C',b13:'C',b14:'B',b15:'B'};
+const TF={31:'TRUE',32:'FALSE',33:'TRUE',34:'FALSE',35:'TRUE',36:'FALSE',37:'TRUE',38:'FALSE',39:'TRUE',40:'FALSE'};
+const FILL={bf1:['pratt'],bf2:['1.2','1.2x','x1.2'],bf3:['buckled','buckling'],bf4:['10'],bf5:['joints']};
+const tfSel={};let totalQ=Object.keys(MC).length+Object.keys(TF).length+Object.keys(FILL).length;
+function countAns(){let n=0;Object.keys(MC).forEach(nm=>{if(document.querySelector('input[name="'+nm+'"]:checked'))n++;});Object.keys(TF).forEach(k=>{if(tfSel[k])n++;});Object.keys(FILL).forEach(id=>{if(document.getElementById(id)?.value.trim())n++;});return n;}
+function upProg(){const n=countAns();const p=Math.round(n/totalQ*100);document.getElementById('prog-fill').style.width=p+'%';document.getElementById('prog-label').textContent=n+' of '+totalQ+' answered';document.getElementById('prog-pct').textContent=p+'%';}
+document.addEventListener('change',function(e){if(e.target.type==='radio'){document.querySelectorAll('input[name="'+e.target.name+'"]').forEach(r=>r.closest('.opt').classList.remove('sel'));e.target.closest('.opt').classList.add('sel');upProg();}});
+document.addEventListener('input',function(e){if(e.target.classList.contains('blank'))upProg();});
+window.doTF=function(qn,val,btn){document.getElementById('qc-tf'+qn).querySelectorAll('.tfbtn').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');tfSel[qn]=val;upProg();};
+function submitBridge(){
+  let score=0;
+  Object.entries(MC).forEach(([nm,correct])=>{
+    const card=document.getElementById('qc-'+nm);const sel=document.querySelector('input[name="'+nm+'"]:checked');
+    document.querySelectorAll('input[name="'+nm+'"]').forEach(r=>{if(r.value===correct)r.closest('.opt').classList.add('c-ok');});
+    if(sel){if(sel.value===correct){score++;card.classList.add('correct');}else{sel.closest('.opt').classList.add('c-no');card.classList.add('wrong');}}else card.classList.add('wrong');
+    document.querySelectorAll('input[name="'+nm+'"]').forEach(r=>r.disabled=true);
+  });
+  Object.entries(TF).forEach(([k,correct])=>{
+    const card=document.getElementById('qc-tf'+k);const given=tfSel[parseInt(k)];
+    card.querySelectorAll('.tfbtn').forEach(btn=>{const v=btn.textContent.includes('TRUE')?'TRUE':'FALSE';if(v===correct)btn.classList.add('c-ok');if(v===given&&given!==correct)btn.classList.add('c-no');btn.disabled=true;btn.style.cursor='default';});
+    if(given===correct){score++;card.classList.add('correct');}else card.classList.add('wrong');
+  });
+  Object.entries(FILL).forEach(([id,accepts])=>{
+    const el=document.getElementById(id);const card=document.getElementById('qc-'+id);const val=el.value.trim().toLowerCase();
+    if(accepts.some(a=>val.includes(a))){score++;el.classList.add('c-ok');card.classList.add('correct');}else{el.classList.add('c-no');card.classList.add('wrong');}el.readOnly=true;
+  });
+  const pct=Math.round(score/totalQ*100);const name=document.getElementById('sname').value.trim()||'Student';
+  let emoji='📚🔄',msg='Review the study guide, especially truss types and scoring rules.';
+  if(pct>=90){emoji='🏆🌉';msg='Excellent — competition ready!';}
+  else if(pct>=75){emoji='🌟👍';msg='Great work! Review any missed questions.';}
+  else if(pct>=60){emoji='💪📖';msg='Good effort — focus on truss types and force directions.';}
+  document.getElementById('score-num').textContent=score+'/'+totalQ;
+  document.getElementById('score-pct').textContent=pct+'% correct';
+  document.getElementById('score-emoji').textContent=emoji;
+  document.getElementById('score-msg').textContent=msg;
+  document.getElementById('score-name').textContent=name+"'s result";
+  document.querySelector('.sub-btn').style.display='none';
+  document.getElementById('score-card').style.display='block';
+  document.getElementById('score-card').scrollIntoView({behavior:'smooth',block:'center'});
+}
+/* Theme */
+(function(){
+  const m=localStorage.getItem('va-theme')||'dark';
+  const btn=document.getElementById('theme-toggle');
+  if(m==='light'){document.body.classList.add('light-mode');if(btn)btn.textContent='🌙';}
+  else{if(btn)btn.textContent='☀️';}
+  window.toggleTheme=function(){const l=document.body.classList.toggle('light-mode');localStorage.setItem('va-theme',l?'light':'dark');document.getElementById('theme-toggle').textContent=l?'🌙':'☀️';};
+})();
+</script>
+</body>
+</html>

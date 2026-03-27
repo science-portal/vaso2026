@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>⚡ Shock Value — VA Division A</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Exo+2:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}
+body{font-family:'Space Grotesk',sans-serif;background:#0D1520;color:#CBD8E8;min-height:100vh;overflow-x:hidden;}
+a{text-decoration:none;}
+body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(245,200,66,.05)0%,transparent 50%);pointer-events:none;z-index:0;}
+.page{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 24px 80px;}
+.hero{padding:48px 0 32px;}
+.hero-ey{display:inline-block;background:rgba(245,200,66,.12);border:1px solid rgba(245,200,66,.3);color:#F5C842;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:4px 14px;border-radius:999px;margin-bottom:14px;}
+.hero h1{font-family:'Exo 2',sans-serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:800;color:#fff;line-height:1.08;margin-bottom:10px;}
+.hero h1 span{color:#F5C842;}
+.hero-sub{font-size:.98rem;color:rgba(192,204,224,.7);max-width:600px;line-height:1.7;margin-bottom:20px;}
+.hbadges{display:flex;gap:8px;flex-wrap:wrap;}
+.hb{padding:4px 14px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(245,200,66,.12);border:1px solid rgba(245,200,66,.3);color:#F5C842;}
+.hb-m{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);color:rgba(192,204,224,.5);}
+.tab-nav{display:flex;border-bottom:1px solid rgba(255,255,255,.1);margin:0 0 32px;overflow-x:auto;scrollbar-width:none;}
+.tab-nav::-webkit-scrollbar{display:none;}
+.tab-btn{padding:11px 18px;font-size:13px;font-weight:700;color:rgba(192,204,224,.5);background:none;border:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s;font-family:'Space Grotesk',sans-serif;}
+.tab-btn:hover{color:rgba(192,204,224,.85);}
+.tab-btn.active{color:#F5C842;border-bottom-color:#F5C842;}
+.tab-panel{display:none;animation:fi .2s ease;}
+.tab-panel.active{display:block;}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.sec-title{font-family:'Exo 2',sans-serif;font-size:1.25rem;font-weight:800;color:#fff;margin-bottom:4px;}
+.sec-sub{font-size:.8rem;color:rgba(192,204,224,.4);letter-spacing:.05em;text-transform:uppercase;margin-bottom:18px;}
+.divider{height:1px;background:linear-gradient(90deg,rgba(245,200,66,.25),transparent);margin:24px 0;}
+.callout{border-radius:12px;padding:15px 18px;margin-bottom:15px;border-left:4px solid;}
+.c-a{background:rgba(245,200,66,.07);border-color:#F5C842;}.c-a h4{color:#F5C842;}
+.c-g{background:rgba(139,195,74,.07);border-color:#7BC67E;}.c-g h4{color:#7BC67E;}
+.c-r{background:rgba(224,92,64,.07);border-color:#E05C40;}.c-r h4{color:#E05C40;}
+.c-y{background:rgba(245,200,66,.07);border-color:#F5C842;}.c-y h4{color:#F5C842;}
+.callout h4{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:7px;}
+.callout p,.callout li{font-size:.9rem;line-height:1.7;color:rgba(192,204,224,.8);}
+.callout ul,.callout ol{padding-left:18px;display:flex;flex-direction:column;gap:4px;}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:18px;}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:18px;}
+.card{background:#0A1E30;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:16px 18px;}
+.card h4{font-size:.92rem;font-weight:700;color:#F5C842;margin-bottom:8px;}
+.card p,.card li{font-size:.85rem;color:rgba(192,204,224,.7);line-height:1.55;}
+.card ul{padding-left:16px;display:flex;flex-direction:column;gap:3px;}
+.stbl{width:100%;border-collapse:collapse;margin-bottom:16px;}
+.stbl th{background:rgba(245,200,66,.15);color:#F5C842;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:9px 13px;text-align:left;border:1px solid rgba(245,200,66,.2);}
+.stbl td{padding:9px 13px;border:1px solid rgba(255,255,255,.06);font-size:.88rem;color:rgba(192,204,224,.8);vertical-align:top;line-height:1.55;}
+.stbl tr:nth-child(even) td{background:rgba(255,255,255,.025);}
+.stbl td:first-child{font-weight:700;color:#fff;width:30%;}
+.qcard{background:#0A1E30;border:1px solid rgba(255,255,255,.07);border-top:none;padding:17px 22px;transition:background .2s;}
+.qcard.correct{background:rgba(46,204,113,.06);border-left:4px solid #2ECC71;}
+.qcard.wrong{background:rgba(231,76,60,.06);border-left:4px solid #E74C3C;}
+.q-num{font-size:.68rem;font-weight:700;color:#F5C842;letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px;}
+.q-text{font-size:.97rem;font-weight:600;color:#fff;margin-bottom:12px;line-height:1.5;}
+.opts{display:flex;flex-direction:column;gap:6px;}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;border:1.5px solid rgba(255,255,255,.1);border-radius:9px;cursor:pointer;font-size:.9rem;color:rgba(192,204,224,.8);background:rgba(255,255,255,.02);transition:all .15s;user-select:none;line-height:1.4;}
+.opt:hover{border-color:#F5C842;background:rgba(245,200,66,.07);}
+.opt.sel{border-color:#F5C842;background:rgba(245,200,66,.12);color:#fff;}
+.opt.c-ok{border-color:#2ECC71!important;background:rgba(46,204,113,.1)!important;color:#7fffc4!important;}
+.opt.c-no{border-color:#E74C3C!important;background:rgba(231,76,60,.1)!important;color:#ffaaaa!important;}
+.opt input{display:none;}
+.dot{width:16px;height:16px;flex-shrink:0;border-radius:50%;border:2px solid rgba(255,255,255,.2);margin-top:2px;transition:all .15s;}
+.sel .dot{background:#F5C842;border-color:#F5C842;}
+.c-ok .dot{background:#2ECC71;border-color:#2ECC71;}
+.c-no .dot{background:#E74C3C;border-color:#E74C3C;}
+.tf{display:flex;gap:9px;}
+.tfbtn{flex:1;padding:10px;border:1.5px solid rgba(255,255,255,.12);border-radius:9px;background:rgba(255,255,255,.02);color:rgba(192,204,224,.7);font-family:'Space Grotesk',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .15s;}
+.tfbtn:hover{border-color:#F5C842;color:#fff;}
+.tfbtn.sel{border-color:#F5C842;background:rgba(245,200,66,.14);color:#F5C842;}
+.tfbtn.c-ok{border-color:#2ECC71!important;background:rgba(46,204,113,.1)!important;color:#7fffc4!important;}
+.tfbtn.c-no{border-color:#E74C3C!important;background:rgba(231,76,60,.1)!important;color:#ffaaaa!important;}
+.fill-wrap{font-size:.95rem;font-weight:500;color:#fff;display:flex;align-items:baseline;flex-wrap:wrap;gap:5px 6px;line-height:2.1;}
+.blank{border:none;border-bottom:2px solid rgba(245,200,66,.4);background:transparent;color:#F5C842;font-family:'Space Grotesk',sans-serif;font-size:.95rem;font-weight:700;width:150px;padding:3px 4px;outline:none;}
+.blank.c-ok{border-bottom-color:#2ECC71;color:#2ECC71;}
+.blank.c-no{border-bottom-color:#E74C3C;color:#E74C3C;}
+.sec-hd{background:rgba(245,200,66,.1);border:1px solid rgba(245,200,66,.2);border-top:none;padding:9px 18px;display:flex;align-items:center;justify-content:space-between;}
+.sec-hd h3{font-family:'Exo 2',sans-serif;font-size:.92rem;font-weight:800;color:#fff;}
+.pts-badge{font-size:.72rem;font-weight:700;color:#F5C842;background:rgba(245,200,66,.1);border:1px solid rgba(245,200,66,.25);padding:2px 9px;border-radius:999px;}
+.test-header{background:rgba(255,255,255,.04);border:1px solid rgba(245,200,66,.2);border-top:4px solid #F5C842;border-radius:14px 14px 0 0;padding:24px 28px 18px;margin-top:4px;}
+.test-header h2{font-family:'Exo 2',sans-serif;font-size:1.6rem;font-weight:800;color:#fff;margin-bottom:6px;}
+.test-header .sub{font-size:.9rem;color:rgba(192,204,224,.65);margin-bottom:14px;}
+.prog-bar{background:rgba(255,255,255,.08);border-radius:999px;height:6px;overflow:hidden;}
+.prog-fill{height:100%;background:#F5C842;border-radius:999px;width:0%;transition:width .4s;}
+.prog-meta{display:flex;justify-content:space-between;font-size:.72rem;color:rgba(192,204,224,.45);margin-top:4px;}
+.name-row{background:rgba(255,255,255,.03);border:1px solid rgba(245,200,66,.15);border-top:none;padding:12px 24px;}
+.name-row label{font-size:.72rem;font-weight:700;color:#F5C842;letter-spacing:.08em;display:block;margin-bottom:4px;}
+.name-row input{background:transparent;border:none;border-bottom:2px solid rgba(245,200,66,.3);width:100%;padding:5px 0;font-family:'Space Grotesk',sans-serif;font-size:.98rem;color:#fff;outline:none;}
+.sub-wrap{margin:20px 0 8px;text-align:center;}
+.sub-btn{background:#F5C842;color:#040810;border:none;padding:13px 44px;border-radius:50px;font-family:'Exo 2',sans-serif;font-size:1.05rem;font-weight:800;cursor:pointer;transition:all .2s;}
+.sub-btn:hover{transform:translateY(-2px);}
+#score-card{display:none;background:rgba(255,255,255,.04);border:1px solid rgba(245,200,66,.25);border-top:4px solid #F5C842;border-radius:14px;padding:34px 28px;text-align:center;margin:18px 0;animation:fi .4s ease;}
+#score-card h2{font-family:'Exo 2',sans-serif;font-size:1.4rem;color:#fff;margin-bottom:8px;}
+#score-num{font-family:'Exo 2',sans-serif;font-size:4.5rem;font-weight:800;color:#F5C842;line-height:1;margin:10px 0 5px;}
+#score-pct,#score-msg,#score-name{font-size:.9rem;color:rgba(192,204,224,.65);margin-top:4px;}
+.retry-btn{margin-top:18px;background:transparent;color:#F5C842;border:1.5px solid #F5C842;padding:8px 28px;border-radius:50px;font-family:'Exo 2',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;}
+/* Light mode */
+body.light-mode{background:#EEF2F7!important;color:#1A2A3A!important;}
+body.light-mode .card,body.light-mode .qcard{background:#fff!important;border-color:rgba(0,0,0,.09)!important;}
+body.light-mode .q-text,body.light-mode .callout p,body.light-mode .callout li,body.light-mode .stbl td{color:rgba(13,31,48,.75)!important;}
+body.light-mode .stbl td:first-child{color:#0D1F30!important;}
+body.light-mode .opt{background:#f8fafb!important;border-color:rgba(0,0,0,.1)!important;color:rgba(13,31,48,.72)!important;}
+body.light-mode .tfbtn{background:#f8fafb!important;border-color:rgba(0,0,0,.1)!important;color:rgba(13,31,48,.65)!important;}
+body.light-mode .callout{background:rgba(0,0,0,.04)!important;}
+body.light-mode .tab-nav{border-bottom-color:rgba(0,0,0,.1)!important;}
+body.light-mode .tab-btn{color:rgba(13,31,48,.4)!important;}
+body.light-mode .tab-btn.active{color:#F5C842!important;}
+body.light-mode .fill-wrap{color:#0D1F30!important;}
+body.light-mode .test-header,body.light-mode #score-card{background:#fff!important;border-color:rgba(0,0,0,.1)!important;}
+body.light-mode .test-header h2,body.light-mode #score-card h2{color:#0D1F30!important;}
+body.light-mode .name-row{background:rgba(0,0,0,.03)!important;border-color:rgba(0,0,0,.08)!important;}
+body.light-mode .name-row input{color:#0D1F30!important;}
+body.light-mode .prog-bar{background:rgba(0,0,0,.08)!important;}
+body.light-mode .gnav{background:rgba(255,255,255,.97)!important;border-bottom-color:rgba(0,0,0,.1)!important;}
+body.light-mode .gnav-logo,body.light-mode .gnav-link{color:#0D1F30!important;}
+body.light-mode .gnav-link.active{background:rgba(0,0,0,.08)!important;}
+body.light-mode .gnav-mobile{background:#fff!important;}
+body.light-mode .gnav-mlink{color:rgba(13,31,48,.65)!important;}
+footer{text-align:center;padding:28px 0;border-top:1px solid rgba(255,255,255,.06);}
+footer p{font-size:.78rem;color:rgba(192,204,224,.25);}
+footer a{color:rgba(245,200,66,.4);}
+body.light-mode footer{border-top-color:rgba(0,0,0,.08)!important;}
+body.light-mode footer p{color:rgba(13,31,48,.3)!important;}
+@media(max-width:540px){.page{padding:0 14px 60px;}.hero{padding:32px 0 20px;}.tab-btn{padding:9px 12px;font-size:12px;}}
+
+/* ── Global light-mode text readability ── */
+body.light-mode,
+body.light-mode .page,
+body.light-mode .tab-panel,
+body.light-mode .callout p,
+body.light-mode .callout li,
+body.light-mode .callout ul,
+body.light-mode .card p,
+body.light-mode .card li,
+body.light-mode .step-body p,
+body.light-mode .step-body li,
+body.light-mode .tip-card p,
+body.light-mode .mat-body p,
+body.light-mode .res-desc,
+body.light-mode .chk-text,
+body.light-mode .hero-sub,
+body.light-mode .ecard-desc,
+body.light-mode .about-card p,
+body.light-mode .about-card li,
+body.light-mode .shop-intro,
+body.light-mode .shop-tbl td,
+body.light-mode .stbl td,
+body.light-mode .truss-card p,
+body.light-mode .outline-subs li,
+body.light-mode .tab-btn,
+body.light-mode .sec-sub,
+body.light-mode .ecard-meta,
+body.light-mode .stat-dates,
+body.light-mode .hero-dates,
+body.light-mode .prog-meta,
+body.light-mode .shop-prog-label,
+body.light-mode .si-note,
+body.light-mode .si-dept,
+body.light-mode .mat-body p,
+body.light-mode .score-mini p { color: rgba(13,31,48,0.72) !important; }
+
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode h4,
+body.light-mode .hero h1,
+body.light-mode .sec-title,
+body.light-mode .section-title,
+body.light-mode .ecard-name,
+body.light-mode .res-title,
+body.light-mode .card h4,
+body.light-mode .step-body h4,
+body.light-mode .tip-card h4,
+body.light-mode .mat-body h4,
+body.light-mode .truss-name,
+body.light-mode .q-text,
+body.light-mode .fill-wrap,
+body.light-mode .test-header h2,
+body.light-mode #score-card h2,
+body.light-mode .si-name,
+body.light-mode .about-card h3,
+body.light-mode .stat-num,
+body.light-mode .gnav-logo { color: #0D1F30 !important; }
+
+body.light-mode .callout h4,
+body.light-mode .sec-hd h3,
+body.light-mode .section-heading { color: inherit !important; }
+
+body.light-mode .hero-eyebrow,
+body.light-mode .hero-ey,
+body.light-mode .hbadge,
+body.light-mode .hbadge-muted { color: rgba(13,31,48,0.55) !important;
+  background: rgba(0,0,0,.06) !important; border-color: rgba(0,0,0,.15) !important; }
+
+</style>
+</head>
+<body>
+<style>
+.gnav{position:sticky;top:0;z-index:300;background:rgba(8,8,24,0.97);border-bottom:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(12px);}
+.gnav-inner{display:flex;align-items:center;max-width:1080px;margin:0 auto;padding:0 20px;height:54px;gap:6px;}
+.gnav-logo{font-size:14px;font-weight:700;color:rgba(255,255,255,0.9);flex-shrink:0;padding:0 10px 0 0;border-right:1px solid rgba(255,255,255,0.1);margin-right:4px;text-decoration:none;font-family:'Space Grotesk',sans-serif;}
+.gnav-logo span{color:rgba(255,255,255,0.55);}
+.gnav-links{display:flex;gap:2px;flex:1;overflow-x:auto;scrollbar-width:none;}
+.gnav-links::-webkit-scrollbar{display:none;}
+.gnav-link{padding:5px 10px;border-radius:7px;font-size:12px;font-weight:600;color:rgba(200,216,232,0.6);white-space:nowrap;text-decoration:none;transition:all .15s;font-family:'Space Grotesk',sans-serif;}
+.gnav-link:hover{background:rgba(255,255,255,0.07);color:#fff;}
+.gnav-link.active{background:rgba(255,255,255,0.1);color:#fff;}
+.gnav-burger{display:none;background:none;border:none;color:rgba(255,255,255,0.7);font-size:20px;cursor:pointer;padding:4px;}
+.gnav-mobile{display:none;flex-direction:column;border-top:1px solid rgba(255,255,255,0.08);}
+.gnav-mobile.open{display:flex;}
+.gnav-mlink{padding:12px 20px;font-size:13px;font-weight:600;color:rgba(200,216,232,0.7);border-bottom:1px solid rgba(255,255,255,0.05);text-decoration:none;}
+.gnav-mlink.active{color:#fff;background:rgba(255,255,255,0.06);}
+#theme-toggle{width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.75);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;line-height:1;}
+#theme-toggle:hover{background:rgba(255,255,255,0.14);}
+body.light-mode #theme-toggle{border-color:rgba(0,0,0,0.15);background:rgba(0,0,0,0.06);color:rgba(0,0,0,0.6);}
+@media(max-width:700px){.gnav-links{display:none;}.gnav-burger{display:block;}}
+</style>
+<script>function toggleMenu(){document.getElementById('gnav-mobile').classList.toggle('open');}</script>
+<nav class="gnav" id="gnav">
+  <div class="gnav-inner">
+    <a class="gnav-logo" href="index.html">⚗️ <span>VA Olympiad</span></a>
+    <div class="gnav-links"><a class="gnav-link" href="index.html">Home</a><a class="gnav-link" href="bridge.html">🌉 Bridge</a><a class="gnav-link" href="tower.html">🏗️ Tower</a><a class="gnav-link" href="lander.html">🚀 Lander</a><a class="gnav-link" href="bungee.html">🥚 Bungee</a><a class="gnav-link" href="ocean.html">🌊 Ocean</a><a class="gnav-link" href="data.html">📊 Data</a><a class="gnav-link" href="nervous.html">🧠 Nervous Sys</a><a class="gnav-link active" href="shock.html">⚡ Shock Value</a></div>
+    <button class="gnav-burger" onclick="toggleMenu()" aria-label="menu">☰</button>
+    <button id="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode" aria-label="Toggle theme">🌙</button>
+  </div>
+  <div class="gnav-mobile" id="gnav-mobile"><a class="gnav-mlink" href="index.html">Home</a><a class="gnav-mlink" href="bridge.html">🌉 Bridge</a><a class="gnav-mlink" href="tower.html">🏗️ Tower</a><a class="gnav-mlink" href="lander.html">🚀 Lander</a><a class="gnav-mlink" href="bungee.html">🥚 Bungee</a><a class="gnav-mlink" href="ocean.html">🌊 Ocean</a><a class="gnav-mlink" href="data.html">📊 Data</a><a class="gnav-mlink" href="nervous.html">🧠 Nervous Sys</a><a class="gnav-mlink active" href="shock.html">⚡ Shock Value</a></div>
+</nav>
+<div class="page">
+  <div class="hero">
+    <div class="hero-ey">VA Division A · Written Event</div>
+    <h1>⚡ <span>Shock Value</span></h1>
+    <p class="hero-sub">Master direct current circuits, Ohm's Law, conductors and insulators, series and parallel circuits — and build a working LED circuit on a breadboard.</p>
+    <div class="hbadges"><span class="hb">Written Event</span><span class="hb">Grades 3–4</span><span class="hb hb-m">30-minute test + circuit build</span><span class="hb hb-m">Calculator required</span></div>
+  </div>
+  <div class="tab-nav"><button class="tab-btn active" onclick="showTab('overview',this)">Overview</button><button class="tab-btn" onclick="showTab('topics',this)">Topics</button><button class="tab-btn" onclick="showTab('vocab',this)">Vocabulary</button><button class="tab-btn" onclick="showTab('test',this)">Practice Test</button></div>
+  <div class="tab-panel active" id="tab-overview">
+<div class="sec-title">Event Overview</div>
+<div class="sec-sub">From the official VA Division A Rules Manual</div>
+<div class="callout c-a">
+  <h4>The Competition — Two Concurrent Parts</h4>
+  <p><b style="color:#fff;">Part 1:</b> Written test on direct current circuits and basic electricity. Basic electricity concepts, conductors &amp; insulators, electron flow, series and parallel circuits, simple Ohm's Law calculations.</p>
+  <p style="margin-top:8px;"><b style="color:#fff;">Part 2:</b> Build a simple series circuit using the provided breadboard, wires, battery, resistor, and LED. Both parts run simultaneously during the 30-minute session.</p>
+</div>
+<div class="callout c-y">
+  <h4>What to Bring</h4>
+  <ul><li>Pen or pencil</li><li>Four-function calculator (addition, subtraction, multiplication, division)</li><li>No safety equipment required</li></ul>
+</div>
+<div class="callout c-a">
+  <h4>Materials Provided for the Circuit Build</h4>
+  <ul>
+    <li>1 — Mini LED</li>
+    <li>1 — SYB-170 Mini Breadboard</li>
+    <li>4 — Male-to-Male ribbon wires</li>
+    <li>1 — AAA Battery Holder (1×1.5V)</li>
+    <li>1 — 220 Ohm resistor</li>
+  </ul>
+</div></div><div class="tab-panel" id="tab-topics">
+<div class="sec-title">Core Topics</div>
+<div class="sec-sub">Study all sections — both the written test and the circuit build are tested</div>
+<div class="grid2">
+  <div class="card"><h4>⚡ Basic Electricity</h4><ul>
+    <li><b style="color:#fff;">Electric current:</b> Flow of electric charge (electrons) through a conductor. Measured in Amperes (A).</li>
+    <li><b style="color:#fff;">Voltage:</b> Electrical potential difference that drives current. Measured in Volts (V).</li>
+    <li><b style="color:#fff;">Resistance:</b> Opposition to current flow. Measured in Ohms (Ω).</li>
+    <li><b style="color:#fff;">Static electricity:</b> Buildup of electric charge on an object's surface.</li>
+    <li><b style="color:#fff;">Conventional current:</b> Flows + to − (opposite of actual electron flow).</li>
+    <li><b style="color:#fff;">Electron flow:</b> Electrons flow from − to + terminal (negative to positive).</li>
+  </ul></div>
+  <div class="card"><h4>🔌 Ohm's Law</h4>
+    <p style="margin-bottom:10px;">The fundamental relationship between voltage, current, and resistance:</p>
+    <div style="background:rgba(245,200,66,.1);border:1px solid rgba(245,200,66,.3);border-radius:8px;padding:12px 14px;font-family:monospace;font-size:1.1rem;color:#F5C842;text-align:center;margin-bottom:10px;">V = I × R</div>
+    <ul>
+      <li>V = Voltage (Volts, V)</li>
+      <li>I = Current (Amperes, A)</li>
+      <li>R = Resistance (Ohms, Ω)</li>
+      <li><b style="color:#fff;">To find current:</b> I = V ÷ R</li>
+      <li><b style="color:#fff;">To find resistance:</b> R = V ÷ I</li>
+      <li>Example: 9V battery, 220Ω resistor → I = 9 ÷ 220 = 0.041 A (41 mA)</li>
+    </ul>
+  </div>
+  <div class="card"><h4>🔗 Series Circuits</h4><ul>
+    <li>Only ONE path for current to flow</li>
+    <li>If one component fails → entire circuit breaks (all go out)</li>
+    <li><b style="color:#fff;">Total resistance:</b> R_total = R1 + R2 + R3 + ...</li>
+    <li><b style="color:#fff;">Current:</b> Same throughout the entire circuit (I is constant)</li>
+    <li><b style="color:#fff;">Voltage:</b> Splits across each component (voltages add up to total)</li>
+    <li>Example: Christmas lights that all go out when one breaks</li>
+    <li>The circuit you build in this event is a SERIES circuit</li>
+  </ul></div>
+  <div class="card"><h4>🔀 Parallel Circuits</h4><ul>
+    <li>MULTIPLE paths for current to flow</li>
+    <li>If one component fails → others continue working</li>
+    <li><b style="color:#fff;">Total resistance:</b> Less than any individual resistor (1/R_total = 1/R1 + 1/R2...)</li>
+    <li><b style="color:#fff;">Voltage:</b> Same across each branch (V is constant)</li>
+    <li><b style="color:#fff;">Current:</b> Splits between branches (currents add up to total)</li>
+    <li>Example: House outlets — each works independently</li>
+  </ul></div>
+  <div class="card"><h4>⚗️ Conductors &amp; Insulators</h4><ul>
+    <li><b style="color:#fff;">Conductors:</b> Allow electric current to flow easily</li>
+    <li>Examples: copper, silver, gold, aluminum, water, human body</li>
+    <li><b style="color:#fff;">Insulators:</b> Resist the flow of electric current</li>
+    <li>Examples: rubber, plastic, glass, wood, air, ceramic</li>
+    <li><b style="color:#fff;">Semiconductors:</b> Between conductors and insulators (e.g., silicon)</li>
+    <li>Insulators are used to coat wires for safety</li>
+    <li>The LED in your circuit is a semiconductor device</li>
+  </ul></div>
+  <div class="card"><h4>🔧 Breadboard &amp; Circuit Build</h4><ul>
+    <li><b style="color:#fff;">Breadboard:</b> Reusable board for prototyping circuits without soldering</li>
+    <li>Holes are connected in rows horizontally (in the middle sections)</li>
+    <li><b style="color:#fff;">LED:</b> Light Emitting Diode — only works if current flows in correct direction (has polarity)</li>
+    <li><b style="color:#fff;">Long LED leg (+):</b> Anode — connect to positive terminal</li>
+    <li><b style="color:#fff;">Short LED leg (−):</b> Cathode — connect to negative terminal</li>
+    <li><b style="color:#fff;">Resistor (220Ω):</b> Limits current to prevent burning out the LED</li>
+    <li>Circuit order: battery (+) → resistor → LED (+) → LED (−) → battery (−)</li>
+  </ul></div>
+</div></div><div class="tab-panel" id="tab-vocab">
+<div class="sec-title">Key Vocabulary</div>
+<div class="sec-sub">Know every term — Ohm's Law calculations will appear on the test</div>
+<table class="stbl">
+  <thead><tr><th>Term</th><th>Definition</th></tr></thead>
+  <tbody>
+    <tr><td>Electric current (I)</td><td>The flow of electric charge through a conductor. Measured in Amperes (A).</td></tr>
+    <tr><td>Voltage (V)</td><td>Electrical potential difference between two points; the "push" that drives current. Measured in Volts (V).</td></tr>
+    <tr><td>Resistance (R)</td><td>Opposition to the flow of electric current. Measured in Ohms (Ω).</td></tr>
+    <tr><td>Ohm's Law</td><td>V = I × R — the fundamental relationship between voltage, current, and resistance.</td></tr>
+    <tr><td>Conductor</td><td>Material that allows electric current to flow easily (e.g., copper, water).</td></tr>
+    <tr><td>Insulator</td><td>Material that resists the flow of electric current (e.g., rubber, plastic, glass).</td></tr>
+    <tr><td>Static electricity</td><td>Buildup of electric charge on the surface of an object that doesn't flow.</td></tr>
+    <tr><td>Electron flow</td><td>Actual movement of electrons from negative to positive terminal in a circuit.</td></tr>
+    <tr><td>Conventional current</td><td>Defined as flowing from positive to negative — opposite of electron flow.</td></tr>
+    <tr><td>Series circuit</td><td>Circuit with only one path for current — total resistance is sum of all resistors.</td></tr>
+    <tr><td>Parallel circuit</td><td>Circuit with multiple paths for current — total resistance is less than any single resistor.</td></tr>
+    <tr><td>LED (Light Emitting Diode)</td><td>Semiconductor component that emits light when current flows through it in the correct direction.</td></tr>
+    <tr><td>Resistor</td><td>Component that limits current flow. A 220Ω resistor protects the LED from too much current.</td></tr>
+    <tr><td>Breadboard</td><td>A reusable prototyping board for building circuits without soldering.</td></tr>
+    <tr><td>Anode (+)</td><td>The positive terminal of an LED — the longer leg. Connect to the positive side of the circuit.</td></tr>
+    <tr><td>Cathode (−)</td><td>The negative terminal of an LED — the shorter leg. Connect toward the negative terminal.</td></tr>
+    <tr><td>Direct current (DC)</td><td>Electric current that flows in one constant direction (as from a battery).</td></tr>
+  </tbody>
+</table></div><div class="tab-panel" id="tab-test">
+<div class="test-header">
+  <h2>⚡ Shock Value Practice Test</h2>
+  <div class="sub">VA Division A · Written Event · <span style="color:#F5C842;font-weight:700;">35 points</span></div>
+  <div class="prog-bar"><div class="prog-fill" id="prog-fill"></div></div>
+  <div class="prog-meta"><span id="prog-label">0 answered</span><span id="prog-pct">0%</span></div>
+</div>
+<div class="name-row"><label>NAME</label><input id="sname" type="text" placeholder="Enter your name..." autocomplete="off"></div>
+
+<div class="sec-hd" style="margin-top:0;"><h3>⭕ Part 1 — Multiple Choice</h3><span class="pts-badge">15 pts</span></div>
+
+<div class="qcard" id="qc-s1"><div class="q-num">Question 1</div><div class="q-text">What is Ohm's Law?</div><div class="opts"><label class="opt"><input type="radio" name="s1" value="A"><span class="dot"></span>P = IV</label><label class="opt"><input type="radio" name="s1" value="B"><span class="dot"></span>V = IR</label><label class="opt"><input type="radio" name="s1" value="C"><span class="dot"></span>F = ma</label><label class="opt"><input type="radio" name="s1" value="D"><span class="dot"></span>E = mc²</label></div></div>
+<div class="qcard" id="qc-s2"><div class="q-num">Question 2</div><div class="q-text">A circuit has a 6V battery and a 120Ω resistor. What is the current?</div><div class="opts"><label class="opt"><input type="radio" name="s2" value="A"><span class="dot"></span>0.5 A</label><label class="opt"><input type="radio" name="s2" value="B"><span class="dot"></span>20 A</label><label class="opt"><input type="radio" name="s2" value="C"><span class="dot"></span>0.05 A</label><label class="opt"><input type="radio" name="s2" value="D"><span class="dot"></span>2 A</label></div></div>
+<div class="qcard" id="qc-s3"><div class="q-num">Question 3</div><div class="q-text">In a SERIES circuit, if one light bulb burns out:</div><div class="opts"><label class="opt"><input type="radio" name="s3" value="A"><span class="dot"></span>Only that bulb goes out</label><label class="opt"><input type="radio" name="s3" value="B"><span class="dot"></span>All bulbs go out</label><label class="opt"><input type="radio" name="s3" value="C"><span class="dot"></span>Other bulbs get brighter</label><label class="opt"><input type="radio" name="s3" value="D"><span class="dot"></span>The resistance decreases</label></div></div>
+<div class="qcard" id="qc-s4"><div class="q-num">Question 4</div><div class="q-text">Which of the following is a good conductor of electricity?</div><div class="opts"><label class="opt"><input type="radio" name="s4" value="A"><span class="dot"></span>Rubber</label><label class="opt"><input type="radio" name="s4" value="B"><span class="dot"></span>Plastic</label><label class="opt"><input type="radio" name="s4" value="C"><span class="dot"></span>Copper</label><label class="opt"><input type="radio" name="s4" value="D"><span class="dot"></span>Glass</label></div></div>
+<div class="qcard" id="qc-s5"><div class="q-num">Question 5</div><div class="q-text">In a breadboard circuit with a 1.5V battery and 220Ω resistor, what is the approximate current through the LED?</div><div class="opts"><label class="opt"><input type="radio" name="s5" value="A"><span class="dot"></span>6.8 mA</label><label class="opt"><input type="radio" name="s5" value="B"><span class="dot"></span>220 mA</label><label class="opt"><input type="radio" name="s5" value="C"><span class="dot"></span>1.5 A</label><label class="opt"><input type="radio" name="s5" value="D"><span class="dot"></span>0.22 A</label></div></div>
+<div class="qcard" id="qc-s6"><div class="q-num">Question 6</div><div class="q-text">Which leg of an LED connects to the positive side of a circuit?</div><div class="opts"><label class="opt"><input type="radio" name="s6" value="A"><span class="dot"></span>The shorter leg (cathode)</label><label class="opt"><input type="radio" name="s6" value="B"><span class="dot"></span>Either leg — LEDs have no polarity</label><label class="opt"><input type="radio" name="s6" value="C"><span class="dot"></span>The longer leg (anode)</label><label class="opt"><input type="radio" name="s6" value="D"><span class="dot"></span>The flat side of the LED</label></div></div>
+<div class="qcard" id="qc-s7"><div class="q-num">Question 7</div><div class="q-text">In a parallel circuit, what happens to the total resistance compared to individual resistors?</div><div class="opts"><label class="opt"><input type="radio" name="s7" value="A"><span class="dot"></span>Total resistance is greater than any individual resistor</label><label class="opt"><input type="radio" name="s7" value="B"><span class="dot"></span>Total resistance equals the largest individual resistor</label><label class="opt"><input type="radio" name="s7" value="C"><span class="dot"></span>Total resistance is less than any individual resistor</label><label class="opt"><input type="radio" name="s7" value="D"><span class="dot"></span>Total resistance is the average of all resistors</label></div></div>
+<div class="qcard" id="qc-s8"><div class="q-num">Question 8</div><div class="q-text">Conventional current direction is defined as flowing:</div><div class="opts"><label class="opt"><input type="radio" name="s8" value="A"><span class="dot"></span>From negative to positive terminal</label><label class="opt"><input type="radio" name="s8" value="B"><span class="dot"></span>From positive to negative terminal</label><label class="opt"><input type="radio" name="s8" value="C"><span class="dot"></span>In the same direction as electron flow</label><label class="opt"><input type="radio" name="s8" value="D"><span class="dot"></span>Randomly in a circuit</label></div></div>
+<div class="qcard" id="qc-s9"><div class="q-num">Question 9</div><div class="q-text">A 9V battery is connected to two resistors in series: 100Ω and 50Ω. What is the total resistance?</div><div class="opts"><label class="opt"><input type="radio" name="s9" value="A"><span class="dot"></span>50Ω</label><label class="opt"><input type="radio" name="s9" value="B"><span class="dot"></span>100Ω</label><label class="opt"><input type="radio" name="s9" value="C"><span class="dot"></span>150Ω</label><label class="opt"><input type="radio" name="s9" value="D"><span class="dot"></span>33.3Ω</label></div></div>
+<div class="qcard" id="qc-s10"><div class="q-num">Question 10</div><div class="q-text">What is the purpose of the 220Ω resistor in the circuit built during Shock Value?</div><div class="opts"><label class="opt"><input type="radio" name="s10" value="A"><span class="dot"></span>To increase the voltage for the LED</label><label class="opt"><input type="radio" name="s10" value="B"><span class="dot"></span>To limit the current and prevent burning out the LED</label><label class="opt"><input type="radio" name="s10" value="C"><span class="dot"></span>To make the LED flash</label><label class="opt"><input type="radio" name="s10" value="D"><span class="dot"></span>To store electrical energy</label></div></div>
+<div class="qcard" id="qc-s11"><div class="q-num">Question 11</div><div class="q-text">Which of the following best describes an insulator?</div><div class="opts"><label class="opt"><input type="radio" name="s11" value="A"><span class="dot"></span>Material that allows current to flow freely</label><label class="opt"><input type="radio" name="s11" value="B"><span class="dot"></span>Material that stores electrical charge</label><label class="opt"><input type="radio" name="s11" value="C"><span class="dot"></span>Material that resists the flow of electric current</label><label class="opt"><input type="radio" name="s11" value="D"><span class="dot"></span>Material that converts electricity to heat</label></div></div>
+<div class="qcard" id="qc-s12"><div class="q-num">Question 12</div><div class="q-text">A 12V battery is connected to a circuit. The current measured is 2A. What is the resistance?</div><div class="opts"><label class="opt"><input type="radio" name="s12" value="A"><span class="dot"></span>24Ω</label><label class="opt"><input type="radio" name="s12" value="B"><span class="dot"></span>6Ω</label><label class="opt"><input type="radio" name="s12" value="C"><span class="dot"></span>10Ω</label><label class="opt"><input type="radio" name="s12" value="D"><span class="dot"></span>0.17Ω</label></div></div>
+<div class="qcard" id="qc-s13"><div class="q-num">Question 13</div><div class="q-text">What does a battery holder do in the Shock Value circuit build?</div><div class="opts"><label class="opt"><input type="radio" name="s13" value="A"><span class="dot"></span>Measures the current flowing through the circuit</label><label class="opt"><input type="radio" name="s13" value="B"><span class="dot"></span>Acts as a resistor to limit current</label><label class="opt"><input type="radio" name="s13" value="C"><span class="dot"></span>Provides a source of DC voltage (1.5V)</label><label class="opt"><input type="radio" name="s13" value="D"><span class="dot"></span>Serves as the breadboard connection</label></div></div>
+<div class="qcard" id="qc-s14"><div class="q-num">Question 14</div><div class="q-text">In a parallel circuit compared to a series circuit, if one branch fails:</div><div class="opts"><label class="opt"><input type="radio" name="s14" value="A"><span class="dot"></span>All branches fail together</label><label class="opt"><input type="radio" name="s14" value="B"><span class="dot"></span>The remaining branches continue working</label><label class="opt"><input type="radio" name="s14" value="C"><span class="dot"></span>Total voltage drops to zero</label><label class="opt"><input type="radio" name="s14" value="D"><span class="dot"></span>Resistance in remaining branches decreases</label></div></div>
+<div class="qcard" id="qc-s15"><div class="q-num">Question 15</div><div class="q-text">What type of current does a battery produce?</div><div class="opts"><label class="opt"><input type="radio" name="s15" value="A"><span class="dot"></span>Alternating current (AC)</label><label class="opt"><input type="radio" name="s15" value="B"><span class="dot"></span>Direct current (DC)</label><label class="opt"><input type="radio" name="s15" value="C"><span class="dot"></span>Static current</label><label class="opt"><input type="radio" name="s15" value="D"><span class="dot"></span>Pulsed current</label></div></div>
+
+<div class="sec-hd"><h3>✅ Part 2 — True or False</h3><span class="pts-badge">10 pts</span></div>
+
+<div class="qcard" id="qc-tf51"><div class="q-num">Question 16</div><div class="q-text">In a series circuit, the total resistance equals the sum of all individual resistances.</div><div class="tf"><button class="tfbtn" onclick="doTF(51,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(51,'FALSE',this)">❌ FALSE</button></div></div>
+<div class="qcard" id="qc-tf52"><div class="q-num">Question 17</div><div class="q-text">Electrons flow from the positive terminal to the negative terminal of a battery.</div><div class="tf"><button class="tfbtn" onclick="doTF(52,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(52,'FALSE',this)">❌ FALSE</button></div></div>
+<div class="qcard" id="qc-tf53"><div class="q-num">Question 18</div><div class="q-text">A parallel circuit continues to work even if one branch is broken.</div><div class="tf"><button class="tfbtn" onclick="doTF(53,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(53,'FALSE',this)">❌ FALSE</button></div></div>
+<div class="qcard" id="qc-tf54"><div class="q-num">Question 19</div><div class="q-text">Glass is a good conductor of electricity.</div><div class="tf"><button class="tfbtn" onclick="doTF(54,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(54,'FALSE',this)">❌ FALSE</button></div></div>
+<div class="qcard" id="qc-tf55"><div class="q-num">Question 20</div><div class="q-text">Ohm's Law states that V = I × R.</div><div class="tf"><button class="tfbtn" onclick="doTF(55,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(55,'FALSE',this)">❌ FALSE</button></div></div>
+<div class="qcard" id="qc-tf56"><div class="q-num">Question 21</div><div class="q-text">In a parallel circuit, the voltage is the same across each branch.</div><div class="tf"><button class="tfbtn" onclick="doTF(56,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(56,'FALSE',this)">❌ FALSE</button></div></div>
+<div class="qcard" id="qc-tf57"><div class="q-num">Question 22</div><div class="q-text">The LED's longer leg is the cathode (negative terminal).</div><div class="tf"><button class="tfbtn" onclick="doTF(57,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(57,'FALSE',this)">❌ FALSE</button></div></div>
+<div class="qcard" id="qc-tf58"><div class="q-num">Question 23</div><div class="q-text">Increasing resistance in a circuit while keeping voltage constant will decrease the current.</div><div class="tf"><button class="tfbtn" onclick="doTF(58,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(58,'FALSE',this)">❌ FALSE</button></div></div>
+<div class="qcard" id="qc-tf59"><div class="q-num">Question 24</div><div class="q-text">The human body is a conductor of electricity.</div><div class="tf"><button class="tfbtn" onclick="doTF(59,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(59,'FALSE',this)">❌ FALSE</button></div></div>
+<div class="qcard" id="qc-tf60"><div class="q-num">Question 25</div><div class="q-text">A 220Ω resistor in series with an LED reduces the chance of burning out the LED.</div><div class="tf"><button class="tfbtn" onclick="doTF(60,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(60,'FALSE',this)">❌ FALSE</button></div></div>
+
+<div class="sec-hd"><h3>📝 Part 3 — Fill in the Blank</h3><span class="pts-badge">10 pts</span></div>
+<div class="qcard" id="qc-sf1"><div class="q-num">Question 26</div><div class="fill-wrap">The opposition to electric current flow is called <input class="blank" id="sf1" placeholder="__________"> and is measured in Ohms.</div></div>
+<div class="qcard" id="qc-sf2"><div class="q-num">Question 27</div><div class="fill-wrap">V = I × R is the formula for <input class="blank" id="sf2" placeholder="__________">.</div></div>
+<div class="qcard" id="qc-sf3"><div class="q-num">Question 28</div><div class="fill-wrap">A circuit where all components share a single path is called a <input class="blank" id="sf3" placeholder="__________"> circuit.</div></div>
+<div class="qcard" id="qc-sf4"><div class="q-num">Question 29</div><div class="fill-wrap">A battery produces <input class="blank" id="sf4" placeholder="__________"> current (current that flows in one direction).</div></div>
+<div class="qcard" id="qc-sf5"><div class="q-num">Question 30</div><div class="fill-wrap">Copper and silver are examples of good <input class="blank" id="sf5" placeholder="__________"> of electricity.</div></div>
+
+<div class="sub-wrap"><button class="sub-btn" onclick="submitTest()">Submit Answers</button></div>
+<div id="score-card"><h2>Test Complete!</h2><div id="score-num">--</div><div id="score-pct"></div><div id="score-emoji" style="font-size:2.2rem;margin-top:8px;"></div><div id="score-msg" style="margin-top:6px;"></div><div id="score-name"></div><button class="retry-btn" onclick="location.reload()">Try Again</button></div>
+
+<script>
+Object.assign(MC,{s1:'B',s2:'C',s3:'B',s4:'C',s5:'A',s6:'C',s7:'C',s8:'B',s9:'C',s10:'B',s11:'C',s12:'B',s13:'C',s14:'B',s15:'B'});
+Object.assign(TF,{51:'TRUE',52:'FALSE',53:'TRUE',54:'FALSE',55:'TRUE',56:'TRUE',57:'FALSE',58:'TRUE',59:'TRUE',60:'TRUE'});
+Object.assign(FILL,{sf1:['resistance'],sf2:["ohm's law",'ohms law'],sf3:['series'],sf4:['direct','dc'],sf5:['conductor','conductors']});
+</script></div>
+</div>
+<footer><p>Shock Value — VA Division A 2025–2026 &nbsp;·&nbsp; <a href="index.html">Back to portal</a></p></footer>
+<script>
+function showTab(id,btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');btn.classList.add('active');
+  window.scrollTo({top:document.querySelector('.tab-nav').offsetTop-60,behavior:'smooth'});
+}
+const MC={};const TF={};const FILL={};const TOTAL_Q=[];let tfSel={};
+function cnt(){let n=0;Object.keys(MC).forEach(nm=>{if(document.querySelector('input[name="'+nm+'"]:checked'))n++;});Object.keys(TF).forEach(k=>{if(tfSel[k])n++;});Object.keys(FILL).forEach(id=>{if(document.getElementById(id)?.value.trim())n++;});return n;}
+function upProg(){const n=cnt();const t=Object.keys(MC).length+Object.keys(TF).length+Object.keys(FILL).length;const p=t?Math.round(n/t*100):0;const pf=document.getElementById('prog-fill');const pl=document.getElementById('prog-label');const pp=document.getElementById('prog-pct');if(pf)pf.style.width=p+'%';if(pl)pl.textContent=n+' of '+t+' answered';if(pp)pp.textContent=p+'%';}
+document.addEventListener('change',function(e){if(e.target.type==='radio'){document.querySelectorAll('input[name="'+e.target.name+'"]').forEach(r=>r.closest('.opt').classList.remove('sel'));e.target.closest('.opt').classList.add('sel');upProg();}});
+document.addEventListener('input',function(e){if(e.target.classList.contains('blank'))upProg();});
+window.doTF=function(qn,val,btn){document.getElementById('qc-tf'+qn).querySelectorAll('.tfbtn').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');tfSel[qn]=val;upProg();};
+window.submitTest=function(){
+  let score=0;
+  Object.entries(MC).forEach(([nm,correct])=>{
+    const card=document.getElementById('qc-'+nm);const sel=document.querySelector('input[name="'+nm+'"]:checked');
+    document.querySelectorAll('input[name="'+nm+'"]').forEach(r=>{if(r.value===correct)r.closest('.opt').classList.add('c-ok');});
+    if(sel){if(sel.value===correct){score++;card.classList.add('correct');}else{sel.closest('.opt').classList.add('c-no');card.classList.add('wrong');}}else card.classList.add('wrong');
+    document.querySelectorAll('input[name="'+nm+'"]').forEach(r=>r.disabled=true);
+  });
+  Object.entries(TF).forEach(([k,correct])=>{
+    const card=document.getElementById('qc-tf'+k);const given=tfSel[parseInt(k)];
+    card.querySelectorAll('.tfbtn').forEach(btn=>{const v=btn.textContent.includes('TRUE')?'TRUE':'FALSE';if(v===correct)btn.classList.add('c-ok');if(v===given&&given!==correct)btn.classList.add('c-no');btn.disabled=true;btn.style.cursor='default';});
+    if(given===correct){score++;card.classList.add('correct');}else card.classList.add('wrong');
+  });
+  Object.entries(FILL).forEach(([id,accepts])=>{
+    const el=document.getElementById(id);const card=document.getElementById('qc-'+id);const val=el.value.trim().toLowerCase();
+    if(accepts.some(a=>val.includes(a))){score++;el.classList.add('c-ok');card.classList.add('correct');}else{el.classList.add('c-no');card.classList.add('wrong');}el.readOnly=true;
+  });
+  const total=Object.keys(MC).length+Object.keys(TF).length+Object.keys(FILL).length;
+  const pct=Math.round(score/total*100);
+  const name=document.getElementById('sname')?.value.trim()||'Student';
+  let emoji='📚🔄',msg='Review the study slides and try again!';
+  if(pct>=90){emoji='🏆🌟';msg='Outstanding — you are ready for competition!';}
+  else if(pct>=75){emoji='🌟👍';msg='Great work! Review any missed questions.';}
+  else if(pct>=60){emoji='💪📖';msg='Good effort — focus on the areas you missed.';}
+  document.getElementById('score-num').textContent=score+'/'+total;
+  document.getElementById('score-pct').textContent=pct+'% correct';
+  document.getElementById('score-msg').textContent=msg;
+  document.getElementById('score-name').textContent=name+"'s result";
+  document.getElementById('score-emoji').textContent=emoji;
+  document.querySelector('.sub-btn').style.display='none';
+  document.getElementById('score-card').style.display='block';
+  document.getElementById('score-card').scrollIntoView({behavior:'smooth',block:'center'});
+};
+// Override MC/TF/FILL with page-specific data injected below
+</script>
+<script>
+(function(){
+  const m=localStorage.getItem('va-theme')||'dark';
+  const btn=document.getElementById('theme-toggle');
+  if(m==='light'){document.body.classList.add('light-mode');if(btn)btn.textContent='🌙';}
+  else{if(btn)btn.textContent='☀️';}
+  window.toggleTheme=function(){
+    const l=document.body.classList.toggle('light-mode');
+    localStorage.setItem('va-theme',l?'light':'dark');
+    const b=document.getElementById('theme-toggle');
+    if(b)b.textContent=l?'🌙':'☀️';
+  };
+})();
+</script>
+</body>
+</html>

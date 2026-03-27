@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>🧠 Nervous System — VA Division A</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Exo+2:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}
+body{font-family:'Space Grotesk',sans-serif;background:#08081F;color:#CBD8E8;min-height:100vh;overflow-x:hidden;}
+a{text-decoration:none;}
+body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(123,94,167,.05)0%,transparent 50%);pointer-events:none;z-index:0;}
+.page{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 24px 80px;}
+.hero{padding:48px 0 32px;}
+.hero-ey{display:inline-block;background:rgba(123,94,167,.12);border:1px solid rgba(123,94,167,.3);color:#7B5EA7;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:4px 14px;border-radius:999px;margin-bottom:14px;}
+.hero h1{font-family:'Exo 2',sans-serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:800;color:#fff;line-height:1.08;margin-bottom:10px;}
+.hero h1 span{color:#7B5EA7;}
+.hero-sub{font-size:.98rem;color:rgba(192,204,224,.7);max-width:600px;line-height:1.7;margin-bottom:20px;}
+.hbadges{display:flex;gap:8px;flex-wrap:wrap;}
+.hb{padding:4px 14px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(123,94,167,.12);border:1px solid rgba(123,94,167,.3);color:#7B5EA7;}
+.hb-m{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);color:rgba(192,204,224,.5);}
+.tab-nav{display:flex;border-bottom:1px solid rgba(255,255,255,.1);margin:0 0 32px;overflow-x:auto;scrollbar-width:none;}
+.tab-nav::-webkit-scrollbar{display:none;}
+.tab-btn{padding:11px 18px;font-size:13px;font-weight:700;color:rgba(192,204,224,.5);background:none;border:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s;font-family:'Space Grotesk',sans-serif;}
+.tab-btn:hover{color:rgba(192,204,224,.85);}
+.tab-btn.active{color:#7B5EA7;border-bottom-color:#7B5EA7;}
+.tab-panel{display:none;animation:fi .2s ease;}
+.tab-panel.active{display:block;}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.sec-title{font-family:'Exo 2',sans-serif;font-size:1.25rem;font-weight:800;color:#fff;margin-bottom:4px;}
+.sec-sub{font-size:.8rem;color:rgba(192,204,224,.4);letter-spacing:.05em;text-transform:uppercase;margin-bottom:18px;}
+.divider{height:1px;background:linear-gradient(90deg,rgba(123,94,167,.25),transparent);margin:24px 0;}
+.callout{border-radius:12px;padding:15px 18px;margin-bottom:15px;border-left:4px solid;}
+.c-a{background:rgba(123,94,167,.07);border-color:#7B5EA7;}.c-a h4{color:#7B5EA7;}
+.c-g{background:rgba(139,195,74,.07);border-color:#7BC67E;}.c-g h4{color:#7BC67E;}
+.c-r{background:rgba(224,92,64,.07);border-color:#E05C40;}.c-r h4{color:#E05C40;}
+.c-y{background:rgba(245,200,66,.07);border-color:#F5C842;}.c-y h4{color:#F5C842;}
+.callout h4{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:7px;}
+.callout p,.callout li{font-size:.9rem;line-height:1.7;color:rgba(192,204,224,.8);}
+.callout ul,.callout ol{padding-left:18px;display:flex;flex-direction:column;gap:4px;}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:18px;}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:18px;}
+.card{background:#0D0D28;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:16px 18px;}
+.card h4{font-size:.92rem;font-weight:700;color:#7B5EA7;margin-bottom:8px;}
+.card p,.card li{font-size:.85rem;color:rgba(192,204,224,.7);line-height:1.55;}
+.card ul{padding-left:16px;display:flex;flex-direction:column;gap:3px;}
+.stbl{width:100%;border-collapse:collapse;margin-bottom:16px;}
+.stbl th{background:rgba(123,94,167,.15);color:#7B5EA7;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:9px 13px;text-align:left;border:1px solid rgba(123,94,167,.2);}
+.stbl td{padding:9px 13px;border:1px solid rgba(255,255,255,.06);font-size:.88rem;color:rgba(192,204,224,.8);vertical-align:top;line-height:1.55;}
+.stbl tr:nth-child(even) td{background:rgba(255,255,255,.025);}
+.stbl td:first-child{font-weight:700;color:#fff;width:30%;}
+.qcard{background:#0D0D28;border:1px solid rgba(255,255,255,.07);border-top:none;padding:17px 22px;transition:background .2s;}
+.qcard.correct{background:rgba(46,204,113,.06);border-left:4px solid #2ECC71;}
+.qcard.wrong{background:rgba(231,76,60,.06);border-left:4px solid #E74C3C;}
+.q-num{font-size:.68rem;font-weight:700;color:#7B5EA7;letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px;}
+.q-text{font-size:.97rem;font-weight:600;color:#fff;margin-bottom:12px;line-height:1.5;}
+.opts{display:flex;flex-direction:column;gap:6px;}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;border:1.5px solid rgba(255,255,255,.1);border-radius:9px;cursor:pointer;font-size:.9rem;color:rgba(192,204,224,.8);background:rgba(255,255,255,.02);transition:all .15s;user-select:none;line-height:1.4;}
+.opt:hover{border-color:#7B5EA7;background:rgba(123,94,167,.07);}
+.opt.sel{border-color:#7B5EA7;background:rgba(123,94,167,.12);color:#fff;}
+.opt.c-ok{border-color:#2ECC71!important;background:rgba(46,204,113,.1)!important;color:#7fffc4!important;}
+.opt.c-no{border-color:#E74C3C!important;background:rgba(231,76,60,.1)!important;color:#ffaaaa!important;}
+.opt input{display:none;}
+.dot{width:16px;height:16px;flex-shrink:0;border-radius:50%;border:2px solid rgba(255,255,255,.2);margin-top:2px;transition:all .15s;}
+.sel .dot{background:#7B5EA7;border-color:#7B5EA7;}
+.c-ok .dot{background:#2ECC71;border-color:#2ECC71;}
+.c-no .dot{background:#E74C3C;border-color:#E74C3C;}
+.tf{display:flex;gap:9px;}
+.tfbtn{flex:1;padding:10px;border:1.5px solid rgba(255,255,255,.12);border-radius:9px;background:rgba(255,255,255,.02);color:rgba(192,204,224,.7);font-family:'Space Grotesk',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .15s;}
+.tfbtn:hover{border-color:#7B5EA7;color:#fff;}
+.tfbtn.sel{border-color:#7B5EA7;background:rgba(123,94,167,.14);color:#7B5EA7;}
+.tfbtn.c-ok{border-color:#2ECC71!important;background:rgba(46,204,113,.1)!important;color:#7fffc4!important;}
+.tfbtn.c-no{border-color:#E74C3C!important;background:rgba(231,76,60,.1)!important;color:#ffaaaa!important;}
+.fill-wrap{font-size:.95rem;font-weight:500;color:#fff;display:flex;align-items:baseline;flex-wrap:wrap;gap:5px 6px;line-height:2.1;}
+.blank{border:none;border-bottom:2px solid rgba(123,94,167,.4);background:transparent;color:#7B5EA7;font-family:'Space Grotesk',sans-serif;font-size:.95rem;font-weight:700;width:150px;padding:3px 4px;outline:none;}
+.blank.c-ok{border-bottom-color:#2ECC71;color:#2ECC71;}
+.blank.c-no{border-bottom-color:#E74C3C;color:#E74C3C;}
+.sec-hd{background:rgba(123,94,167,.1);border:1px solid rgba(123,94,167,.2);border-top:none;padding:9px 18px;display:flex;align-items:center;justify-content:space-between;}
+.sec-hd h3{font-family:'Exo 2',sans-serif;font-size:.92rem;font-weight:800;color:#fff;}
+.pts-badge{font-size:.72rem;font-weight:700;color:#7B5EA7;background:rgba(123,94,167,.1);border:1px solid rgba(123,94,167,.25);padding:2px 9px;border-radius:999px;}
+.test-header{background:rgba(255,255,255,.04);border:1px solid rgba(123,94,167,.2);border-top:4px solid #7B5EA7;border-radius:14px 14px 0 0;padding:24px 28px 18px;margin-top:4px;}
+.test-header h2{font-family:'Exo 2',sans-serif;font-size:1.6rem;font-weight:800;color:#fff;margin-bottom:6px;}
+.test-header .sub{font-size:.9rem;color:rgba(192,204,224,.65);margin-bottom:14px;}
+.prog-bar{background:rgba(255,255,255,.08);border-radius:999px;height:6px;overflow:hidden;}
+.prog-fill{height:100%;background:#7B5EA7;border-radius:999px;width:0%;transition:width .4s;}
+.prog-meta{display:flex;justify-content:space-between;font-size:.72rem;color:rgba(192,204,224,.45);margin-top:4px;}
+.name-row{background:rgba(255,255,255,.03);border:1px solid rgba(123,94,167,.15);border-top:none;padding:12px 24px;}
+.name-row label{font-size:.72rem;font-weight:700;color:#7B5EA7;letter-spacing:.08em;display:block;margin-bottom:4px;}
+.name-row input{background:transparent;border:none;border-bottom:2px solid rgba(123,94,167,.3);width:100%;padding:5px 0;font-family:'Space Grotesk',sans-serif;font-size:.98rem;color:#fff;outline:none;}
+.sub-wrap{margin:20px 0 8px;text-align:center;}
+.sub-btn{background:#7B5EA7;color:#040810;border:none;padding:13px 44px;border-radius:50px;font-family:'Exo 2',sans-serif;font-size:1.05rem;font-weight:800;cursor:pointer;transition:all .2s;}
+.sub-btn:hover{transform:translateY(-2px);}
+#score-card{display:none;background:rgba(255,255,255,.04);border:1px solid rgba(123,94,167,.25);border-top:4px solid #7B5EA7;border-radius:14px;padding:34px 28px;text-align:center;margin:18px 0;animation:fi .4s ease;}
+#score-card h2{font-family:'Exo 2',sans-serif;font-size:1.4rem;color:#fff;margin-bottom:8px;}
+#score-num{font-family:'Exo 2',sans-serif;font-size:4.5rem;font-weight:800;color:#7B5EA7;line-height:1;margin:10px 0 5px;}
+#score-pct,#score-msg,#score-name{font-size:.9rem;color:rgba(192,204,224,.65);margin-top:4px;}
+.retry-btn{margin-top:18px;background:transparent;color:#7B5EA7;border:1.5px solid #7B5EA7;padding:8px 28px;border-radius:50px;font-family:'Exo 2',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;}
+/* Light mode */
+body.light-mode{background:#EEF2F7!important;color:#1A2A3A!important;}
+body.light-mode .card,body.light-mode .qcard{background:#fff!important;border-color:rgba(0,0,0,.09)!important;}
+body.light-mode .q-text,body.light-mode .callout p,body.light-mode .callout li,body.light-mode .stbl td{color:rgba(13,31,48,.75)!important;}
+body.light-mode .stbl td:first-child{color:#0D1F30!important;}
+body.light-mode .opt{background:#f8fafb!important;border-color:rgba(0,0,0,.1)!important;color:rgba(13,31,48,.72)!important;}
+body.light-mode .tfbtn{background:#f8fafb!important;border-color:rgba(0,0,0,.1)!important;color:rgba(13,31,48,.65)!important;}
+body.light-mode .callout{background:rgba(0,0,0,.04)!important;}
+body.light-mode .tab-nav{border-bottom-color:rgba(0,0,0,.1)!important;}
+body.light-mode .tab-btn{color:rgba(13,31,48,.4)!important;}
+body.light-mode .tab-btn.active{color:#7B5EA7!important;}
+body.light-mode .fill-wrap{color:#0D1F30!important;}
+body.light-mode .test-header,body.light-mode #score-card{background:#fff!important;border-color:rgba(0,0,0,.1)!important;}
+body.light-mode .test-header h2,body.light-mode #score-card h2{color:#0D1F30!important;}
+body.light-mode .name-row{background:rgba(0,0,0,.03)!important;border-color:rgba(0,0,0,.08)!important;}
+body.light-mode .name-row input{color:#0D1F30!important;}
+body.light-mode .prog-bar{background:rgba(0,0,0,.08)!important;}
+body.light-mode .gnav{background:rgba(255,255,255,.97)!important;border-bottom-color:rgba(0,0,0,.1)!important;}
+body.light-mode .gnav-logo,body.light-mode .gnav-link{color:#0D1F30!important;}
+body.light-mode .gnav-link.active{background:rgba(0,0,0,.08)!important;}
+body.light-mode .gnav-mobile{background:#fff!important;}
+body.light-mode .gnav-mlink{color:rgba(13,31,48,.65)!important;}
+footer{text-align:center;padding:28px 0;border-top:1px solid rgba(255,255,255,.06);}
+footer p{font-size:.78rem;color:rgba(192,204,224,.25);}
+footer a{color:rgba(123,94,167,.4);}
+body.light-mode footer{border-top-color:rgba(0,0,0,.08)!important;}
+body.light-mode footer p{color:rgba(13,31,48,.3)!important;}
+@media(max-width:540px){.page{padding:0 14px 60px;}.hero{padding:32px 0 20px;}.tab-btn{padding:9px 12px;font-size:12px;}}
+
+/* ── Global light-mode text readability ── */
+body.light-mode,
+body.light-mode .page,
+body.light-mode .tab-panel,
+body.light-mode .callout p,
+body.light-mode .callout li,
+body.light-mode .callout ul,
+body.light-mode .card p,
+body.light-mode .card li,
+body.light-mode .step-body p,
+body.light-mode .step-body li,
+body.light-mode .tip-card p,
+body.light-mode .mat-body p,
+body.light-mode .res-desc,
+body.light-mode .chk-text,
+body.light-mode .hero-sub,
+body.light-mode .ecard-desc,
+body.light-mode .about-card p,
+body.light-mode .about-card li,
+body.light-mode .shop-intro,
+body.light-mode .shop-tbl td,
+body.light-mode .stbl td,
+body.light-mode .truss-card p,
+body.light-mode .outline-subs li,
+body.light-mode .tab-btn,
+body.light-mode .sec-sub,
+body.light-mode .ecard-meta,
+body.light-mode .stat-dates,
+body.light-mode .hero-dates,
+body.light-mode .prog-meta,
+body.light-mode .shop-prog-label,
+body.light-mode .si-note,
+body.light-mode .si-dept,
+body.light-mode .mat-body p,
+body.light-mode .score-mini p { color: rgba(13,31,48,0.72) !important; }
+
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode h4,
+body.light-mode .hero h1,
+body.light-mode .sec-title,
+body.light-mode .section-title,
+body.light-mode .ecard-name,
+body.light-mode .res-title,
+body.light-mode .card h4,
+body.light-mode .step-body h4,
+body.light-mode .tip-card h4,
+body.light-mode .mat-body h4,
+body.light-mode .truss-name,
+body.light-mode .q-text,
+body.light-mode .fill-wrap,
+body.light-mode .test-header h2,
+body.light-mode #score-card h2,
+body.light-mode .si-name,
+body.light-mode .about-card h3,
+body.light-mode .stat-num,
+body.light-mode .gnav-logo { color: #0D1F30 !important; }
+
+body.light-mode .callout h4,
+body.light-mode .sec-hd h3,
+body.light-mode .section-heading { color: inherit !important; }
+
+body.light-mode .hero-eyebrow,
+body.light-mode .hero-ey,
+body.light-mode .hbadge,
+body.light-mode .hbadge-muted { color: rgba(13,31,48,0.55) !important;
+  background: rgba(0,0,0,.06) !important; border-color: rgba(0,0,0,.15) !important; }
+
+</style>
+</head>
+<body>
+<style>
+.gnav{position:sticky;top:0;z-index:300;background:rgba(8,8,24,0.97);border-bottom:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(12px);}
+.gnav-inner{display:flex;align-items:center;max-width:1080px;margin:0 auto;padding:0 20px;height:54px;gap:6px;}
+.gnav-logo{font-size:14px;font-weight:700;color:rgba(255,255,255,0.9);flex-shrink:0;padding:0 10px 0 0;border-right:1px solid rgba(255,255,255,0.1);margin-right:4px;text-decoration:none;font-family:'Space Grotesk',sans-serif;}
+.gnav-logo span{color:rgba(255,255,255,0.55);}
+.gnav-links{display:flex;gap:2px;flex:1;overflow-x:auto;scrollbar-width:none;}
+.gnav-links::-webkit-scrollbar{display:none;}
+.gnav-link{padding:5px 10px;border-radius:7px;font-size:12px;font-weight:600;color:rgba(200,216,232,0.6);white-space:nowrap;text-decoration:none;transition:all .15s;font-family:'Space Grotesk',sans-serif;}
+.gnav-link:hover{background:rgba(255,255,255,0.07);color:#fff;}
+.gnav-link.active{background:rgba(255,255,255,0.1);color:#fff;}
+.gnav-burger{display:none;background:none;border:none;color:rgba(255,255,255,0.7);font-size:20px;cursor:pointer;padding:4px;}
+.gnav-mobile{display:none;flex-direction:column;border-top:1px solid rgba(255,255,255,0.08);}
+.gnav-mobile.open{display:flex;}
+.gnav-mlink{padding:12px 20px;font-size:13px;font-weight:600;color:rgba(200,216,232,0.7);border-bottom:1px solid rgba(255,255,255,0.05);text-decoration:none;}
+.gnav-mlink.active{color:#fff;background:rgba(255,255,255,0.06);}
+#theme-toggle{width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.75);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;line-height:1;}
+#theme-toggle:hover{background:rgba(255,255,255,0.14);}
+body.light-mode #theme-toggle{border-color:rgba(0,0,0,0.15);background:rgba(0,0,0,0.06);color:rgba(0,0,0,0.6);}
+@media(max-width:700px){.gnav-links{display:none;}.gnav-burger{display:block;}}
+</style>
+<script>function toggleMenu(){document.getElementById('gnav-mobile').classList.toggle('open');}</script>
+<nav class="gnav" id="gnav">
+  <div class="gnav-inner">
+    <a class="gnav-logo" href="index.html">⚗️ <span>VA Olympiad</span></a>
+    <div class="gnav-links"><a class="gnav-link" href="index.html">Home</a><a class="gnav-link" href="bridge.html">🌉 Bridge</a><a class="gnav-link" href="tower.html">🏗️ Tower</a><a class="gnav-link" href="lander.html">🚀 Lander</a><a class="gnav-link" href="bungee.html">🥚 Bungee</a><a class="gnav-link" href="ocean.html">🌊 Ocean</a><a class="gnav-link" href="data.html">📊 Data</a><a class="gnav-link active" href="nervous.html">🧠 Nervous Sys</a><a class="gnav-link" href="shock.html">⚡ Shock Value</a></div>
+    <button class="gnav-burger" onclick="toggleMenu()" aria-label="menu">☰</button>
+    <button id="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode" aria-label="Toggle theme">🌙</button>
+  </div>
+  <div class="gnav-mobile" id="gnav-mobile"><a class="gnav-mlink" href="index.html">Home</a><a class="gnav-mlink" href="bridge.html">🌉 Bridge</a><a class="gnav-mlink" href="tower.html">🏗️ Tower</a><a class="gnav-mlink" href="lander.html">🚀 Lander</a><a class="gnav-mlink" href="bungee.html">🥚 Bungee</a><a class="gnav-mlink" href="ocean.html">🌊 Ocean</a><a class="gnav-mlink" href="data.html">📊 Data</a><a class="gnav-mlink active" href="nervous.html">🧠 Nervous Sys</a><a class="gnav-mlink" href="shock.html">⚡ Shock Value</a></div>
+</nav>
+<div class="page">
+  <div class="hero">
+    <div class="hero-ey">VA Division A · Written Event</div>
+    <h1>🧠 <span>Nervous System</span></h1>
+    <p class="hero-sub">Master the anatomy of the nervous system, how neurons communicate, CNS vs PNS, sensory organs, and effects of drugs on the brain.</p>
+    <div class="hbadges"><span class="hb">Written Event</span><span class="hb">Grades 3–4</span><span class="hb hb-m">30-minute test</span><span class="hb hb-m">No safety gear needed</span></div>
+  </div>
+  <div class="tab-nav"><button class="tab-btn active" onclick="showTab('overview',this)">Overview</button><button class="tab-btn" onclick="showTab('topics',this)">Topics</button><button class="tab-btn" onclick="showTab('vocab',this)">Vocabulary</button><button class="tab-btn" onclick="showTab('test',this)">Practice Test</button></div>
+  <div class="tab-panel active" id="tab-overview">
+<div class="sec-title">Event Overview</div>
+<div class="sec-sub">From the official VA Division A Rules Manual</div>
+<div class="callout c-a">
+  <h4>The Competition</h4>
+  <p>Teams take a written test of 25–50 questions on the human nervous system with an emphasis on the function of the brain. 30-minute session on the written test schedule. No safety equipment required.</p>
+</div>
+<div class="callout c-y">
+  <h4>What to Bring</h4>
+  <ul><li>Writing utensils (pencil or pen)</li><li>No calculator needed</li><li>No safety equipment required for this event</li></ul>
+</div>
+<div class="callout c-a">
+  <h4>Official Test Topics (from rules manual)</h4>
+  <ul>
+    <li>Neurons — anatomy and physiology of neurons including impulses</li>
+    <li>Brain &amp; Spinal Cord — structure and function</li>
+    <li>Central and Peripheral Nervous System — similarities and differences</li>
+    <li>Somatic and Autonomic Nervous System</li>
+    <li>Effects of drugs on the nervous system</li>
+    <li>Types of sensory organs — General &amp; Special Senses</li>
+    <li>Mechanism of Proprioception</li>
+    <li>Physiology of Sight, Smell, Hearing, Taste, and Balance</li>
+  </ul>
+</div></div><div class="tab-panel" id="tab-topics">
+<div class="sec-title">Core Topics</div>
+<div class="sec-sub">Study all sections below</div>
+<div class="grid2">
+  <div class="card"><h4>🧠 The Brain — Major Regions</h4><ul>
+    <li><b style="color:#fff;">Cerebrum:</b> Largest part. Thinking, feeling, moving, language, memory. Divided into 4 lobes.</li>
+    <li><b style="color:#fff;">Frontal lobe:</b> Planning, movement, personality, speech (Broca's area)</li>
+    <li><b style="color:#fff;">Parietal lobe:</b> Sensory processing, spatial awareness</li>
+    <li><b style="color:#fff;">Temporal lobe:</b> Hearing, memory, language comprehension (Wernicke's area)</li>
+    <li><b style="color:#fff;">Occipital lobe:</b> Vision processing</li>
+    <li><b style="color:#fff;">Cerebellum:</b> Balance, coordination, posture</li>
+    <li><b style="color:#fff;">Brain stem:</b> Breathing, heart rate, sleep-wake cycles, connects brain to spinal cord</li>
+  </ul></div>
+  <div class="card"><h4>🔌 Neurons &amp; Impulses</h4><ul>
+    <li><b style="color:#fff;">Neuron:</b> Basic unit of the nervous system — transmits electrical signals</li>
+    <li><b style="color:#fff;">Dendrites:</b> Receive signals from other neurons</li>
+    <li><b style="color:#fff;">Cell body (soma):</b> Contains the nucleus; processes signals</li>
+    <li><b style="color:#fff;">Axon:</b> Sends signals away from cell body</li>
+    <li><b style="color:#fff;">Myelin sheath:</b> Fatty coating that speeds signal transmission</li>
+    <li><b style="color:#fff;">Synapse:</b> Gap between neurons; signals cross via neurotransmitters</li>
+    <li><b style="color:#fff;">Action potential:</b> Electrical impulse traveling along the axon</li>
+  </ul></div>
+  <div class="card"><h4>🌐 CNS vs PNS</h4><ul>
+    <li><b style="color:#fff;">CNS (Central Nervous System):</b> Brain + Spinal Cord</li>
+    <li><b style="color:#fff;">PNS (Peripheral Nervous System):</b> All nerves outside brain/spinal cord</li>
+    <li><b style="color:#fff;">Sensory (afferent) nerves:</b> Carry signals TO the CNS</li>
+    <li><b style="color:#fff;">Motor (efferent) nerves:</b> Carry signals FROM the CNS to muscles/glands</li>
+    <li><b style="color:#fff;">Somatic NS:</b> Voluntary muscle control</li>
+    <li><b style="color:#fff;">Autonomic NS:</b> Involuntary — controls organs, glands, heart rate</li>
+    <li><b style="color:#fff;">Sympathetic:</b> Fight-or-flight response</li>
+    <li><b style="color:#fff;">Parasympathetic:</b> Rest-and-digest response</li>
+  </ul></div>
+  <div class="card"><h4>👁️ Special Senses</h4><ul>
+    <li><b style="color:#fff;">Sight:</b> Retina (rods = dim light; cones = color) → optic nerve → occipital lobe</li>
+    <li><b style="color:#fff;">Hearing:</b> Eardrum → ossicles (hammer, anvil, stirrup) → cochlea → auditory nerve</li>
+    <li><b style="color:#fff;">Smell:</b> Olfactory receptors in nasal epithelium → olfactory nerve → brain</li>
+    <li><b style="color:#fff;">Taste:</b> Taste buds on tongue (sweet, sour, salty, bitter, umami)</li>
+    <li><b style="color:#fff;">Balance:</b> Semicircular canals and vestibule in inner ear</li>
+    <li><b style="color:#fff;">Proprioception:</b> Sense of body position from muscles and joints</li>
+  </ul></div>
+  <div class="card"><h4>💊 Drugs &amp; the Nervous System</h4><ul>
+    <li><b style="color:#fff;">Stimulants:</b> Speed up CNS activity (caffeine, amphetamines)</li>
+    <li><b style="color:#fff;">Depressants:</b> Slow down CNS activity (alcohol, barbiturates)</li>
+    <li><b style="color:#fff;">Hallucinogens:</b> Alter perception (LSD, psilocybin)</li>
+    <li><b style="color:#fff;">Opioids:</b> Block pain signals, highly addictive (morphine, heroin)</li>
+    <li>Drugs affect neurotransmitters — they can mimic, block, or flood receptors</li>
+    <li>Long-term drug use can cause permanent changes to brain structure</li>
+  </ul></div>
+  <div class="card"><h4>🏛️ Other Brain Structures</h4><ul>
+    <li><b style="color:#fff;">Thalamus:</b> Relay station — routes sensory info to correct brain area</li>
+    <li><b style="color:#fff;">Hypothalamus:</b> Regulates temperature, hunger, thirst, hormones</li>
+    <li><b style="color:#fff;">Amygdala:</b> Processes emotions, especially fear</li>
+    <li><b style="color:#fff;">Hippocampus:</b> Long-term memory formation and retrieval</li>
+    <li><b style="color:#fff;">Corpus callosum:</b> Band of fibers connecting left &amp; right cerebral hemispheres</li>
+    <li><b style="color:#fff;">Pituitary gland:</b> Master endocrine gland controlled by hypothalamus</li>
+    <li><b style="color:#fff;">Basal ganglia:</b> Movement coordination and habit formation</li>
+  </ul></div>
+</div></div><div class="tab-panel" id="tab-vocab">
+<div class="sec-title">Key Vocabulary</div>
+<div class="sec-sub">Know every term before test day</div>
+<table class="stbl">
+  <thead><tr><th>Term</th><th>Definition</th></tr></thead>
+  <tbody>
+    <tr><td>Neuron</td><td>The basic functional unit of the nervous system; a nerve cell that transmits electrical impulses.</td></tr>
+    <tr><td>Dendrites</td><td>Branch-like extensions of a neuron that receive incoming signals from other neurons.</td></tr>
+    <tr><td>Axon</td><td>The long fiber of a neuron that carries electrical impulses away from the cell body.</td></tr>
+    <tr><td>Myelin sheath</td><td>Fatty coating around an axon that insulates it and speeds signal conduction.</td></tr>
+    <tr><td>Synapse</td><td>The junction between two neurons where neurotransmitters carry signals across a gap.</td></tr>
+    <tr><td>Neurotransmitter</td><td>Chemical messenger released at a synapse to transmit signals between neurons.</td></tr>
+    <tr><td>Action potential</td><td>An electrical impulse that travels along the axon when the neuron fires.</td></tr>
+    <tr><td>CNS</td><td>Central Nervous System — the brain and spinal cord.</td></tr>
+    <tr><td>PNS</td><td>Peripheral Nervous System — all nerves outside the brain and spinal cord.</td></tr>
+    <tr><td>Somatic nervous system</td><td>Division of PNS controlling voluntary skeletal muscle movement.</td></tr>
+    <tr><td>Autonomic nervous system</td><td>Division of PNS controlling involuntary functions: heart, digestion, glands.</td></tr>
+    <tr><td>Sympathetic NS</td><td>Autonomic division that triggers fight-or-flight response (increases heart rate, dilates pupils).</td></tr>
+    <tr><td>Parasympathetic NS</td><td>Autonomic division that promotes rest-and-digest (slows heart rate, aids digestion).</td></tr>
+    <tr><td>Cerebrum</td><td>Largest brain region — responsible for thinking, movement, sensation, language, and memory.</td></tr>
+    <tr><td>Cerebellum</td><td>Brain region below the cerebrum that coordinates balance, posture, and smooth movement.</td></tr>
+    <tr><td>Brain stem</td><td>Connects brain to spinal cord; controls breathing, heart rate, and other vital functions.</td></tr>
+    <tr><td>Thalamus</td><td>Brain relay station that routes sensory information to appropriate cortical areas.</td></tr>
+    <tr><td>Hypothalamus</td><td>Regulates body temperature, hunger, thirst, and hormonal output from the pituitary gland.</td></tr>
+    <tr><td>Hippocampus</td><td>Critical for forming and retrieving long-term memories; located in temporal lobe.</td></tr>
+    <tr><td>Amygdala</td><td>Processes emotions especially fear and threat; part of the limbic system.</td></tr>
+    <tr><td>Proprioception</td><td>The sense of body position and movement, detected by receptors in muscles and joints.</td></tr>
+    <tr><td>Reflex arc</td><td>A neural pathway that bypasses the brain for rapid responses to stimuli (e.g., knee jerk).</td></tr>
+  </tbody>
+</table></div><div class="tab-panel" id="tab-test">
+<div class="test-header">
+  <h2>🧠 Nervous System Practice Test</h2>
+  <div class="sub">VA Division A · Written Event · <span style="color:#7B5EA7;font-weight:700;">35 points</span></div>
+  <div class="prog-bar"><div class="prog-fill" id="prog-fill"></div></div>
+  <div class="prog-meta"><span id="prog-label">0 answered</span><span id="prog-pct">0%</span></div>
+</div>
+<div class="name-row"><label>NAME</label><input id="sname" type="text" placeholder="Enter your name..." autocomplete="off"></div>
+
+<div class="sec-hd" style="margin-top:0;"><h3>⭕ Part 1 — Multiple Choice</h3><span class="pts-badge">15 pts</span></div>
+
+<div class="qcard" id="qc-n1"><div class="q-num">Question 1</div><div class="q-text">Which part of the brain is responsible for balance and coordination?</div><div class="opts"><label class="opt"><input type="radio" name="n1" value="A"><span class="dot"></span>Cerebrum</label><label class="opt"><input type="radio" name="n1" value="B"><span class="dot"></span>Cerebellum</label><label class="opt"><input type="radio" name="n1" value="C"><span class="dot"></span>Brain stem</label><label class="opt"><input type="radio" name="n1" value="D"><span class="dot"></span>Hypothalamus</label></div></div>
+<div class="qcard" id="qc-n2"><div class="q-num">Question 2</div><div class="q-text">What is the function of dendrites in a neuron?</div><div class="opts"><label class="opt"><input type="radio" name="n2" value="A"><span class="dot"></span>Send signals away from the cell body</label><label class="opt"><input type="radio" name="n2" value="B"><span class="dot"></span>Receive signals from other neurons</label><label class="opt"><input type="radio" name="n2" value="C"><span class="dot"></span>Produce myelin sheath</label><label class="opt"><input type="radio" name="n2" value="D"><span class="dot"></span>Connect brain to spinal cord</label></div></div>
+<div class="qcard" id="qc-n3"><div class="q-num">Question 3</div><div class="q-text">Which division of the nervous system controls voluntary muscle movement?</div><div class="opts"><label class="opt"><input type="radio" name="n3" value="A"><span class="dot"></span>Autonomic nervous system</label><label class="opt"><input type="radio" name="n3" value="B"><span class="dot"></span>Sympathetic nervous system</label><label class="opt"><input type="radio" name="n3" value="C"><span class="dot"></span>Somatic nervous system</label><label class="opt"><input type="radio" name="n3" value="D"><span class="dot"></span>Parasympathetic nervous system</label></div></div>
+<div class="qcard" id="qc-n4"><div class="q-num">Question 4</div><div class="q-text">Neurotransmitters are released at which location?</div><div class="opts"><label class="opt"><input type="radio" name="n4" value="A"><span class="dot"></span>Along the axon</label><label class="opt"><input type="radio" name="n4" value="B"><span class="dot"></span>In the cell body</label><label class="opt"><input type="radio" name="n4" value="C"><span class="dot"></span>At the synapse</label><label class="opt"><input type="radio" name="n4" value="D"><span class="dot"></span>In the myelin sheath</label></div></div>
+<div class="qcard" id="qc-n5"><div class="q-num">Question 5</div><div class="q-text">The cerebrum's occipital lobe is primarily responsible for:</div><div class="opts"><label class="opt"><input type="radio" name="n5" value="A"><span class="dot"></span>Hearing and memory</label><label class="opt"><input type="radio" name="n5" value="B"><span class="dot"></span>Planning and personality</label><label class="opt"><input type="radio" name="n5" value="C"><span class="dot"></span>Vision processing</label><label class="opt"><input type="radio" name="n5" value="D"><span class="dot"></span>Sensory processing and spatial awareness</label></div></div>
+<div class="qcard" id="qc-n6"><div class="q-num">Question 6</div><div class="q-text">The "fight-or-flight" response is controlled by which system?</div><div class="opts"><label class="opt"><input type="radio" name="n6" value="A"><span class="dot"></span>Parasympathetic nervous system</label><label class="opt"><input type="radio" name="n6" value="B"><span class="dot"></span>Somatic nervous system</label><label class="opt"><input type="radio" name="n6" value="C"><span class="dot"></span>Sympathetic nervous system</label><label class="opt"><input type="radio" name="n6" value="D"><span class="dot"></span>Central nervous system</label></div></div>
+<div class="qcard" id="qc-n7"><div class="q-num">Question 7</div><div class="q-text">Which brain structure serves as a relay station routing sensory information to the correct brain area?</div><div class="opts"><label class="opt"><input type="radio" name="n7" value="A"><span class="dot"></span>Hypothalamus</label><label class="opt"><input type="radio" name="n7" value="B"><span class="dot"></span>Thalamus</label><label class="opt"><input type="radio" name="n7" value="C"><span class="dot"></span>Amygdala</label><label class="opt"><input type="radio" name="n7" value="D"><span class="dot"></span>Hippocampus</label></div></div>
+<div class="qcard" id="qc-n8"><div class="q-num">Question 8</div><div class="q-text">What is proprioception?</div><div class="opts"><label class="opt"><input type="radio" name="n8" value="A"><span class="dot"></span>The sense of smell via olfactory nerves</label><label class="opt"><input type="radio" name="n8" value="B"><span class="dot"></span>The ability to detect body position and movement</label><label class="opt"><input type="radio" name="n8" value="C"><span class="dot"></span>The process of converting light to electrical signals</label><label class="opt"><input type="radio" name="n8" value="D"><span class="dot"></span>The mechanism for detecting temperature</label></div></div>
+<div class="qcard" id="qc-n9"><div class="q-num">Question 9</div><div class="q-text">Depressant drugs affect the nervous system by:</div><div class="opts"><label class="opt"><input type="radio" name="n9" value="A"><span class="dot"></span>Speeding up CNS activity</label><label class="opt"><input type="radio" name="n9" value="B"><span class="dot"></span>Mimicking dopamine exclusively</label><label class="opt"><input type="radio" name="n9" value="C"><span class="dot"></span>Slowing down CNS activity</label><label class="opt"><input type="radio" name="n9" value="D"><span class="dot"></span>Only affecting peripheral nerves</label></div></div>
+<div class="qcard" id="qc-n10"><div class="q-num">Question 10</div><div class="q-text">Which part of the ear contains the organ of hearing (cochlea)?</div><div class="opts"><label class="opt"><input type="radio" name="n10" value="A"><span class="dot"></span>Outer ear</label><label class="opt"><input type="radio" name="n10" value="B"><span class="dot"></span>Middle ear</label><label class="opt"><input type="radio" name="n10" value="C"><span class="dot"></span>Inner ear</label><label class="opt"><input type="radio" name="n10" value="D"><span class="dot"></span>Eardrum (tympanic membrane)</label></div></div>
+<div class="qcard" id="qc-n11"><div class="q-num">Question 11</div><div class="q-text">The corpus callosum connects:</div><div class="opts"><label class="opt"><input type="radio" name="n11" value="A"><span class="dot"></span>The brain stem to the spinal cord</label><label class="opt"><input type="radio" name="n11" value="B"><span class="dot"></span>The thalamus to the hypothalamus</label><label class="opt"><input type="radio" name="n11" value="C"><span class="dot"></span>The left and right cerebral hemispheres</label><label class="opt"><input type="radio" name="n11" value="D"><span class="dot"></span>The cerebrum to the cerebellum</label></div></div>
+<div class="qcard" id="qc-n12"><div class="q-num">Question 12</div><div class="q-text">Which neuron part is covered by myelin sheath?</div><div class="opts"><label class="opt"><input type="radio" name="n12" value="A"><span class="dot"></span>Dendrites</label><label class="opt"><input type="radio" name="n12" value="B"><span class="dot"></span>Cell body</label><label class="opt"><input type="radio" name="n12" value="C"><span class="dot"></span>Axon</label><label class="opt"><input type="radio" name="n12" value="D"><span class="dot"></span>Nucleus</label></div></div>
+<div class="qcard" id="qc-n13"><div class="q-num">Question 13</div><div class="q-text">A reflex arc is notable because it:</div><div class="opts"><label class="opt"><input type="radio" name="n13" value="A"><span class="dot"></span>Requires a conscious decision</label><label class="opt"><input type="radio" name="n13" value="B"><span class="dot"></span>Can bypass the brain for rapid response</label><label class="opt"><input type="radio" name="n13" value="C"><span class="dot"></span>Only occurs in the somatic nervous system</label><label class="opt"><input type="radio" name="n13" value="D"><span class="dot"></span>Is controlled entirely by the cerebellum</label></div></div>
+<div class="qcard" id="qc-n14"><div class="q-num">Question 14</div><div class="q-text">The hippocampus is primarily involved in:</div><div class="opts"><label class="opt"><input type="radio" name="n14" value="A"><span class="dot"></span>Regulating body temperature</label><label class="opt"><input type="radio" name="n14" value="B"><span class="dot"></span>Processing emotions and fear</label><label class="opt"><input type="radio" name="n14" value="C"><span class="dot"></span>Long-term memory formation and retrieval</label><label class="opt"><input type="radio" name="n14" value="D"><span class="dot"></span>Coordinating balance and posture</label></div></div>
+<div class="qcard" id="qc-n15"><div class="q-num">Question 15</div><div class="q-text">Rods in the retina are specialized for:</div><div class="opts"><label class="opt"><input type="radio" name="n15" value="A"><span class="dot"></span>Color vision in bright light</label><label class="opt"><input type="radio" name="n15" value="B"><span class="dot"></span>Detecting motion in dim/low light</label><label class="opt"><input type="radio" name="n15" value="C"><span class="dot"></span>Processing depth perception</label><label class="opt"><input type="radio" name="n15" value="D"><span class="dot"></span>Transmitting signals to the temporal lobe</label></div></div>
+
+<div class="sec-hd"><h3>✅ Part 2 — True or False</h3><span class="pts-badge">10 pts</span></div>
+
+<div class="qcard" id="qc-tf31"><div class="q-num">Question 16</div><div class="q-text">The spinal cord is part of the Central Nervous System.</div><div class="tf"><button class="tfbtn" onclick="doTF(31,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(31,'FALSE',this)">❌ FALSE</button></div></div>
+<div class="qcard" id="qc-tf32"><div class="q-num">Question 17</div><div class="q-text">Sensory (afferent) nerves carry signals FROM the CNS to the body.</div><div class="tf"><button class="tfbtn" onclick="doTF(32,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(32,'FALSE',this)">❌ FALSE</button></div></div>
+<div class="qcard" id="qc-tf33"><div class="q-num">Question 18</div><div class="q-text">The cerebellum is responsible for higher-level thinking and personality.</div><div class="tf"><button class="tfbtn" onclick="doTF(33,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(33,'FALSE',this)">❌ FALSE</button></div></div>
+<div class="qcard" id="qc-tf34"><div class="q-num">Question 19</div><div class="q-text">The myelin sheath speeds up the transmission of electrical signals along an axon.</div><div class="tf"><button class="tfbtn" onclick="doTF(34,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(34,'FALSE',this)">❌ FALSE</button></div></div>
+<div class="qcard" id="qc-tf35"><div class="q-num">Question 20</div><div class="q-text">The autonomic nervous system controls voluntary movements like walking.</div><div class="tf"><button class="tfbtn" onclick="doTF(35,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(35,'FALSE',this)">❌ FALSE</button></div></div>
+<div class="qcard" id="qc-tf36"><div class="q-num">Question 21</div><div class="q-text">Stimulant drugs increase CNS activity, while depressants decrease it.</div><div class="tf"><button class="tfbtn" onclick="doTF(36,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(36,'FALSE',this)">❌ FALSE</button></div></div>
+<div class="qcard" id="qc-tf37"><div class="q-num">Question 22</div><div class="q-text">The inner ear contains structures responsible for both hearing and balance.</div><div class="tf"><button class="tfbtn" onclick="doTF(37,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(37,'FALSE',this)">❌ FALSE</button></div></div>
+<div class="qcard" id="qc-tf38"><div class="q-num">Question 23</div><div class="q-text">The amygdala is primarily involved in processing emotions, especially fear.</div><div class="tf"><button class="tfbtn" onclick="doTF(38,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(38,'FALSE',this)">❌ FALSE</button></div></div>
+<div class="qcard" id="qc-tf39"><div class="q-num">Question 24</div><div class="q-text">An action potential travels from the dendrites, through the cell body, along the axon.</div><div class="tf"><button class="tfbtn" onclick="doTF(39,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(39,'FALSE',this)">❌ FALSE</button></div></div>
+<div class="qcard" id="qc-tf40"><div class="q-num">Question 25</div><div class="q-text">The parasympathetic nervous system triggers the fight-or-flight response.</div><div class="tf"><button class="tfbtn" onclick="doTF(40,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(40,'FALSE',this)">❌ FALSE</button></div></div>
+
+<div class="sec-hd"><h3>📝 Part 3 — Fill in the Blank</h3><span class="pts-badge">10 pts</span></div>
+<div class="qcard" id="qc-nf1"><div class="q-num">Question 26</div><div class="fill-wrap">The junction between two neurons where chemical signals are passed is called the <input class="blank" id="nf1" placeholder="__________">.</div></div>
+<div class="qcard" id="qc-nf2"><div class="q-num">Question 27</div><div class="fill-wrap">The brain region that regulates hunger, thirst, and body temperature is the <input class="blank" id="nf2" placeholder="__________">.</div></div>
+<div class="qcard" id="qc-nf3"><div class="q-num">Question 28</div><div class="fill-wrap">The fatty coating around an axon that speeds up nerve impulse transmission is called the <input class="blank" id="nf3" placeholder="__________">.</div></div>
+<div class="qcard" id="qc-nf4"><div class="q-num">Question 29</div><div class="fill-wrap">The three smallest bones in the body, found in the ear, are collectively called the <input class="blank" id="nf4" placeholder="__________">.</div></div>
+<div class="qcard" id="qc-nf5"><div class="q-num">Question 30</div><div class="fill-wrap">Detecting your own body's position and movement without looking is called <input class="blank" id="nf5" placeholder="__________">.</div></div>
+
+<div class="sub-wrap"><button class="sub-btn" onclick="submitTest()">Submit Answers</button></div>
+<div id="score-card"><h2>Test Complete!</h2><div id="score-num">--</div><div id="score-pct"></div><div id="score-emoji" style="font-size:2.2rem;margin-top:8px;"></div><div id="score-msg" style="margin-top:6px;"></div><div id="score-name"></div><button class="retry-btn" onclick="location.reload()">Try Again</button></div>
+
+<script>
+Object.assign(MC,{n1:'B',n2:'B',n3:'C',n4:'C',n5:'C',n6:'C',n7:'B',n8:'B',n9:'C',n10:'C',n11:'C',n12:'C',n13:'B',n14:'C',n15:'B'});
+Object.assign(TF,{31:'TRUE',32:'FALSE',33:'FALSE',34:'TRUE',35:'FALSE',36:'TRUE',37:'TRUE',38:'TRUE',39:'TRUE',40:'FALSE'});
+Object.assign(FILL,{nf1:['synapse'],nf2:['hypothalamus'],nf3:['myelin','myelin sheath'],nf4:['ossicles'],nf5:['proprioception']});
+</script></div>
+</div>
+<footer><p>Nervous System — VA Division A 2025–2026 &nbsp;·&nbsp; <a href="index.html">Back to portal</a></p></footer>
+<script>
+function showTab(id,btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');btn.classList.add('active');
+  window.scrollTo({top:document.querySelector('.tab-nav').offsetTop-60,behavior:'smooth'});
+}
+const MC={};const TF={};const FILL={};const TOTAL_Q=[];let tfSel={};
+function cnt(){let n=0;Object.keys(MC).forEach(nm=>{if(document.querySelector('input[name="'+nm+'"]:checked'))n++;});Object.keys(TF).forEach(k=>{if(tfSel[k])n++;});Object.keys(FILL).forEach(id=>{if(document.getElementById(id)?.value.trim())n++;});return n;}
+function upProg(){const n=cnt();const t=Object.keys(MC).length+Object.keys(TF).length+Object.keys(FILL).length;const p=t?Math.round(n/t*100):0;const pf=document.getElementById('prog-fill');const pl=document.getElementById('prog-label');const pp=document.getElementById('prog-pct');if(pf)pf.style.width=p+'%';if(pl)pl.textContent=n+' of '+t+' answered';if(pp)pp.textContent=p+'%';}
+document.addEventListener('change',function(e){if(e.target.type==='radio'){document.querySelectorAll('input[name="'+e.target.name+'"]').forEach(r=>r.closest('.opt').classList.remove('sel'));e.target.closest('.opt').classList.add('sel');upProg();}});
+document.addEventListener('input',function(e){if(e.target.classList.contains('blank'))upProg();});
+window.doTF=function(qn,val,btn){document.getElementById('qc-tf'+qn).querySelectorAll('.tfbtn').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');tfSel[qn]=val;upProg();};
+window.submitTest=function(){
+  let score=0;
+  Object.entries(MC).forEach(([nm,correct])=>{
+    const card=document.getElementById('qc-'+nm);const sel=document.querySelector('input[name="'+nm+'"]:checked');
+    document.querySelectorAll('input[name="'+nm+'"]').forEach(r=>{if(r.value===correct)r.closest('.opt').classList.add('c-ok');});
+    if(sel){if(sel.value===correct){score++;card.classList.add('correct');}else{sel.closest('.opt').classList.add('c-no');card.classList.add('wrong');}}else card.classList.add('wrong');
+    document.querySelectorAll('input[name="'+nm+'"]').forEach(r=>r.disabled=true);
+  });
+  Object.entries(TF).forEach(([k,correct])=>{
+    const card=document.getElementById('qc-tf'+k);const given=tfSel[parseInt(k)];
+    card.querySelectorAll('.tfbtn').forEach(btn=>{const v=btn.textContent.includes('TRUE')?'TRUE':'FALSE';if(v===correct)btn.classList.add('c-ok');if(v===given&&given!==correct)btn.classList.add('c-no');btn.disabled=true;btn.style.cursor='default';});
+    if(given===correct){score++;card.classList.add('correct');}else card.classList.add('wrong');
+  });
+  Object.entries(FILL).forEach(([id,accepts])=>{
+    const el=document.getElementById(id);const card=document.getElementById('qc-'+id);const val=el.value.trim().toLowerCase();
+    if(accepts.some(a=>val.includes(a))){score++;el.classList.add('c-ok');card.classList.add('correct');}else{el.classList.add('c-no');card.classList.add('wrong');}el.readOnly=true;
+  });
+  const total=Object.keys(MC).length+Object.keys(TF).length+Object.keys(FILL).length;
+  const pct=Math.round(score/total*100);
+  const name=document.getElementById('sname')?.value.trim()||'Student';
+  let emoji='📚🔄',msg='Review the study slides and try again!';
+  if(pct>=90){emoji='🏆🌟';msg='Outstanding — you are ready for competition!';}
+  else if(pct>=75){emoji='🌟👍';msg='Great work! Review any missed questions.';}
+  else if(pct>=60){emoji='💪📖';msg='Good effort — focus on the areas you missed.';}
+  document.getElementById('score-num').textContent=score+'/'+total;
+  document.getElementById('score-pct').textContent=pct+'% correct';
+  document.getElementById('score-msg').textContent=msg;
+  document.getElementById('score-name').textContent=name+"'s result";
+  document.getElementById('score-emoji').textContent=emoji;
+  document.querySelector('.sub-btn').style.display='none';
+  document.getElementById('score-card').style.display='block';
+  document.getElementById('score-card').scrollIntoView({behavior:'smooth',block:'center'});
+};
+// Override MC/TF/FILL with page-specific data injected below
+</script>
+<script>
+(function(){
+  const m=localStorage.getItem('va-theme')||'dark';
+  const btn=document.getElementById('theme-toggle');
+  if(m==='light'){document.body.classList.add('light-mode');if(btn)btn.textContent='🌙';}
+  else{if(btn)btn.textContent='☀️';}
+  window.toggleTheme=function(){
+    const l=document.body.classList.toggle('light-mode');
+    localStorage.setItem('va-theme',l?'light':'dark');
+    const b=document.getElementById('theme-toggle');
+    if(b)b.textContent=l?'🌙':'☀️';
+  };
+})();
+</script>
+</body>
+</html>

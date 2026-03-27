@@ -74,6 +74,76 @@ footer{text-align:center;padding:28px 0;border-top:1px solid rgba(255,255,255,.0
 footer p{font-size:.8rem;color:rgba(184,216,232,.25);}
 footer a{color:rgba(79,195,247,.4);}
 @media(max-width:540px){.page{padding:0 14px 60px;}.hero{padding:36px 0 24px;}.tab-btn{padding:9px 12px;font-size:12px;}}
+
+/* ── Global light-mode text readability ── */
+body.light-mode,
+body.light-mode .page,
+body.light-mode .tab-panel,
+body.light-mode .callout p,
+body.light-mode .callout li,
+body.light-mode .callout ul,
+body.light-mode .card p,
+body.light-mode .card li,
+body.light-mode .step-body p,
+body.light-mode .step-body li,
+body.light-mode .tip-card p,
+body.light-mode .mat-body p,
+body.light-mode .res-desc,
+body.light-mode .chk-text,
+body.light-mode .hero-sub,
+body.light-mode .ecard-desc,
+body.light-mode .about-card p,
+body.light-mode .about-card li,
+body.light-mode .shop-intro,
+body.light-mode .shop-tbl td,
+body.light-mode .stbl td,
+body.light-mode .truss-card p,
+body.light-mode .outline-subs li,
+body.light-mode .tab-btn,
+body.light-mode .sec-sub,
+body.light-mode .ecard-meta,
+body.light-mode .stat-dates,
+body.light-mode .hero-dates,
+body.light-mode .prog-meta,
+body.light-mode .shop-prog-label,
+body.light-mode .si-note,
+body.light-mode .si-dept,
+body.light-mode .mat-body p,
+body.light-mode .score-mini p { color: rgba(13,31,48,0.72) !important; }
+
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode h4,
+body.light-mode .hero h1,
+body.light-mode .sec-title,
+body.light-mode .section-title,
+body.light-mode .ecard-name,
+body.light-mode .res-title,
+body.light-mode .card h4,
+body.light-mode .step-body h4,
+body.light-mode .tip-card h4,
+body.light-mode .mat-body h4,
+body.light-mode .truss-name,
+body.light-mode .q-text,
+body.light-mode .fill-wrap,
+body.light-mode .test-header h2,
+body.light-mode #score-card h2,
+body.light-mode .si-name,
+body.light-mode .about-card h3,
+body.light-mode .stat-num,
+body.light-mode .gnav-logo { color: #0D1F30 !important; }
+
+body.light-mode .callout h4,
+body.light-mode .sec-hd h3,
+body.light-mode .section-heading { color: inherit !important; }
+
+body.light-mode .hero-eyebrow,
+body.light-mode .hero-ey,
+body.light-mode .hbadge,
+body.light-mode .hbadge-muted { color: rgba(13,31,48,0.55) !important;
+  background: rgba(0,0,0,.06) !important; border-color: rgba(0,0,0,.15) !important; }
+
 </style>
 
 <style id="theme-vars">
@@ -264,32 +334,37 @@ body.light-mode .chk-box { border-color: rgba(0,0,0,0.2) !important; }
 </style>
 </head>
 <body>
-<nav class="gnav"><div class="gnav-inner">
-    <a class="gnav-logo" href="index.html">⚗️ <span>VA Olympiad</span></a>
-    <div class="gnav-links"><a class="gnav-link" href="index.html">Home</a><a class="gnav-link" href="ocean.html">🌊 Ocean</a><a class="gnav-link" href="tower.html">🏗️ Tower</a><a class="gnav-link" href="bungee.html">🥚 Bungee</a><a class="gnav-link" href="lander.html">🚀 Lander</a><a class="gnav-link active" href="data.html">📊 Data</a></div>
-    <button id="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode" aria-label="Toggle theme">🌙</button>
-    <button class="gnav-burger" onclick="toggleMenu()">☰</button>
-  </div>
-  <div class="gnav-mobile" id="gnav-mobile"><a class="gnav-mlink" href="index.html">Home</a><a class="gnav-mlink" href="ocean.html">🌊 Ocean</a><a class="gnav-mlink" href="tower.html">🏗️ Tower</a><a class="gnav-mlink" href="bungee.html">🥚 Bungee</a><a class="gnav-mlink" href="lander.html">🚀 Lander</a><a class="gnav-mlink active" href="data.html">📊 Data</a></div>
-</nav>
 <style>
-.gnav{position:sticky;top:0;z-index:300;background:rgba(8,8,24,.97);border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(12px);}
-.gnav-inner{display:flex;align-items:center;max-width:1080px;margin:0 auto;padding:0 24px;height:54px;gap:6px;}
-.gnav-logo{font-size:14px;font-weight:700;color:rgba(255,255,255,.9);flex-shrink:0;padding-right:10px;border-right:1px solid rgba(255,255,255,.1);margin-right:4px;text-decoration:none;}
-.gnav-logo span{color:rgba(255,255,255,.55);}
+.gnav{position:sticky;top:0;z-index:300;background:rgba(8,8,24,0.97);border-bottom:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(12px);}
+.gnav-inner{display:flex;align-items:center;max-width:1080px;margin:0 auto;padding:0 20px;height:54px;gap:6px;}
+.gnav-logo{font-size:14px;font-weight:700;color:rgba(255,255,255,0.9);flex-shrink:0;padding:0 10px 0 0;border-right:1px solid rgba(255,255,255,0.1);margin-right:4px;text-decoration:none;font-family:'Space Grotesk',sans-serif;}
+.gnav-logo span{color:rgba(255,255,255,0.55);}
 .gnav-links{display:flex;gap:2px;flex:1;overflow-x:auto;scrollbar-width:none;}
 .gnav-links::-webkit-scrollbar{display:none;}
-.gnav-link{padding:6px 12px;border-radius:8px;font-size:12.5px;font-weight:600;color:rgba(200,216,232,.6);white-space:nowrap;text-decoration:none;transition:all .15s;}
-.gnav-link:hover{background:rgba(255,255,255,.07);color:#fff;}
-.gnav-link.active{background:rgba(255,255,255,.1);color:#fff;}
-.gnav-burger{display:none;background:none;border:none;color:rgba(255,255,255,.7);font-size:20px;cursor:pointer;}
-.gnav-mobile{display:none;flex-direction:column;border-top:1px solid rgba(255,255,255,.08);}
+.gnav-link{padding:5px 10px;border-radius:7px;font-size:12px;font-weight:600;color:rgba(200,216,232,0.6);white-space:nowrap;text-decoration:none;transition:all .15s;font-family:'Space Grotesk',sans-serif;}
+.gnav-link:hover{background:rgba(255,255,255,0.07);color:#fff;}
+.gnav-link.active{background:rgba(255,255,255,0.1);color:#fff;}
+.gnav-burger{display:none;background:none;border:none;color:rgba(255,255,255,0.7);font-size:20px;cursor:pointer;padding:4px;}
+.gnav-mobile{display:none;flex-direction:column;border-top:1px solid rgba(255,255,255,0.08);}
 .gnav-mobile.open{display:flex;}
-.gnav-mlink{padding:13px 24px;font-size:14px;font-weight:600;color:rgba(200,216,232,.7);border-bottom:1px solid rgba(255,255,255,.05);text-decoration:none;}
-.gnav-mlink.active{color:#fff;background:rgba(255,255,255,.06);}
-@media(max-width:680px){.gnav-links{display:none;}.gnav-burger{display:block;}}
+.gnav-mlink{padding:12px 20px;font-size:13px;font-weight:600;color:rgba(200,216,232,0.7);border-bottom:1px solid rgba(255,255,255,0.05);text-decoration:none;}
+.gnav-mlink.active{color:#fff;background:rgba(255,255,255,0.06);}
+#theme-toggle{width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.75);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;line-height:1;}
+#theme-toggle:hover{background:rgba(255,255,255,0.14);}
+body.light-mode #theme-toggle{border-color:rgba(0,0,0,0.15);background:rgba(0,0,0,0.06);color:rgba(0,0,0,0.6);}
+@media(max-width:700px){.gnav-links{display:none;}.gnav-burger{display:block;}}
 </style>
 <script>function toggleMenu(){document.getElementById('gnav-mobile').classList.toggle('open');}</script>
+<nav class="gnav" id="gnav">
+  <div class="gnav-inner">
+    <a class="gnav-logo" href="index.html">⚗️ <span>VA Olympiad</span></a>
+    <div class="gnav-links"><a class="gnav-link" href="index.html">Home</a><a class="gnav-link" href="bridge.html">🌉 Bridge</a><a class="gnav-link" href="tower.html">🏗️ Tower</a><a class="gnav-link" href="lander.html">🚀 Lander</a><a class="gnav-link" href="bungee.html">🥚 Bungee</a><a class="gnav-link" href="ocean.html">🌊 Ocean</a><a class="gnav-link active" href="data.html">📊 Data</a><a class="gnav-link" href="nervous.html">🧠 Nervous Sys</a><a class="gnav-link" href="shock.html">⚡ Shock Value</a></div>
+    <button class="gnav-burger" onclick="toggleMenu()" aria-label="menu">☰</button>
+    <button id="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode" aria-label="Toggle theme">🌙</button>
+  </div>
+  <div class="gnav-mobile" id="gnav-mobile"><a class="gnav-mlink" href="index.html">Home</a><a class="gnav-mlink" href="bridge.html">🌉 Bridge</a><a class="gnav-mlink" href="tower.html">🏗️ Tower</a><a class="gnav-mlink" href="lander.html">🚀 Lander</a><a class="gnav-mlink" href="bungee.html">🥚 Bungee</a><a class="gnav-mlink" href="ocean.html">🌊 Ocean</a><a class="gnav-mlink active" href="data.html">📊 Data</a><a class="gnav-mlink" href="nervous.html">🧠 Nervous Sys</a><a class="gnav-mlink" href="shock.html">⚡ Shock Value</a></div>
+</nav>
+
 <div class="page">
   <div class="hero">
     <div class="hero-ey">VA Division A · Written Event · Grades 3–4</div>
