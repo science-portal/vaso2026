@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>🥚 Bungee Egg Drop — Official Instructions</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Exo+2:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--_bg:#0D1B2A;--_panel:#1B2A3B;--_ar:224,92,64;--_pr:27,42,59;}
+
+:root{--bg:var(--_bg);--panel:var(--_panel);--accent:#E05C40;--al:rgba(224,92,64,0.15);--gold:#F5C842;--aqua:#4FC3F7;--lime:#8BC34A;--white:#fff;--silver:#C8D8E8;--dark:#04040e;}
+*{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--silver);min-height:100vh;overflow-x:hidden;}
+body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,0.025)1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.025)1px,transparent 1px);background-size:50px 50px;pointer-events:none;z-index:0;}
+.hero{background:linear-gradient(135deg,var(--panel)0%,#0a0818 100%);border-bottom:3px solid var(--accent);padding:50px 24px 42px;text-align:center;position:relative;z-index:1;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 120%,rgba(var(--_ar),.12)0%,transparent 70%);}
+.hero-icon{font-size:3.8rem;display:block;margin-bottom:14px;animation:bob 3s ease-in-out infinite;}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.hero h1{font-family:'Exo 2',sans-serif;font-size:clamp(2rem,5vw,3rem);font-weight:800;color:#fff;line-height:1.1;margin-bottom:10px;}
+.hero h1 span{color:var(--accent);}
+.hero p{font-size:1.05rem;color:var(--silver);max-width:600px;margin:0 auto 22px;line-height:1.65;}
+.pills{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.pill{padding:5px 16px;border-radius:999px;font-size:0.8rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;background:rgba(var(--_ar),.15);border:1px solid rgba(var(--_ar),.4);color:var(--accent);}
+.pill-gold{background:rgba(245,200,66,.15);border:1px solid rgba(245,200,66,.4);color:var(--gold);}
+.nav-bar{position:sticky;top:0;z-index:100;background:rgba(var(--_pr),.95);border-bottom:1px solid rgba(var(--_ar),.2);backdrop-filter:blur(8px);display:flex;justify-content:center;gap:6px;padding:10px 16px;flex-wrap:wrap;}
+.nav-btn{padding:6px 18px;border-radius:999px;background:transparent;border:1px solid rgba(var(--_ar),.25);color:var(--silver);font-family:'Space Grotesk',sans-serif;font-size:0.83rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all .18s;white-space:nowrap;}
+.nav-btn:hover{background:rgba(var(--_ar),.1);border-color:var(--accent);color:#fff;}
+.content{max-width:820px;margin:0 auto;padding:40px 20px 80px;position:relative;z-index:1;}
+.section{margin-bottom:48px;}
+.sec-title{font-family:'Exo 2',sans-serif;font-size:1.5rem;font-weight:800;color:#fff;margin-bottom:4px;display:flex;align-items:center;gap:10px;}
+.sec-sub{font-size:.88rem;color:rgba(200,216,232,.5);margin-bottom:20px;letter-spacing:.04em;}
+.divider{height:2px;margin-bottom:22px;background:linear-gradient(90deg,var(--accent),rgba(var(--_ar),.1));border-radius:2px;}
+.callout{border-radius:12px;padding:18px 22px;margin-bottom:18px;border-left:4px solid;}
+.c-a{background:rgba(var(--_ar),.08);border-color:var(--accent);}.c-a h4{color:var(--accent);}
+.c-g{background:rgba(245,200,66,.08);border-color:var(--gold);}.c-g h4{color:var(--gold);}
+.c-l{background:rgba(139,195,74,.08);border-color:var(--lime);}.c-l h4{color:var(--lime);}
+.c-q{background:rgba(79,195,247,.08);border-color:var(--aqua);}.c-q h4{color:var(--aqua);}
+.callout h4{font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;}
+.callout p,.callout li{font-size:.95rem;line-height:1.65;color:var(--silver);}
+.callout ul,.callout ol{padding-left:22px;display:flex;flex-direction:column;gap:5px;}
+.steps{display:flex;flex-direction:column;gap:14px;}
+.step{display:flex;gap:16px;align-items:flex-start;background:var(--panel);border:1px solid rgba(var(--_ar),.12);border-radius:12px;padding:16px 18px;}
+.step-num{width:34px;height:34px;flex-shrink:0;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:'Exo 2',sans-serif;font-size:1rem;font-weight:800;color:#fff;}
+.step-body h4{font-size:1rem;font-weight:700;color:#fff;margin-bottom:5px;}
+.step-body p{font-size:.92rem;color:var(--silver);line-height:1.6;}
+.step-body ul{padding-left:20px;margin-top:6px;display:flex;flex-direction:column;gap:4px;}
+.step-body li{font-size:.92rem;color:var(--silver);line-height:1.5;}
+.mat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;}
+.mat-card{background:var(--panel);border:1px solid rgba(var(--_ar),.12);border-radius:10px;padding:14px 16px;}
+.mat-card .mi{font-size:1.6rem;margin-bottom:6px;display:block;}
+.mat-card h4{font-size:.92rem;font-weight:700;color:var(--accent);margin-bottom:4px;}
+.mat-card p{font-size:.85rem;color:var(--silver);line-height:1.5;}
+.qty{display:inline-block;font-size:.75rem;font-weight:700;padding:2px 8px;border-radius:999px;background:rgba(var(--_ar),.15);color:var(--accent);border:1px solid rgba(var(--_ar),.3);margin-top:6px;}
+.stbl{width:100%;border-collapse:collapse;}
+.stbl th{background:rgba(var(--_pr),1);color:var(--gold);font-family:'Exo 2',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:12px 16px;text-align:left;border:1px solid rgba(var(--_ar),.2);}
+.stbl td{padding:11px 16px;border:1px solid rgba(var(--_ar),.1);font-size:.9rem;color:var(--silver);vertical-align:top;line-height:1.5;}
+.stbl tr:nth-child(even) td{background:rgba(255,255,255,.02);}
+.tips-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;}
+.tip-card{background:var(--panel);border:1px solid rgba(var(--_ar),.15);border-radius:10px;padding:16px;position:relative;overflow:hidden;}
+.tip-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.t1::before{background:var(--accent)}.t2::before{background:var(--gold)}.t3::before{background:var(--lime)}
+.t4::before{background:var(--aqua)}.t5::before{background:#7B5EA7}.t6::before{background:#00BFA5}
+.tip-card .ti{font-size:1.4rem;margin-bottom:8px;display:block;}
+.tip-card h4{font-size:.9rem;font-weight:700;color:#fff;margin-bottom:6px;}
+.tip-card p{font-size:.85rem;color:var(--silver);line-height:1.55;}
+.checklist{display:flex;flex-direction:column;gap:8px;}
+.chk{display:flex;align-items:flex-start;gap:12px;background:var(--panel);border:1px solid rgba(var(--_ar),.1);border-radius:9px;padding:12px 14px;}
+.cb{width:22px;height:22px;flex-shrink:0;border:2px solid rgba(var(--_ar),.4);border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.9rem;transition:all .15s;margin-top:1px;user-select:none;}
+.cb.chk-done{background:var(--accent);border-color:var(--accent);color:#fff;}
+.ct{font-size:.92rem;color:var(--silver);line-height:1.5;}
+.ct strong{color:#fff;}
+footer{text-align:center;padding:24px;position:relative;z-index:1;font-size:.82rem;color:rgba(200,216,232,.3);border-top:1px solid rgba(var(--_ar),.1);margin-top:20px;}
+footer span{color:rgba(var(--_ar),.5);}
+@media(max-width:500px){.hero h1{font-size:1.8rem;}.content{padding:24px 14px 60px;}}
+function tc(el){el.classList.toggle('chk-done');el.textContent=el.classList.contains('chk-done')?'✓':'';}
+
+
+/* ── Global light-mode text readability ── */
+body.light-mode,
+body.light-mode .page,
+body.light-mode .tab-panel,
+body.light-mode .callout p,
+body.light-mode .callout li,
+body.light-mode .callout ul,
+body.light-mode .card p,
+body.light-mode .card li,
+body.light-mode .step-body p,
+body.light-mode .step-body li,
+body.light-mode .tip-card p,
+body.light-mode .mat-body p,
+body.light-mode .res-desc,
+body.light-mode .chk-text,
+body.light-mode .hero-sub,
+body.light-mode .ecard-desc,
+body.light-mode .about-card p,
+body.light-mode .about-card li,
+body.light-mode .shop-intro,
+body.light-mode .shop-tbl td,
+body.light-mode .stbl td,
+body.light-mode .truss-card p,
+body.light-mode .outline-subs li,
+body.light-mode .tab-btn,
+body.light-mode .sec-sub,
+body.light-mode .ecard-meta,
+body.light-mode .stat-dates,
+body.light-mode .hero-dates,
+body.light-mode .prog-meta,
+body.light-mode .shop-prog-label,
+body.light-mode .si-note,
+body.light-mode .si-dept,
+body.light-mode .mat-body p,
+body.light-mode .score-mini p { color: rgba(13,31,48,0.72) !important; }
+
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode h4,
+body.light-mode .hero h1,
+body.light-mode .sec-title,
+body.light-mode .section-title,
+body.light-mode .ecard-name,
+body.light-mode .res-title,
+body.light-mode .card h4,
+body.light-mode .step-body h4,
+body.light-mode .tip-card h4,
+body.light-mode .mat-body h4,
+body.light-mode .truss-name,
+body.light-mode .q-text,
+body.light-mode .fill-wrap,
+body.light-mode .test-header h2,
+body.light-mode #score-card h2,
+body.light-mode .si-name,
+body.light-mode .about-card h3,
+body.light-mode .stat-num,
+body.light-mode .gnav-logo { color: #0D1F30 !important; }
+
+body.light-mode .callout h4,
+body.light-mode .sec-hd h3,
+body.light-mode .section-heading { color: inherit !important; }
+
+body.light-mode .hero-eyebrow,
+body.light-mode .hero-ey,
+body.light-mode .hbadge,
+body.light-mode .hbadge-muted { color: rgba(13,31,48,0.55) !important;
+  background: rgba(0,0,0,.06) !important; border-color: rgba(0,0,0,.15) !important; }
+
+</style>
+<style id="theme-vars">
+/* ── Light/Dark mode variables ── */
+:root {
+  --mode-bg1: #1A1A2E;
+  --mode-bg2: rgba(4,43,69,0.7);
+  --mode-nav: rgba(8,8,24,0.97);
+  --mode-nav-border: rgba(255,255,255,0.08);
+  --mode-text: #B8D8E8;
+  --mode-text-strong: #FFFFFF;
+  --mode-text-muted: rgba(184,216,232,0.5);
+  --mode-card-bg: rgba(4,43,69,0.7);
+  --mode-card-border: rgba(255,255,255,0.08);
+  --mode-input-bg: transparent;
+  --mode-input-color: #fff;
+  --mode-table-even: rgba(255,255,255,0.025);
+  --mode-section-bg: rgba(255,255,255,0.03);
+}
+body.light-mode {
+  --mode-bg1: #F0F4F8;
+  --mode-bg2: #FFFFFF;
+  --mode-nav: rgba(255,255,255,0.97);
+  --mode-nav-border: rgba(0,0,0,0.1);
+  --mode-text: #2A3E52;
+  --mode-text-strong: #0D1F30;
+  --mode-text-muted: rgba(42,62,82,0.5);
+  --mode-card-bg: #FFFFFF;
+  --mode-card-border: rgba(0,0,0,0.09);
+  --mode-input-bg: #fff;
+  --mode-input-color: #0D1F30;
+  --mode-table-even: rgba(0,0,0,0.03);
+  --mode-section-bg: rgba(0,0,0,0.03);
+}
+
+/* ── Toggle button ── */
+#theme-toggle {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.75);
+  cursor: pointer;
+  font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  line-height: 1;
+}
+#theme-toggle:hover { background: rgba(255,255,255,0.14); }
+body.light-mode #theme-toggle {
+  border-color: rgba(0,0,0,0.15);
+  background: rgba(0,0,0,0.06);
+  color: rgba(0,0,0,0.6);
+}
+body.light-mode #theme-toggle:hover { background: rgba(0,0,0,0.1); }
+
+/* ── Light mode nav overrides ── */
+body.light-mode .gnav {
+  background: rgba(255,255,255,0.97) !important;
+  border-bottom-color: rgba(0,0,0,0.1) !important;
+}
+body.light-mode .gnav-logo { color: #0D1F30 !important; border-right-color: rgba(0,0,0,0.12) !important; }
+body.light-mode .gnav-logo span { color: rgba(13,31,48,0.5) !important; }
+body.light-mode .gnav-link { color: rgba(13,31,48,0.55) !important; }
+body.light-mode .gnav-link:hover { background: rgba(0,0,0,0.05) !important; color: #0D1F30 !important; }
+body.light-mode .gnav-link.active { background: rgba(0,0,0,0.08) !important; color: #0D1F30 !important; }
+body.light-mode .gnav-burger { color: rgba(0,0,0,0.55) !important; }
+body.light-mode .gnav-mobile { background: #fff; border-top-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .gnav-mlink { color: rgba(13,31,48,0.65) !important; border-bottom-color: rgba(0,0,0,0.06) !important; }
+body.light-mode .gnav-mlink.active { color: #0D1F30 !important; background: rgba(0,0,0,0.05) !important; }
+
+/* ── Light mode body/backgrounds ── */
+body.light-mode { background: #EEF2F7 !important; color: var(--mode-text) !important; }
+body.light-mode .bg-ocean,
+body.light-mode .bg-ocean .wave { filter: opacity(0.12); }
+body.light-mode body::after { opacity: 0.3; }
+
+/* ── Light mode cards and panels ── */
+body.light-mode .project-card,
+body.light-mode .oc-card,
+body.light-mode .res-card,
+body.light-mode .concept-card,
+body.light-mode .topic-card,
+body.light-mode .about-card,
+body.light-mode .tip-card,
+body.light-mode .step,
+body.light-mode .chk-item,
+body.light-mode .mat-item,
+body.light-mode .slide-card,
+body.light-mode .stat-box {
+  background: #FFFFFF !important;
+  border-color: rgba(0,0,0,0.09) !important;
+}
+body.light-mode .project-card:hover,
+body.light-mode .res-card:hover,
+body.light-mode .slide-card:hover { border-color: rgba(0,0,0,0.2) !important; }
+
+/* ── Light mode text ── */
+body.light-mode h1, body.light-mode h2, body.light-mode h3,
+body.light-mode .hero h1, body.light-mode .section-title,
+body.light-mode .sec-title, body.light-mode .pc-title,
+body.light-mode .res-title, body.light-mode .about-card h3,
+body.light-mode .step-body h4, body.light-mode .tip-card h4,
+body.light-mode .mat-body h4 { color: #0D1F30 !important; }
+body.light-mode .hero-sub, body.light-mode .section-subtitle,
+body.light-mode .sec-sub, body.light-mode .hero-sub,
+body.light-mode .pc-desc, body.light-mode .res-desc,
+body.light-mode .about-card p, body.light-mode .about-card li,
+body.light-mode .step-body p, body.light-mode .tip-card p,
+body.light-mode .mat-body p, body.light-mode p { color: rgba(13,31,48,0.65) !important; }
+body.light-mode .hero-eyebrow, body.light-mode .hbadge-muted,
+body.light-mode .hb-muted, body.light-mode .pc-tag,
+body.light-mode .res-pill, body.light-mode .pill { color: rgba(13,31,48,0.5) !important; background: rgba(0,0,0,0.05) !important; border-color: rgba(0,0,0,0.1) !important; }
+
+/* ── Light mode tables ── */
+body.light-mode .stbl th { background: rgba(0,0,0,0.08) !important; }
+body.light-mode .stbl td { border-color: rgba(0,0,0,0.07) !important; color: rgba(13,31,48,0.75) !important; }
+body.light-mode .stbl td:first-child { color: #0D1F30 !important; }
+body.light-mode .stbl tr:nth-child(even) td { background: rgba(0,0,0,0.025) !important; }
+body.light-mode .shop-tbl th { background: rgba(0,0,0,0.05) !important; color: rgba(13,31,48,0.5) !important; border-bottom-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .shop-tbl td { border-bottom-color: rgba(0,0,0,0.06) !important; color: rgba(13,31,48,0.75) !important; }
+body.light-mode .si-name { color: #0D1F30 !important; }
+
+/* ── Light mode callouts ── */
+body.light-mode .callout,
+body.light-mode .shop-intro,
+body.light-mode .safety-warn,
+body.light-mode .c-acc, body.light-mode .c-gold,
+body.light-mode .c-green, body.light-mode .c-aqua,
+body.light-mode .c-bl, body.light-mode .c-gd,
+body.light-mode .callout p, body.light-mode .callout li { color: rgba(13,31,48,0.72) !important; }
+body.light-mode .callout { background: rgba(0,0,0,0.04) !important; }
+body.light-mode .c-acc { background: rgba(0,0,0,0.04) !important; }
+
+/* ── Light mode quiz ── */
+body.light-mode .header { background: #FFFFFF !important; border-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .header h1 { color: #0D1F30 !important; }
+body.light-mode .header .sub { color: rgba(13,31,48,0.6) !important; }
+body.light-mode .name-box { background: rgba(0,0,0,0.03) !important; border-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .name-box input { color: #0D1F30 !important; border-bottom-color: rgba(0,0,0,0.2) !important; }
+body.light-mode .sec-hd { background: rgba(0,0,0,0.05) !important; border-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .sec-hd h3 { color: #0D1F30 !important; }
+body.light-mode .qcard { background: #FFFFFF !important; border-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .q-text { color: #0D1F30 !important; }
+body.light-mode .opt { background: #F8FAFB !important; border-color: rgba(0,0,0,0.1) !important; color: rgba(13,31,48,0.72) !important; }
+body.light-mode .opt:hover { background: rgba(0,0,0,0.05) !important; }
+body.light-mode .tfbtn { background: #F8FAFB !important; border-color: rgba(0,0,0,0.1) !important; color: rgba(13,31,48,0.65) !important; }
+body.light-mode .fill-wrap { color: #0D1F30 !important; }
+body.light-mode .data-block { background: rgba(0,0,0,0.04) !important; border-color: rgba(0,0,0,0.1) !important; color: rgba(13,31,48,0.8) !important; }
+body.light-mode .sa { background: #F8FAFB !important; border-color: rgba(0,0,0,0.12) !important; color: #0D1F30 !important; }
+body.light-mode #score-card { background: #FFFFFF !important; border-color: rgba(0,0,0,0.1) !important; }
+body.light-mode #score-card h2 { color: #0D1F30 !important; }
+body.light-mode #score-msg, body.light-mode #score-pct, body.light-mode #score-name, body.light-mode #score-sa-note { color: rgba(13,31,48,0.6) !important; }
+body.light-mode .prog-outer { background: rgba(0,0,0,0.08) !important; }
+
+/* ── Light mode tab nav ── */
+body.light-mode .tab-nav { border-bottom-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .tab-btn { color: rgba(13,31,48,0.4) !important; }
+body.light-mode .tab-btn:hover { color: rgba(13,31,48,0.75) !important; }
+
+/* ── Light mode hero badges ── */
+body.light-mode .hero-eyebrow,
+body.light-mode .hero-ey { background: rgba(0,0,0,0.05) !important; border-color: rgba(0,0,0,0.12) !important; }
+
+/* ── Light mode section labels ── */
+body.light-mode .section-eyebrow,
+body.light-mode .sec-label { opacity: 0.7; }
+
+/* ── Light mode about scoring boxes ── */
+body.light-mode [style*="background:rgba(245,166,35,.06)"],
+body.light-mode [style*="background:rgba(224,92,64,.06)"],
+body.light-mode [style*="background:rgba(123,94,167,.06)"] { background: rgba(0,0,0,0.04) !important; }
+
+/* ── Light mode footer ── */
+body.light-mode footer { border-top-color: rgba(0,0,0,0.08) !important; }
+body.light-mode footer p { color: rgba(13,31,48,0.3) !important; }
+
+/* ── Light mode dividers ── */
+body.light-mode .divider { background: rgba(0,0,0,0.1) !important; }
+
+/* ── Light mode prog/shopping ── */
+body.light-mode .shop-total { background: rgba(0,0,0,0.04) !important; border-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .shop-total-label { color: rgba(13,31,48,0.5) !important; }
+body.light-mode .shop-prog { background: rgba(0,0,0,0.08) !important; }
+body.light-mode .cb { border-color: rgba(0,0,0,0.2) !important; background: #fff !important; }
+body.light-mode .chk-box { border-color: rgba(0,0,0,0.2) !important; }
+</style>
+</head><body>
+
+<div class="project-nav" id="project-nav">
+  <div class="project-nav-inner">
+    <a class="pnav-link" href="Tower_Instructions.html" id="pnav-tower">
+      <span class="pnav-icon">🏗️</span>
+      <span class="pnav-label">Tower Building</span>
+      <span class="pnav-grade">3rd Grade</span>
+    </a>
+    <a class="pnav-link" href="Bungee_Egg_Drop_Instructions.html" id="pnav-bungee">
+      <span class="pnav-icon">🥚</span>
+      <span class="pnav-label">Bungee Egg Drop</span>
+      <span class="pnav-grade">Grades 3–4</span>
+    </a>
+    <a class="pnav-link" href="Astronaut_Lander_Instructions.html" id="pnav-lander">
+      <span class="pnav-icon">🚀</span>
+      <span class="pnav-label">Astronaut Lander</span>
+      <span class="pnav-grade">Grades 3–4</span>
+    </a>
+    <a class="pnav-link pnav-home" href="../index.html">
+      <span class="pnav-icon">🌊</span>
+      <span class="pnav-label">All Events</span>
+      <span class="pnav-grade">Portal Home</span>
+    </a>
+  </div>
+</div>
+<style>
+.project-nav{position:sticky;top:0;z-index:200;background:rgba(10,10,20,0.96);border-bottom:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(10px);}
+.project-nav-inner{display:flex;max-width:820px;margin:0 auto;padding:0 20px;}
+.pnav-link{display:flex;flex-direction:column;align-items:center;padding:10px 18px;text-decoration:none;border-bottom:3px solid transparent;transition:all .18s;flex:1;gap:2px;min-width:0;}
+.pnav-link:hover{background:rgba(255,255,255,0.05);}
+.pnav-link.active{border-bottom-color:var(--accent);}
+.pnav-link.active .pnav-label{color:var(--accent);}
+.pnav-link.active .pnav-icon{opacity:1;}
+.pnav-home{border-left:1px solid rgba(255,255,255,0.08);margin-left:auto;flex:0 0 auto;}
+.pnav-icon{font-size:16px;opacity:.7;transition:opacity .18s;}
+.pnav-label{font-size:12px;font-weight:700;color:rgba(200,216,232,0.7);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;text-align:center;transition:color .18s;}
+.pnav-grade{font-size:10px;color:rgba(200,216,232,0.35);white-space:nowrap;}
+@media(max-width:500px){.pnav-label{display:none;}.pnav-grade{display:none;}.pnav-link{padding:10px;}.pnav-icon{font-size:20px;opacity:.8;}}
+</style>
+
+<style>
+.shop-section{margin-bottom:48px;}
+.shop-intro{background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.12);border-radius:12px;padding:14px 18px;margin-bottom:18px;font-size:.88rem;color:rgba(200,216,232,.75);line-height:1.6;}
+.shop-intro strong{color:#fff;}
+.shop-warning{border-radius:10px;padding:14px 18px;margin-bottom:16px;font-size:.88rem;line-height:1.6;}
+.shop-table{width:100%;border-collapse:collapse;border-radius:12px;overflow:hidden;border:0.5px solid rgba(255,255,255,0.1);}
+.shop-table th{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:9px 12px;text-align:left;border-bottom:0.5px solid rgba(255,255,255,0.1);}
+.shop-table td{padding:11px 12px;border-bottom:0.5px solid rgba(255,255,255,0.06);font-size:.88rem;line-height:1.5;vertical-align:top;}
+.shop-table tr:last-child td{border-bottom:none;}
+.shop-table tr.shop-checked td{opacity:.45;}
+.shop-table tr.shop-checked .shop-item-name{text-decoration:line-through;}
+.shop-cb{width:18px;height:18px;border-radius:4px;border:1.5px solid rgba(255,255,255,0.25);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;background:transparent;}
+.shop-cb.done{background:var(--accent);border-color:var(--accent);}
+.shop-cb.done::after{content:'✓';font-size:11px;font-weight:700;color:#fff;line-height:1;}
+.shop-item-name{font-weight:600;color:#fff;display:block;margin-bottom:2px;}
+.shop-item-note{font-size:.78rem;color:rgba(200,216,232,.55);}
+.shop-qty{font-size:.85rem;font-weight:600;white-space:nowrap;}
+.shop-dept{font-size:.78rem;color:rgba(200,216,232,.55);}
+.shop-price{font-size:.88rem;font-weight:700;white-space:nowrap;}
+.shop-total-row{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.12);border-radius:10px;padding:12px 16px;margin-top:14px;}
+.shop-total-label{font-size:.85rem;color:rgba(200,216,232,.65);}
+.shop-total-amt{font-size:1.2rem;font-weight:700;}
+.shop-progress{height:3px;background:rgba(255,255,255,0.08);border-radius:2px;margin-top:10px;}
+.shop-progress-fill{height:3px;border-radius:2px;transition:width .3s;background:var(--lime);}
+.shop-progress-label{font-size:.75rem;color:rgba(200,216,232,.4);margin-top:4px;}
+.shop-shared-note{font-size:.78rem;color:rgba(200,216,232,.45);font-style:italic;margin-top:8px;padding:0 2px;}
+</style>
+
+<div class="hero">
+  <span class="hero-icon">🥚</span>
+  <h1>Bungee <span>Egg Drop</span></h1>
+  <p>VA Division A. Design a rubber band bungee cord system to protect a raw egg — dropping from a two-story stairwell and stopping as close as possible to the Artificial Horizon.</p>
+  <div class="pills">
+    <span class="pill">Grades 3–4</span>
+    <span class="pill pill-gold">45-Minute Session</span>
+    <span class="pill">2 Students Per Team</span>
+  </div>
+</div>
+<nav class="nav-bar">
+  <a class="nav-btn" href="#overview">Overview</a>
+  <a class="nav-btn" href="#materials">Materials</a>
+  <a class="nav-btn" href="#rules">Rules</a>
+  <a class="nav-btn" href="#scoring">Scoring</a>
+  <a class="nav-btn" href="#competition">Competition Phase</a>
+  <a class="nav-btn" href="#tips">Tips</a>
+  <a class="nav-btn" href="#checklist">Checklist</a>
+  <a class="nav-btn" href="#shopping">Shopping List</a>
+</nav>
+<div class="content">
+
+<div class="section" id="overview">
+  <div class="sec-title"><span>🎯</span> Event Overview</div>
+  <div class="sec-sub">FROM THE OFFICIAL 2025–2026 VA DIVISION A RULES MANUAL</div>
+  <div class="divider"></div>
+  <div class="callout c-a">
+    <h4>🥚 The Challenge</h4>
+    <p>Design and construct a bungee cord system using rubber bands to protect a raw egg from breaking when it jumps from the top of a two-story stairwell. The goal is to stop the egg as close as possible to the <strong style="color:#fff">Artificial Horizon</strong> (a zero-line on a chart) — without going past it.</p>
+    <p style="margin-top:10px;font-size:1.05rem;font-weight:700;color:var(--gold);text-align:center;">Score = Assessment Score (50 pts) + Best Drop Score (50 pts) = max 100</p>
+  </div>
+  <div class="callout c-g">
+    <h4>⚠️ Safety — REQUIRED</h4>
+    <ul>
+      <li><strong>ANSI Z87 D3 Splash/Droplet standard goggles</strong> must be worn during ALL event testing</li>
+      <li>This is a D3 rating (splash protection) — different from standard impact glasses</li>
+      <li>All competitors must wear them — even during other teams' drops</li>
+      <li>Without proper goggles = no-show score</li>
+    </ul>
+  </div>
+  <div class="callout c-q">
+    <h4>📝 Written Assessment Topics</h4>
+    <p>The written test covers: <strong style="color:#fff">Law of Conservation of Energy, Elastic Potential Energy (EPE), Gravitational Potential Energy (GPE), and Kinetic Energy (KE)</strong>. This test is answered simultaneously during the 25-minute build phase.</p>
+  </div>
+</div>
+
+<div class="section" id="materials">
+  <div class="sec-title"><span>📦</span> Materials Provided at Event</div>
+  <div class="sec-sub">ONLY THESE MATERIALS MAY BE USED</div>
+  <div class="divider"></div>
+  <div class="mat-grid">
+    <div class="mat-card"><span class="mi">🔴</span><h4>Rubber Bands (Assortment)</h4><p>Sizes: <strong>#19</strong> (shortest/stiffest), <strong>#33</strong> (medium), <strong>#64</strong> (longer), <strong>#117B</strong> (longest). May cut to any size or leave whole. Tie together in any manner.</p><span class="qty">Assortment provided</span></div>
+    <div class="mat-card"><span class="mi">🩹</span><h4>Masking Tape (2.54 cm)</h4><p>Used ONLY to attach the bungee cord to the plastic bag. May NOT be used to support or strengthen the egg or bag itself.</p><span class="qty">50 cm</span></div>
+    <div class="mat-card"><span class="mi">🥚</span><h4>Raw Egg</h4><p>Choose from the eggs provided. Must be room temperature. Will be sealed in the plastic bag before the drop. Egg broken = visible leakage when rolled on paper towel.</p><span class="qty">1 egg (your choice)</span></div>
+    <div class="mat-card"><span class="mi">🛍️</span><h4>Plastic Bag (Sandwich/Snack Size)</h4><p>The egg is sealed inside this bag. The bungee cord is attached to the bag. This protects against mess if the egg breaks.</p><span class="qty">1 bag</span></div>
+  </div>
+  <div class="callout c-a" style="margin-top:18px;">
+    <h4>🚫 Critical Restrictions</h4>
+    <ul>
+      <li><strong>No tape</strong> may be used to support or strengthen the egg or the plastic bag</li>
+      <li>Tape is ONLY for attaching the bungee cord to the bag (knot or tape or both)</li>
+      <li>You must seal the egg inside the provided plastic bag</li>
+      <li>Any egg leakage upon breaking = Tier violation</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section" id="rules">
+  <div class="sec-title"><span>📋</span> Official Build Phase Rules</div>
+  <div class="sec-sub">25 MINUTES — BUILD AND WRITTEN TEST SIMULTANEOUSLY</div>
+  <div class="divider"></div>
+  <table class="stbl">
+    <tr><th>Rule</th><th>Official Details</th></tr>
+    <tr><td><strong>Event Supervisor Announces TDD</strong></td><td>At the start of the construction phase, the Event Supervisor announces the Target Drop Distance (TDD) from the second-floor railing to the Artificial Horizon. Minimum TDD = 200 cm.</td></tr>
+    <tr><td><strong>Artificial Horizon Chart</strong></td><td>A chart labeled from +100cm to −100cm with zero in the middle. The egg must stop as close to zero as possible without going below it.</td></tr>
+    <tr><td><strong>Rubber Bands</strong></td><td>May be cut to any size or left whole. May be tied together in any manner. Choose from sizes #64, #33, #19, and #117B.</td></tr>
+    <tr><td><strong>Egg & Bag</strong></td><td>Choose a room-temperature egg from those provided. Seal it in the provided plastic bag.</td></tr>
+    <tr><td><strong>Attach Bungee to Bag</strong></td><td>Attach the bungee cord to the bag by tying a knot, using masking tape, or both.</td></tr>
+    <tr><td><strong>No Tape on Egg/Bag</strong></td><td>Masking tape may NOT be used to support or strengthen the egg or the plastic bag.</td></tr>
+    <tr><td><strong>Announce Estimate</strong></td><td>Before dropping, announce your estimate of how close to the Artificial Horizon the egg will stop. This estimate is your tiebreaker!</td></tr>
+    <tr><td><strong>Written Assessment</strong></td><td>Answered simultaneously with the build phase. Topics: Conservation of Energy, GPE, KE, EPE. Also state estimated drop distance on the assessment paper.</td></tr>
+  </table>
+</div>
+
+<div class="section" id="scoring">
+  <div class="sec-title"><span>🏅</span> Official Scoring</div>
+  <div class="sec-sub">EXACT FORMULA FROM THE RULES MANUAL</div>
+  <div class="divider"></div>
+  <div class="callout c-g">
+    <h4>📊 Score Formula</h4>
+    <p><strong style="color:#fff">FS = Assessment Score (AS) + max(Drop Score 1, Drop Score 2)</strong></p>
+    <p style="margin-top:8px;">• AS = 50 × (your Raw Assessment Score ÷ best RAS among all teams)</p>
+    <p style="margin-top:4px;">• DS = 50 × (TDD − your DD) ÷ max(TDD − DD for all teams)</p>
+    <p style="margin-top:4px;">• If egg drops BELOW the horizon: DD = 200 cm (maximum penalty distance)</p>
+    <p style="margin-top:8px;color:var(--aqua);">Example: TDD=400cm. Your RAS=6, best=9 → AS=33.33. Your 2nd drop DD=13cm → DS2=(400−13)÷(400−7)×50=49.24. FS=82.57.</p>
+  </div>
+  <table class="stbl" style="margin-top:14px;">
+    <tr><th>Term</th><th>Meaning</th></tr>
+    <tr><td><strong>TDD (Target Drop Distance)</strong></td><td>Distance from railing to Artificial Horizon. Announced at start. Min = 200cm.</td></tr>
+    <tr><td><strong>DD (Drop Distance)</strong></td><td>Distance from the horizon to the lowest point the egg reaches. Measured from slow-motion video.</td></tr>
+    <tr><td><strong>DD = 200cm</strong></td><td>If egg passes BELOW the horizon. This is the maximum penalty — avoid going past the line!</td></tr>
+    <tr><td><strong>Two drops allowed</strong></td><td>You may adjust the bungee between drops. Your BEST drop score is used.</td></tr>
+    <tr><td><strong>Tiebreaker 1</strong></td><td>Smallest difference between your estimated and actual drop distance — be as accurate as possible!</td></tr>
+    <tr><td><strong>Tiebreaker 2</strong></td><td>Correct answers on selected written assessment questions</td></tr>
+    <tr><td><strong>Broken Egg Test</strong></td><td>Egg removed from bag and rolled on paper towel. Any wet area = broken = Tier 2 violation (−20%)</td></tr>
+  </table>
+</div>
+
+<div class="section" id="competition">
+  <div class="sec-title"><span>🪂</span> Competition Phase — Step by Step</div>
+  <div class="sec-sub">EXACT PROCEDURE FROM THE OFFICIAL RULES</div>
+  <div class="divider"></div>
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Attach Bungee to Retaining Hook</h4><p>Attach the END of your bungee cord opposite the egg to the Retaining Hook on the Bungee Jump Platform. Make sure the rest of the rubber bands are hanging loose over the front of the platform.</p></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Position the Egg</h4><p>Place and hold the egg (in the bag) at the end of the jump platform in a <strong>VERTICAL position</strong>. You may hold the lander in any manner as long as the bungee is attached to the hook and the egg is at the platform edge.</p></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Announce Ready — Countdown</h4><p>Announce to the Event Supervisor that you are ready. Wait for their reply that the camera is ready. Then count down from 3: <strong>"3, 2, 1, drop"</strong> and OPEN YOUR HAND. <strong>DO NOT PUSH THE EGG.</strong></p></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Video Recording</h4><p>The Event Supervisor records the drop in slow motion showing the entire Artificial Horizon Chart (−100cm to +100cm). The lowest point of the egg is measured to the nearest 1cm mark from the video.</p></div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-body"><h4>Adjust Between Drops</h4><p>You receive two drops. After the first drop, you may adjust your bungee cord. Use your first drop as data: did the egg stop too high (add longer bands) or go too far (add shorter/stiffer bands)?</p></div></div>
+    <div class="step"><div class="step-num">6</div><div class="step-body"><h4>Egg Inspection</h4><p>After the drops, the egg is removed from the plastic bag by the team and <strong>rolled on a paper towel</strong>. Any wet areas on the towel indicate leakage — egg is deemed broken (Tier 2 violation). Cracks without leaking = NOT broken.</p></div></div>
+  </div>
+</div>
+
+<div class="section" id="tips">
+  <div class="sec-title"><span>⚡</span> Strategy Tips</div>
+  <div class="sec-sub">HOW TO DESIGN YOUR BUNGEE SYSTEM</div>
+  <div class="divider"></div>
+  <div class="tips-grid">
+    <div class="tip-card t1"><span class="ti">📏</span><h4>Test on the Floor First</h4><p>Before the competition, practice: attach your bungee to a fixed point, hold the bagged egg at the top, measure how far it stretches. Compare to the TDD — you want the egg to stop AT the horizon, not past it.</p></div>
+    <div class="tip-card t2"><span class="ti">🔴</span><h4>Band Size Matters</h4><p>#19 = stiffest/shortest. #117B = longest/softest. Bands in series (end-to-end) = longer, more stretch. Bands in parallel (side-by-side) = stiffer. Mix sizes to fine-tune your stopping distance.</p></div>
+    <div class="tip-card t3"><span class="ti">✂️</span><h4>Cut Bands to Calibrate</h4><p>Cutting a rubber band makes it shorter and effectively stiffer. A small cut can be the difference between just reaching the horizon and going past it. Make small adjustments between drops.</p></div>
+    <div class="tip-card t4"><span class="ti">📊</span><h4>Accurate Estimate = Tiebreaker Win</h4><p>If tied, the team with the closest estimate to their actual drop distance wins. Time your test drop carefully and give an honest, precise estimate — not a guess.</p></div>
+    <div class="tip-card t5"><span class="ti">⚡</span><h4>Study the Energy Formulas</h4><p>GPE = mgh, KE = ½mv², EPE = ½kx². Know how energy transforms: GPE → KE → EPE → KE → GPE (minus losses). This is 50 points of your score.</p></div>
+    <div class="tip-card t6"><span class="ti">🛡️</span><h4>Egg Safety = Tier 1</h4><p>A broken egg = Tier 2 (−20% of total score). Always seal the egg completely in the plastic bag. The bag catches any leakage — critical for keeping your Tier 1 status.</p></div>
+  </div>
+</div>
+
+<div class="section" id="checklist">
+  <div class="sec-title"><span>✅</span> Pre-Competition Checklist</div>
+  <div class="sec-sub">VERIFY BEFORE YOU STEP UP TO THE PLATFORM</div>
+  <div class="divider"></div>
+  <div class="checklist">
+    <div class="chk"><div class="cb" onclick="tc(this)"></div><div class="ct"><strong>ANSI Z87 D3 Splash/Droplet goggles</strong> are packed and ready (NOT just impact glasses)</div></div>
+    <div class="chk"><div class="cb" onclick="tc(this)"></div><div class="ct">Egg is <strong>sealed inside the plastic bag</strong> — completely closed</div></div>
+    <div class="chk"><div class="cb" onclick="tc(this)"></div><div class="ct">Bungee cord is <strong>attached to the bag</strong> via knot, tape, or both</div></div>
+    <div class="chk"><div class="cb" onclick="tc(this)"></div><div class="ct"><strong>No tape is touching the egg or bag wall</strong> — only used for attachment point</div></div>
+    <div class="chk"><div class="cb" onclick="tc(this)"></div><div class="ct">You have <strong>announced your estimate</strong> to the Event Supervisor</div></div>
+    <div class="chk"><div class="cb" onclick="tc(this)"></div><div class="ct">You know the <strong>countdown procedure</strong>: say "3, 2, 1, drop" — open hand, don't push</div></div>
+    <div class="chk"><div class="cb" onclick="tc(this)"></div><div class="ct">Written assessment is <strong>complete or in progress</strong> — don't forget it during the build</div></div>
+    <div class="chk"><div class="cb" onclick="tc(this)"></div><div class="ct">Know what to adjust <strong>between drops</strong>: went too far = add shorter bands; stopped short = add longer bands</div></div>
+    <div class="chk"><div class="cb" onclick="tc(this)"></div><div class="ct">Know the <strong>GPE, KE, and EPE formulas</strong> for the written test</div></div>
+  </div>
+</div>
+
+<div class="shop-section" id="shopping">
+  <div class="sec-title"><span>🛒</span> Walmart Practice Shopping List</div>
+  <div class="sec-sub">FOR HOME PRACTICE — ALL ITEMS ARE PROVIDED AT THE ACTUAL COMPETITION</div>
+  <div class="divider"></div>
+
+  <div class="shop-intro">
+    All materials are <strong>provided free at the competition event.</strong> This list is for buying supplies to practice at home before competition day.
+    Quantities are sized for <strong>~5 practice runs per team</strong>.
+    <br><br>
+    Competition provides: rubber bands (#64, #33, #19, #117B assortment), 50 cm tape, 1 large egg, 1 plastic bag. Eggs and bags are the main consumables in practice.
+  </div>
+
+  <div class="shop-warning" style="background:rgba(245,200,66,.08);border:0.5px solid rgba(245,200,66,.3);">
+    <span style="font-weight:700;color:#F5C842;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;">⚠ Safety gear — not provided at event</span><br>
+    <span style="font-size:.88rem;color:rgba(200,216,232,.75);">Teams must bring their own safety eyewear. Without it, you receive a no-show score and cannot compete.</span>
+  </div>
+
+  <table class="shop-table" style="margin-bottom:8px;">
+    <thead>
+      <tr style="background:rgba(245,200,66,.12);">
+        <th style="width:28px;"></th>
+        <th style="color:#F5C842;">Safety gear (bring yourself)</th>
+        <th style="color:#F5C842;">Qty</th>
+        <th style="color:#F5C842;">Where at Walmart</th>
+        <th style="color:#F5C842;">Est. price</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr id="srow-safety-0">
+      <td style="width:28px;padding:11px 8px 11px 12px;">
+        <div class="shop-cb" onclick="toggleShop(this,'safety-0','bungee')"></div>
+      </td>
+      <td>
+        <span class="shop-item-name">ANSI Z87 D3 splash/droplet safety goggles (full seal)</span>
+        <span class="shop-item-note">MUST be D3 rated — look for "D3" on the label. Full-seal goggle, NOT just glasses. Check sporting goods or safety section.</span>
+      </td>
+      <td class="shop-qty">1 pair per student</td>
+      <td class="shop-dept">Sporting goods / Safety</td>
+      <td class="shop-price" style="color:#E05C40;">~$16</td>
+    </tr></tbody>
+  </table>
+
+  <table class="shop-table">
+    <thead>
+      <tr style="background:rgba(255,255,255,.05);">
+        <th style="width:28px;"></th>
+        <th>Practice materials</th>
+        <th>Qty for ~5 runs</th>
+        <th>Where at Walmart</th>
+        <th>Est. price</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr id="srow-practice-0">
+      <td style="width:28px;padding:11px 8px 11px 12px;">
+        <div class="shop-cb" onclick="toggleShop(this,'practice-0','bungee')"></div>
+      </td>
+      <td>
+        <span class="shop-item-name">Assorted rubber bands — sizes #19, #33, #64, #117B</span>
+        <span class="shop-item-note">Must have all 4 sizes. Look for "assorted" bags. Verify that #117B (large/long) are included. Usually in office/school supplies.</span>
+      </td>
+      <td class="shop-qty">2 bags</td>
+      <td class="shop-dept">Office / School supplies</td>
+      <td class="shop-price">~$6</td>
+    </tr>
+    <tr id="srow-practice-1">
+      <td style="width:28px;padding:11px 8px 11px 12px;">
+        <div class="shop-cb" onclick="toggleShop(this,'practice-1','bungee')"></div>
+      </td>
+      <td>
+        <span class="shop-item-name">Masking tape, 1" (2.54 cm) wide</span>
+        <span class="shop-item-note">Only 50 cm allowed per run — pre-cut strips to practice with the correct amount.</span>
+      </td>
+      <td class="shop-qty">1 roll</td>
+      <td class="shop-dept">Hardware / Office</td>
+      <td class="shop-price">~$3</td>
+    </tr>
+    <tr id="srow-practice-2">
+      <td style="width:28px;padding:11px 8px 11px 12px;">
+        <div class="shop-cb" onclick="toggleShop(this,'practice-2','bungee')"></div>
+      </td>
+      <td>
+        <span class="shop-item-name">Large chicken eggs (room temperature)</span>
+        <span class="shop-item-note">1 egg per drop attempt. A dozen gives you ~6 practice sessions of 2 drops each.</span>
+      </td>
+      <td class="shop-qty">2 dozen</td>
+      <td class="shop-dept">Grocery / Dairy</td>
+      <td class="shop-price">~$8</td>
+    </tr>
+    <tr id="srow-practice-3">
+      <td style="width:28px;padding:11px 8px 11px 12px;">
+        <div class="shop-cb" onclick="toggleShop(this,'practice-3','bungee')"></div>
+      </td>
+      <td>
+        <span class="shop-item-name">Sandwich or snack-size plastic bags (Ziploc)</span>
+        <span class="shop-item-note">1 per egg. Sealing the egg in the bag is a competition requirement — practice doing it quickly.</span>
+      </td>
+      <td class="shop-qty">1 box</td>
+      <td class="shop-dept">Kitchen / Food storage</td>
+      <td class="shop-price">~$4</td>
+    </tr>
+    <tr id="srow-practice-4">
+      <td style="width:28px;padding:11px 8px 11px 12px;">
+        <div class="shop-cb" onclick="toggleShop(this,'practice-4','bungee')"></div>
+      </td>
+      <td>
+        <span class="shop-item-name">Paper towels</span>
+        <span class="shop-item-note">Required for egg inspection: roll egg on paper towel after drop to check for leakage. Part of the official judging process.</span>
+      </td>
+      <td class="shop-qty">1 roll</td>
+      <td class="shop-dept">Cleaning supplies</td>
+      <td class="shop-price">~$2</td>
+    </tr>
+    <tr id="srow-practice-5">
+      <td style="width:28px;padding:11px 8px 11px 12px;">
+        <div class="shop-cb" onclick="toggleShop(this,'practice-5','bungee')"></div>
+      </td>
+      <td>
+        <span class="shop-item-name">Measuring tape or meter stick</span>
+        <span class="shop-item-note">For measuring drop distance and calibrating your bungee cord before the competition. Bungee cord stops must be measured accurately.</span>
+      </td>
+      <td class="shop-qty">1</td>
+      <td class="shop-dept">Hardware / School supplies</td>
+      <td class="shop-price">~$4</td>
+    </tr></tbody>
+  </table>
+
+  <div class="shop-shared-note">Items marked "shared" are covered by purchases for another event — no additional cost.</div>
+
+  <div class="shop-progress"><div class="shop-progress-fill" id="progress-bungee" style="width:0%;"></div></div>
+  <div class="shop-progress-label" id="progress-label-bungee">0 of 7 items checked</div>
+
+  <div class="shop-total-row">
+    <div>
+      <div class="shop-total-label">Estimated total (materials only)</div>
+      <div class="shop-total-amt" id="total-bungee" style="color:#E05C40;">~$43</div>
+    </div>
+    <div style="font-size:.78rem;color:rgba(200,216,232,.35);text-align:right;max-width:180px;line-height:1.5;">Before tax. Prices vary by store. Safety gear additional.</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const prices = {
+    'safety-0': 16,
+    'practice-0': 6,
+    'practice-1': 3,
+    'practice-2': 8,
+    'practice-3': 4,
+    'practice-4': 2,
+    'practice-5': 4
+  };
+  const totalItems = 7;
+  let checkedItems = {};
+
+  window.toggleShop = window.toggleShop || function(el, id, pid) {
+    el.classList.toggle('done');
+    const row = document.getElementById('srow-' + id);
+    if (row) row.classList.toggle('shop-checked', el.classList.contains('done'));
+    const allToggles = document.querySelectorAll('.shop-cb[onclick]');
+    let checked = 0, subtotal = 0;
+    allToggles.forEach(cb => {
+      if (cb.classList.contains('done')) {
+        checked++;
+        const fn = cb.getAttribute('onclick');
+        const m = fn.match(/'([^']+)'/);
+        if (m) subtotal += prices[m[1]] || 0;
+      }
+    });
+    const fill = document.getElementById('progress-' + pid);
+    const lbl = document.getElementById('progress-label-' + pid);
+    const tot = document.getElementById('total-' + pid);
+    if (fill) fill.style.width = Math.round(checked/totalItems*100) + '%';
+    if (lbl) lbl.textContent = checked + ' of ' + totalItems + ' items checked';
+    if (tot) tot.textContent = '~Bungee Egg Drop — Official Instructions &nbsp;<span>•</span>&nbsp; VA Division A 2025–2026 &nbsp;<span>•</span>&nbsp; 🥚</footer>
+<script>function tc(el){el.classList.toggle('chk-done');el.textContent=el.classList.contains('chk-done')?'✓':'';}
+</script><script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var el = document.getElementById('pnav-bungee');
+    if (el) el.classList.add('active');
+  });
+  </script>
+
+<script id="theme-logic">
+(function() {
+  function applyTheme(mode) {
+    const btn = document.getElementById('theme-toggle');
+    if (mode === 'light') {
+      document.body.classList.add('light-mode');
+      if (btn) btn.textContent = '🌙';
+    } else {
+      document.body.classList.remove('light-mode');
+      if (btn) btn.textContent = '☀️';
+    }
+  }
+  // Apply on load
+  const saved = localStorage.getItem('va-theme') || 'dark';
+  applyTheme(saved);
+  
+  window.toggleTheme = function() {
+    const isLight = document.body.classList.contains('light-mode');
+    const newMode = isLight ? 'dark' : 'light';
+    localStorage.setItem('va-theme', newMode);
+    applyTheme(newMode);
+  };
+})();
+</script>
+</body></html> + subtotal;
+  };
+})();
+</script>
+</div>
+<footer>Bungee Egg Drop — Official Instructions &nbsp;<span>•</span>&nbsp; VA Division A 2025–2026 &nbsp;<span>•</span>&nbsp; 🥚</footer>
+<script>function tc(el){el.classList.toggle('chk-done');el.textContent=el.classList.contains('chk-done')?'✓':'';}
+</script><script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var el = document.getElementById('pnav-bungee');
+    if (el) el.classList.add('active');
+  });
+  </script>
+</body></html>

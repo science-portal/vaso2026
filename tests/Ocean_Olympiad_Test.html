@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌊 Ocean Olympiad Test — Grades 3–4</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Exo+2:ital,wght@0,700;0,800;1,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:     #03111C;
+  --navy:   #042B45;
+  --teal:   #0A7E8C;
+  --aqua:   #18C5D9;
+  --gold:   #F4C430;
+  --silver: #B8D8E8;
+  --coral:  #FF6B6B;
+  --seafoam:#2EC4B6;
+  --white:  #FFFFFF;
+  --correct:#2ECC71;
+  --wrong:  #E74C3C;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+  padding: 24px 16px 60px;
+  color: var(--silver);
+  overflow-x: hidden;
+}
+
+/* stars background */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    radial-gradient(circle at 15% 25%, rgba(24,197,217,0.06) 0%, transparent 45%),
+    radial-gradient(circle at 80% 70%, rgba(10,126,140,0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Animated particle bubbles */
+.bubble {
+  position: fixed; border-radius: 50%;
+  background: rgba(24,197,217,0.12);
+  border: 1px solid rgba(24,197,217,0.25);
+  animation: rise linear infinite;
+  pointer-events: none; z-index: 0;
+}
+@keyframes rise {
+  0%   { transform: translateY(110vh); opacity: 0.7; }
+  100% { transform: translateY(-15vh); opacity: 0; }
+}
+
+.page-wrap {
+  max-width: 740px; margin: 0 auto; position: relative; z-index: 1;
+}
+
+/* HEADER */
+.header {
+  background: linear-gradient(135deg, var(--navy) 0%, #063050 100%);
+  border: 1px solid rgba(24,197,217,0.2);
+  border-top: 4px solid var(--aqua);
+  border-radius: 16px 16px 0 0;
+  padding: 30px 36px 24px;
+}
+.header .badge {
+  display: inline-block;
+  background: rgba(24,197,217,0.15);
+  border: 1px solid rgba(24,197,217,0.4);
+  color: var(--aqua);
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.12em;
+  padding: 4px 12px; border-radius: 999px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+.header h1 {
+  font-family: 'Exo 2', sans-serif;
+  font-size: 2.2rem; font-weight: 800;
+  color: var(--white); line-height: 1.1;
+  margin-bottom: 6px;
+}
+.header .sub { font-size: 0.95rem; color: var(--silver); margin-bottom: 16px; }
+.header .sub span { color: var(--gold); font-weight: 600; }
+
+.progress-outer {
+  background: rgba(255,255,255,0.08);
+  border-radius: 999px; height: 8px; overflow: hidden;
+}
+.progress-inner {
+  height: 100%; background: linear-gradient(90deg, var(--teal), var(--aqua));
+  border-radius: 999px; width: 0%;
+  transition: width 0.4s ease;
+}
+.progress-meta {
+  display: flex; justify-content: space-between;
+  font-size: 0.78rem; color: rgba(184,216,232,0.65);
+  margin-top: 5px;
+}
+
+/* NAME BOX */
+.name-box {
+  background: var(--navy);
+  border: 1px solid rgba(24,197,217,0.15);
+  border-top: none;
+  padding: 18px 28px;
+}
+.name-box label { font-size: 0.8rem; font-weight: 700; color: var(--aqua); letter-spacing: 0.08em; display: block; margin-bottom: 6px; }
+.name-box input {
+  background: transparent; border: none;
+  border-bottom: 2px solid rgba(24,197,217,0.3);
+  width: 100%; padding: 7px 0;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.05rem; color: var(--white); outline: none;
+  transition: border-color 0.2s;
+}
+.name-box input:focus { border-bottom-color: var(--aqua); }
+
+/* SECTION HEADER */
+.section-hd {
+  margin-top: 20px;
+  background: linear-gradient(90deg, var(--teal) 0%, #065a68 100%);
+  border-radius: 10px 10px 0 0;
+  padding: 11px 22px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.section-hd h3 {
+  font-family: 'Exo 2', sans-serif;
+  font-size: 1rem; font-weight: 800;
+  color: var(--white); letter-spacing: 0.04em;
+}
+.section-hd .pts {
+  font-size: 0.78rem; font-weight: 700;
+  color: var(--gold);
+  background: rgba(244,196,48,0.15);
+  border: 1px solid rgba(244,196,48,0.35);
+  padding: 3px 10px; border-radius: 999px;
+}
+
+/* QUESTION CARD */
+.qcard {
+  background: var(--navy);
+  border: 1px solid rgba(24,197,217,0.1);
+  border-top: none;
+  padding: 20px 26px;
+  transition: background 0.25s;
+}
+.qcard:last-of-type { border-radius: 0 0 12px 12px; }
+.qcard.correct { background: #051e14; border-left: 4px solid var(--correct); }
+.qcard.wrong   { background: #1c0505; border-left: 4px solid var(--wrong); }
+
+.q-num { font-size: 0.7rem; font-weight: 700; color: var(--teal); letter-spacing: 0.1em; margin-bottom: 7px; text-transform: uppercase; }
+.q-text { font-size: 1.0rem; font-weight: 600; color: var(--white); margin-bottom: 14px; line-height: 1.5; }
+
+/* Radio options */
+.opts { display: flex; flex-direction: column; gap: 7px; }
+.opt {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 10px 14px;
+  border: 1.5px solid rgba(24,197,217,0.18);
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-size: 0.93rem; font-weight: 500;
+  color: var(--silver);
+  background: rgba(255,255,255,0.03);
+  user-select: none;
+  line-height: 1.45;
+}
+.opt:hover { border-color: var(--aqua); background: rgba(24,197,217,0.07); }
+.opt.sel   { border-color: var(--aqua); background: rgba(24,197,217,0.12); color: var(--white); }
+.opt.c-ok  { border-color: var(--correct); background: rgba(46,204,113,0.1); color: #7fffc4; }
+.opt.c-no  { border-color: var(--wrong);   background: rgba(231,76,60,0.1);  color: #ffaaaa; }
+.opt input { display: none; }
+.dot {
+  width: 18px; height: 18px; flex-shrink: 0;
+  border-radius: 50%; border: 2px solid rgba(24,197,217,0.4);
+  margin-top: 2px; display: flex; align-items: center; justify-content: center;
+  font-size: 0.6rem; transition: all 0.15s;
+}
+.sel .dot  { border-color: var(--aqua);    background: var(--aqua); }
+.c-ok .dot { border-color: var(--correct); background: var(--correct); }
+.c-no .dot { border-color: var(--wrong);   background: var(--wrong); }
+
+/* True/False */
+.tf { display: flex; gap: 10px; }
+.tfbtn {
+  flex: 1; padding: 12px;
+  border: 1.5px solid rgba(24,197,217,0.18);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.03);
+  color: var(--silver); font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.97rem; font-weight: 700;
+  cursor: pointer; transition: all 0.15s; text-align: center;
+}
+.tfbtn:hover { border-color: var(--aqua); background: rgba(24,197,217,0.08); color: var(--white); }
+.tfbtn.sel   { border-color: var(--aqua); background: rgba(24,197,217,0.14); color: var(--aqua); }
+.tfbtn.c-ok  { border-color: var(--correct); background: rgba(46,204,113,0.1);  color: #7fffc4; }
+.tfbtn.c-no  { border-color: var(--wrong);   background: rgba(231,76,60,0.1);   color: #ffaaaa; }
+
+/* Fill blank */
+.fill-wrap { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 8px; font-size: 0.97rem; font-weight: 500; line-height: 2; }
+.blank {
+  border: none; border-bottom: 2px solid var(--teal);
+  background: transparent; color: var(--aqua);
+  font-family: 'Space Grotesk', sans-serif; font-size: 0.97rem; font-weight: 700;
+  width: 160px; padding: 3px 4px; outline: none; transition: border-color 0.2s;
+}
+.blank:focus { border-bottom-color: var(--aqua); }
+.blank.c-ok { border-bottom-color: var(--correct); color: var(--correct); }
+.blank.c-no { border-bottom-color: var(--wrong);   color: var(--wrong); }
+
+/* Matching */
+.match-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+.match-term { font-weight: 600; color: var(--white); font-size: 0.92rem; min-width: 200px; }
+.match-sel {
+  border: 1.5px solid rgba(24,197,217,0.25);
+  border-radius: 8px; padding: 7px 10px;
+  background: rgba(4,43,69,0.8);
+  font-family: 'Space Grotesk', sans-serif; font-size: 0.88rem; font-weight: 600;
+  color: var(--silver); outline: none; cursor: pointer;
+  transition: border-color 0.2s; min-width: 260px;
+}
+.match-sel:focus { border-color: var(--aqua); }
+.match-sel.c-ok { border-color: var(--correct); color: var(--correct); }
+.match-sel.c-no { border-color: var(--wrong);   color: var(--wrong); }
+
+/* Short answer */
+.sa {
+  width: 100%; padding: 12px 14px;
+  border: 1.5px solid rgba(24,197,217,0.2); border-radius: 10px;
+  background: rgba(4,43,69,0.5);
+  font-family: 'Space Grotesk', sans-serif; font-size: 0.95rem; font-weight: 500;
+  color: var(--white); resize: none; outline: none; min-height: 68px; line-height: 1.55;
+  transition: border-color 0.2s;
+}
+.sa:focus { border-color: var(--aqua); }
+
+/* Feedback */
+.fb { display: none; margin-top: 9px; padding: 8px 13px; border-radius: 8px; font-size: 0.88rem; font-weight: 700; animation: pop 0.2s ease; }
+@keyframes pop { from { transform: scale(0.88); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.fb.ok { display: block; background: rgba(46,204,113,0.12); color: #7fffc4; border: 1px solid rgba(46,204,113,0.3); }
+.fb.no { display: block; background: rgba(231,76,60,0.12);  color: #ffaaaa; border: 1px solid rgba(231,76,60,0.3); }
+
+/* SUBMIT */
+.sub-wrap { margin: 28px 0 10px; text-align: center; }
+.sub-btn {
+  background: linear-gradient(135deg, var(--teal) 0%, var(--aqua) 100%);
+  color: var(--bg); border: none; padding: 15px 50px;
+  border-radius: 50px;
+  font-family: 'Exo 2', sans-serif; font-size: 1.15rem; font-weight: 800;
+  cursor: pointer; letter-spacing: 0.04em;
+  box-shadow: 0 6px 28px rgba(24,197,217,0.3);
+  transition: all 0.2s;
+}
+.sub-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 36px rgba(24,197,217,0.45); }
+
+/* SCORE CARD */
+#score-card {
+  display: none;
+  background: linear-gradient(135deg, var(--navy) 0%, #021525 100%);
+  border: 1px solid rgba(24,197,217,0.25);
+  border-top: 4px solid var(--aqua);
+  border-radius: 16px; padding: 42px 36px;
+  text-align: center; margin: 20px 0;
+  animation: pop 0.4s ease;
+}
+#score-card h2 { font-family: 'Exo 2', sans-serif; font-size: 1.6rem; color: var(--white); margin-bottom: 8px; }
+#score-num { font-family: 'Exo 2', sans-serif; font-size: 5.5rem; font-weight: 800; color: var(--gold); line-height: 1; margin: 12px 0 6px; }
+#score-pct { font-size: 1.1rem; color: var(--aqua); font-weight: 700; margin-bottom: 6px; }
+#score-msg { font-size: 1.05rem; color: var(--silver); margin-top: 8px; }
+#score-emoji { font-size: 2.8rem; margin-top: 12px; }
+.retry-btn {
+  margin-top: 22px; background: transparent; color: var(--aqua);
+  border: 1.5px solid var(--aqua); padding: 10px 34px; border-radius: 50px;
+  font-family: 'Exo 2', sans-serif; font-size: 1rem; font-weight: 700;
+  cursor: pointer; transition: all 0.2s;
+}
+.retry-btn:hover { background: rgba(24,197,217,0.1); }
+
+.ocean-bar { text-align: center; font-size: 1.3rem; padding: 16px 0 4px; letter-spacing: 6px; opacity: 0.35; }
+
+@media (max-width: 500px) {
+  .header h1 { font-size: 1.7rem; }
+  .match-sel { min-width: 180px; }
+  .match-term { min-width: 140px; }
+}
+
+/* ── Global light-mode text readability ── */
+body.light-mode,
+body.light-mode .page,
+body.light-mode .tab-panel,
+body.light-mode .callout p,
+body.light-mode .callout li,
+body.light-mode .callout ul,
+body.light-mode .card p,
+body.light-mode .card li,
+body.light-mode .step-body p,
+body.light-mode .step-body li,
+body.light-mode .tip-card p,
+body.light-mode .mat-body p,
+body.light-mode .res-desc,
+body.light-mode .chk-text,
+body.light-mode .hero-sub,
+body.light-mode .ecard-desc,
+body.light-mode .about-card p,
+body.light-mode .about-card li,
+body.light-mode .shop-intro,
+body.light-mode .shop-tbl td,
+body.light-mode .stbl td,
+body.light-mode .truss-card p,
+body.light-mode .outline-subs li,
+body.light-mode .tab-btn,
+body.light-mode .sec-sub,
+body.light-mode .ecard-meta,
+body.light-mode .stat-dates,
+body.light-mode .hero-dates,
+body.light-mode .prog-meta,
+body.light-mode .shop-prog-label,
+body.light-mode .si-note,
+body.light-mode .si-dept,
+body.light-mode .mat-body p,
+body.light-mode .score-mini p { color: rgba(13,31,48,0.72) !important; }
+
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode h4,
+body.light-mode .hero h1,
+body.light-mode .sec-title,
+body.light-mode .section-title,
+body.light-mode .ecard-name,
+body.light-mode .res-title,
+body.light-mode .card h4,
+body.light-mode .step-body h4,
+body.light-mode .tip-card h4,
+body.light-mode .mat-body h4,
+body.light-mode .truss-name,
+body.light-mode .q-text,
+body.light-mode .fill-wrap,
+body.light-mode .test-header h2,
+body.light-mode #score-card h2,
+body.light-mode .si-name,
+body.light-mode .about-card h3,
+body.light-mode .stat-num,
+body.light-mode .gnav-logo { color: #0D1F30 !important; }
+
+body.light-mode .callout h4,
+body.light-mode .sec-hd h3,
+body.light-mode .section-heading { color: inherit !important; }
+
+body.light-mode .hero-eyebrow,
+body.light-mode .hero-ey,
+body.light-mode .hbadge,
+body.light-mode .hbadge-muted { color: rgba(13,31,48,0.55) !important;
+  background: rgba(0,0,0,.06) !important; border-color: rgba(0,0,0,.15) !important; }
+
+</style>
+
+<style id="theme-vars">
+/* ── Light/Dark mode variables ── */
+:root {
+  --mode-bg1: #1A1A2E;
+  --mode-bg2: rgba(4,43,69,0.7);
+  --mode-nav: rgba(8,8,24,0.97);
+  --mode-nav-border: rgba(255,255,255,0.08);
+  --mode-text: #B8D8E8;
+  --mode-text-strong: #FFFFFF;
+  --mode-text-muted: rgba(184,216,232,0.5);
+  --mode-card-bg: rgba(4,43,69,0.7);
+  --mode-card-border: rgba(255,255,255,0.08);
+  --mode-input-bg: transparent;
+  --mode-input-color: #fff;
+  --mode-table-even: rgba(255,255,255,0.025);
+  --mode-section-bg: rgba(255,255,255,0.03);
+}
+body.light-mode {
+  --mode-bg1: #F0F4F8;
+  --mode-bg2: #FFFFFF;
+  --mode-nav: rgba(255,255,255,0.97);
+  --mode-nav-border: rgba(0,0,0,0.1);
+  --mode-text: #2A3E52;
+  --mode-text-strong: #0D1F30;
+  --mode-text-muted: rgba(42,62,82,0.5);
+  --mode-card-bg: #FFFFFF;
+  --mode-card-border: rgba(0,0,0,0.09);
+  --mode-input-bg: #fff;
+  --mode-input-color: #0D1F30;
+  --mode-table-even: rgba(0,0,0,0.03);
+  --mode-section-bg: rgba(0,0,0,0.03);
+}
+
+/* ── Toggle button ── */
+#theme-toggle {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.75);
+  cursor: pointer;
+  font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  line-height: 1;
+}
+#theme-toggle:hover { background: rgba(255,255,255,0.14); }
+body.light-mode #theme-toggle {
+  border-color: rgba(0,0,0,0.15);
+  background: rgba(0,0,0,0.06);
+  color: rgba(0,0,0,0.6);
+}
+body.light-mode #theme-toggle:hover { background: rgba(0,0,0,0.1); }
+
+/* ── Light mode nav overrides ── */
+body.light-mode .gnav {
+  background: rgba(255,255,255,0.97) !important;
+  border-bottom-color: rgba(0,0,0,0.1) !important;
+}
+body.light-mode .gnav-logo { color: #0D1F30 !important; border-right-color: rgba(0,0,0,0.12) !important; }
+body.light-mode .gnav-logo span { color: rgba(13,31,48,0.5) !important; }
+body.light-mode .gnav-link { color: rgba(13,31,48,0.55) !important; }
+body.light-mode .gnav-link:hover { background: rgba(0,0,0,0.05) !important; color: #0D1F30 !important; }
+body.light-mode .gnav-link.active { background: rgba(0,0,0,0.08) !important; color: #0D1F30 !important; }
+body.light-mode .gnav-burger { color: rgba(0,0,0,0.55) !important; }
+body.light-mode .gnav-mobile { background: #fff; border-top-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .gnav-mlink { color: rgba(13,31,48,0.65) !important; border-bottom-color: rgba(0,0,0,0.06) !important; }
+body.light-mode .gnav-mlink.active { color: #0D1F30 !important; background: rgba(0,0,0,0.05) !important; }
+
+/* ── Light mode body/backgrounds ── */
+body.light-mode { background: #EEF2F7 !important; color: var(--mode-text) !important; }
+body.light-mode .bg-ocean,
+body.light-mode .bg-ocean .wave { filter: opacity(0.12); }
+body.light-mode body::after { opacity: 0.3; }
+
+/* ── Light mode cards and panels ── */
+body.light-mode .project-card,
+body.light-mode .oc-card,
+body.light-mode .res-card,
+body.light-mode .concept-card,
+body.light-mode .topic-card,
+body.light-mode .about-card,
+body.light-mode .tip-card,
+body.light-mode .step,
+body.light-mode .chk-item,
+body.light-mode .mat-item,
+body.light-mode .slide-card,
+body.light-mode .stat-box {
+  background: #FFFFFF !important;
+  border-color: rgba(0,0,0,0.09) !important;
+}
+body.light-mode .project-card:hover,
+body.light-mode .res-card:hover,
+body.light-mode .slide-card:hover { border-color: rgba(0,0,0,0.2) !important; }
+
+/* ── Light mode text ── */
+body.light-mode h1, body.light-mode h2, body.light-mode h3,
+body.light-mode .hero h1, body.light-mode .section-title,
+body.light-mode .sec-title, body.light-mode .pc-title,
+body.light-mode .res-title, body.light-mode .about-card h3,
+body.light-mode .step-body h4, body.light-mode .tip-card h4,
+body.light-mode .mat-body h4 { color: #0D1F30 !important; }
+body.light-mode .hero-sub, body.light-mode .section-subtitle,
+body.light-mode .sec-sub, body.light-mode .hero-sub,
+body.light-mode .pc-desc, body.light-mode .res-desc,
+body.light-mode .about-card p, body.light-mode .about-card li,
+body.light-mode .step-body p, body.light-mode .tip-card p,
+body.light-mode .mat-body p, body.light-mode p { color: rgba(13,31,48,0.65) !important; }
+body.light-mode .hero-eyebrow, body.light-mode .hbadge-muted,
+body.light-mode .hb-muted, body.light-mode .pc-tag,
+body.light-mode .res-pill, body.light-mode .pill { color: rgba(13,31,48,0.5) !important; background: rgba(0,0,0,0.05) !important; border-color: rgba(0,0,0,0.1) !important; }
+
+/* ── Light mode tables ── */
+body.light-mode .stbl th { background: rgba(0,0,0,0.08) !important; }
+body.light-mode .stbl td { border-color: rgba(0,0,0,0.07) !important; color: rgba(13,31,48,0.75) !important; }
+body.light-mode .stbl td:first-child { color: #0D1F30 !important; }
+body.light-mode .stbl tr:nth-child(even) td { background: rgba(0,0,0,0.025) !important; }
+body.light-mode .shop-tbl th { background: rgba(0,0,0,0.05) !important; color: rgba(13,31,48,0.5) !important; border-bottom-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .shop-tbl td { border-bottom-color: rgba(0,0,0,0.06) !important; color: rgba(13,31,48,0.75) !important; }
+body.light-mode .si-name { color: #0D1F30 !important; }
+
+/* ── Light mode callouts ── */
+body.light-mode .callout,
+body.light-mode .shop-intro,
+body.light-mode .safety-warn,
+body.light-mode .c-acc, body.light-mode .c-gold,
+body.light-mode .c-green, body.light-mode .c-aqua,
+body.light-mode .c-bl, body.light-mode .c-gd,
+body.light-mode .callout p, body.light-mode .callout li { color: rgba(13,31,48,0.72) !important; }
+body.light-mode .callout { background: rgba(0,0,0,0.04) !important; }
+body.light-mode .c-acc { background: rgba(0,0,0,0.04) !important; }
+
+/* ── Light mode quiz ── */
+body.light-mode .header { background: #FFFFFF !important; border-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .header h1 { color: #0D1F30 !important; }
+body.light-mode .header .sub { color: rgba(13,31,48,0.6) !important; }
+body.light-mode .name-box { background: rgba(0,0,0,0.03) !important; border-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .name-box input { color: #0D1F30 !important; border-bottom-color: rgba(0,0,0,0.2) !important; }
+body.light-mode .sec-hd { background: rgba(0,0,0,0.05) !important; border-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .sec-hd h3 { color: #0D1F30 !important; }
+body.light-mode .qcard { background: #FFFFFF !important; border-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .q-text { color: #0D1F30 !important; }
+body.light-mode .opt { background: #F8FAFB !important; border-color: rgba(0,0,0,0.1) !important; color: rgba(13,31,48,0.72) !important; }
+body.light-mode .opt:hover { background: rgba(0,0,0,0.05) !important; }
+body.light-mode .tfbtn { background: #F8FAFB !important; border-color: rgba(0,0,0,0.1) !important; color: rgba(13,31,48,0.65) !important; }
+body.light-mode .fill-wrap { color: #0D1F30 !important; }
+body.light-mode .data-block { background: rgba(0,0,0,0.04) !important; border-color: rgba(0,0,0,0.1) !important; color: rgba(13,31,48,0.8) !important; }
+body.light-mode .sa { background: #F8FAFB !important; border-color: rgba(0,0,0,0.12) !important; color: #0D1F30 !important; }
+body.light-mode #score-card { background: #FFFFFF !important; border-color: rgba(0,0,0,0.1) !important; }
+body.light-mode #score-card h2 { color: #0D1F30 !important; }
+body.light-mode #score-msg, body.light-mode #score-pct, body.light-mode #score-name, body.light-mode #score-sa-note { color: rgba(13,31,48,0.6) !important; }
+body.light-mode .prog-outer { background: rgba(0,0,0,0.08) !important; }
+
+/* ── Light mode tab nav ── */
+body.light-mode .tab-nav { border-bottom-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .tab-btn { color: rgba(13,31,48,0.4) !important; }
+body.light-mode .tab-btn:hover { color: rgba(13,31,48,0.75) !important; }
+
+/* ── Light mode hero badges ── */
+body.light-mode .hero-eyebrow,
+body.light-mode .hero-ey { background: rgba(0,0,0,0.05) !important; border-color: rgba(0,0,0,0.12) !important; }
+
+/* ── Light mode section labels ── */
+body.light-mode .section-eyebrow,
+body.light-mode .sec-label { opacity: 0.7; }
+
+/* ── Light mode about scoring boxes ── */
+body.light-mode [style*="background:rgba(245,166,35,.06)"],
+body.light-mode [style*="background:rgba(224,92,64,.06)"],
+body.light-mode [style*="background:rgba(123,94,167,.06)"] { background: rgba(0,0,0,0.04) !important; }
+
+/* ── Light mode footer ── */
+body.light-mode footer { border-top-color: rgba(0,0,0,0.08) !important; }
+body.light-mode footer p { color: rgba(13,31,48,0.3) !important; }
+
+/* ── Light mode dividers ── */
+body.light-mode .divider { background: rgba(0,0,0,0.1) !important; }
+
+/* ── Light mode prog/shopping ── */
+body.light-mode .shop-total { background: rgba(0,0,0,0.04) !important; border-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .shop-total-label { color: rgba(13,31,48,0.5) !important; }
+body.light-mode .shop-prog { background: rgba(0,0,0,0.08) !important; }
+body.light-mode .cb { border-color: rgba(0,0,0,0.2) !important; background: #fff !important; }
+body.light-mode .chk-box { border-color: rgba(0,0,0,0.2) !important; }
+</style>
+</head>
+<body>
+
+<script>
+  // bubbles
+  [18,12,26,8,20,14,30,10,22,16].forEach((sz, i) => {
+    const b = document.createElement('div');
+    b.className = 'bubble';
+    b.style.cssText = `width:${sz}px;height:${sz}px;left:${[7,18,29,40,51,60,69,78,87,94][i]}%;animation-duration:${[11,8,14,7,12,9,15,10,13,8][i]}s;animation-delay:${[0,3,1,5,2,7,4,1,6,2][i]}s`;
+    document.body.appendChild(b);
+  });
+</script>
+
+<div class="page-wrap">
+
+<div class="header">
+  <div class="badge">🏆 Science Olympiad Prep</div>
+  <h1>Ocean Science Test</h1>
+  <div class="sub">Advanced Level · Grades 3–4 · <span>50 Points</span></div>
+  <div class="progress-outer"><div class="progress-inner" id="prog"></div></div>
+  <div class="progress-meta"><span id="prog-label">0 of 30 answered</span><span id="prog-pct">0%</span></div>
+</div>
+
+<div class="name-box">
+  <label>COMPETITOR NAME</label>
+  <input id="sname" type="text" placeholder="Enter your full name..." autocomplete="off">
+</div>
+
+<div id="quiz">
+
+<!-- ── PART 1: Multiple Choice (15 pts) ── -->
+<div class="section-hd"><h3>⭕ Part 1 — Multiple Choice</h3><span class="pts">15 pts · 1 pt each</span></div>
+
+<!-- Q1 -->
+<div class="qcard" id="qc1">
+  <div class="q-num">Question 1</div>
+  <div class="q-text">What drives thermohaline circulation in the ocean?</div>
+  <div class="opts" id="r1">
+    <label class="opt"><input type="radio" name="r1" value="A"><span class="dot"></span>Wind speed and direction</label>
+    <label class="opt"><input type="radio" name="r1" value="B"><span class="dot"></span>Differences in water temperature and salinity (density)</label>
+    <label class="opt"><input type="radio" name="r1" value="C"><span class="dot"></span>The gravitational pull of the Moon</label>
+    <label class="opt"><input type="radio" name="r1" value="D"><span class="dot"></span>Tectonic plate movement on the ocean floor</label>
+  </div>
+</div>
+
+<!-- Q2 -->
+<div class="qcard" id="qc2">
+  <div class="q-num">Question 2</div>
+  <div class="q-text">Which ocean zone receives sunlight but NO photosynthesis occurs there?</div>
+  <div class="opts" id="r2">
+    <label class="opt"><input type="radio" name="r2" value="A"><span class="dot"></span>Epipelagic Zone</label>
+    <label class="opt"><input type="radio" name="r2" value="B"><span class="dot"></span>Mesopelagic (Twilight) Zone</label>
+    <label class="opt"><input type="radio" name="r2" value="C"><span class="dot"></span>Bathypelagic (Midnight) Zone</label>
+    <label class="opt"><input type="radio" name="r2" value="D"><span class="dot"></span>Hadal Zone</label>
+  </div>
+</div>
+
+<!-- Q3 -->
+<div class="qcard" id="qc3">
+  <div class="q-num">Question 3</div>
+  <div class="q-text">What two chemicals react to produce bioluminescence?</div>
+  <div class="opts" id="r3">
+    <label class="opt"><input type="radio" name="r3" value="A"><span class="dot"></span>Chlorophyll and sunlight</label>
+    <label class="opt"><input type="radio" name="r3" value="B"><span class="dot"></span>Luciferin and luciferase (with oxygen)</label>
+    <label class="opt"><input type="radio" name="r3" value="C"><span class="dot"></span>Salt and carbonic acid</label>
+    <label class="opt"><input type="radio" name="r3" value="D"><span class="dot"></span>Zooxanthellae and CO₂</label>
+  </div>
+</div>
+
+<!-- Q4 -->
+<div class="qcard" id="qc4">
+  <div class="q-num">Question 4</div>
+  <div class="q-text">Spring tides (the strongest tides) occur when:</div>
+  <div class="opts" id="r4">
+    <label class="opt"><input type="radio" name="r4" value="A"><span class="dot"></span>The Sun and Moon are at 90° to each other</label>
+    <label class="opt"><input type="radio" name="r4" value="B"><span class="dot"></span>The Sun, Earth, and Moon are aligned (new or full moon)</label>
+    <label class="opt"><input type="radio" name="r4" value="C"><span class="dot"></span>Ocean temperatures are highest in summer</label>
+    <label class="opt"><input type="radio" name="r4" value="D"><span class="dot"></span>Strong winds blow across the water surface</label>
+  </div>
+</div>
+
+<!-- Q5 -->
+<div class="qcard" id="qc5">
+  <div class="q-num">Question 5</div>
+  <div class="q-text">The "10% Rule" in ocean food webs means:</div>
+  <div class="opts" id="r5">
+    <label class="opt"><input type="radio" name="r5" value="A"><span class="dot"></span>10% of ocean species have been discovered</label>
+    <label class="opt"><input type="radio" name="r5" value="B"><span class="dot"></span>Only 10% of energy passes from one trophic level to the next</label>
+    <label class="opt"><input type="radio" name="r5" value="C"><span class="dot"></span>10% of the ocean is covered by coral reefs</label>
+    <label class="opt"><input type="radio" name="r5" value="D"><span class="dot"></span>Phytoplankton make up 10% of all ocean biomass</label>
+  </div>
+</div>
+
+<!-- Q6 -->
+<div class="qcard" id="qc6">
+  <div class="q-num">Question 6</div>
+  <div class="q-text">What is chemosynthesis, and where does it occur in the ocean?</div>
+  <div class="opts" id="r6">
+    <label class="opt"><input type="radio" name="r6" value="A"><span class="dot"></span>Making food from sunlight — occurs in the epipelagic zone</label>
+    <label class="opt"><input type="radio" name="r6" value="B"><span class="dot"></span>Making food from chemicals — occurs at hydrothermal vents on the ocean floor</label>
+    <label class="opt"><input type="radio" name="r6" value="C"><span class="dot"></span>Converting salt water to fresh water — occurs in polar regions</label>
+    <label class="opt"><input type="radio" name="r6" value="D"><span class="dot"></span>Breaking down dead organisms — only occurs in the abyss</label>
+  </div>
+</div>
+
+<!-- Q7 -->
+<div class="qcard" id="qc7">
+  <div class="q-num">Question 7</div>
+  <div class="q-text">Coral bleaching happens when:</div>
+  <div class="opts" id="r7">
+    <label class="opt"><input type="radio" name="r7" value="A"><span class="dot"></span>Coral polyps absorb too much CO₂ and turn white from calcium</label>
+    <label class="opt"><input type="radio" name="r7" value="B"><span class="dot"></span>Stressed corals expel their zooxanthellae algae due to warm water</label>
+    <label class="opt"><input type="radio" name="r7" value="C"><span class="dot"></span>Bioluminescent bacteria colonize the reef surface</label>
+    <label class="opt"><input type="radio" name="r7" value="D"><span class="dot"></span>Ocean acidification dissolves calcium carbonate in coral skeletons</label>
+  </div>
+</div>
+
+<!-- Q8 -->
+<div class="qcard" id="qc8">
+  <div class="q-num">Question 8</div>
+  <div class="q-text">Which process brings cold, nutrient-rich water to the ocean surface, fueling marine ecosystems?</div>
+  <div class="opts" id="r8">
+    <label class="opt"><input type="radio" name="r8" value="A"><span class="dot"></span>Subduction</label>
+    <label class="opt"><input type="radio" name="r8" value="B"><span class="dot"></span>Thermohaline convergence</label>
+    <label class="opt"><input type="radio" name="r8" value="C"><span class="dot"></span>Upwelling</label>
+    <label class="opt"><input type="radio" name="r8" value="D"><span class="dot"></span>Tidal bore</label>
+  </div>
+</div>
+
+<!-- Q9 -->
+<div class="qcard" id="qc9">
+  <div class="q-num">Question 9</div>
+  <div class="q-text">Ocean acidification is PRIMARILY caused by:</div>
+  <div class="opts" id="r9">
+    <label class="opt"><input type="radio" name="r9" value="A"><span class="dot"></span>Increased salt runoff from farmland</label>
+    <label class="opt"><input type="radio" name="r9" value="B"><span class="dot"></span>The ocean absorbing CO₂ from the atmosphere, forming carbonic acid</label>
+    <label class="opt"><input type="radio" name="r9" value="C"><span class="dot"></span>Volcanic eruptions on the ocean floor releasing sulfur</label>
+    <label class="opt"><input type="radio" name="r9" value="D"><span class="dot"></span>Melting polar ice diluting the ocean's minerals</label>
+  </div>
+</div>
+
+<!-- Q10 -->
+<div class="qcard" id="qc10">
+  <div class="q-num">Question 10</div>
+  <div class="q-text">Mid-ocean ridges form because of:</div>
+  <div class="opts" id="r10">
+    <label class="opt"><input type="radio" name="r10" value="A"><span class="dot"></span>Tectonic plates converging and one subducting under the other</label>
+    <label class="opt"><input type="radio" name="r10" value="B"><span class="dot"></span>Tectonic plates diverging and magma rising to form new ocean crust</label>
+    <label class="opt"><input type="radio" name="r10" value="C"><span class="dot"></span>Sediment accumulation from continental rivers over millions of years</label>
+    <label class="opt"><input type="radio" name="r10" value="D"><span class="dot"></span>Erosion by strong deep-sea currents cutting into the ocean floor</label>
+  </div>
+</div>
+
+<!-- Q11 -->
+<div class="qcard" id="qc11">
+  <div class="q-num">Question 11</div>
+  <div class="q-text">The barreleye fish has a transparent head so that:</div>
+  <div class="opts" id="r11">
+    <label class="opt"><input type="radio" name="r11" value="A"><span class="dot"></span>It can disguise itself as a jellyfish to avoid predators</label>
+    <label class="opt"><input type="radio" name="r11" value="B"><span class="dot"></span>Its tubular eyes can rotate upward to spot prey silhouetted from above</label>
+    <label class="opt"><input type="radio" name="r11" value="C"><span class="dot"></span>Light can pass through and attract bioluminescent plankton</label>
+    <label class="opt"><input type="radio" name="r11" value="D"><span class="dot"></span>It can see in all directions simultaneously in dark water</label>
+  </div>
+</div>
+
+<!-- Q12 -->
+<div class="qcard" id="qc12">
+  <div class="q-num">Question 12</div>
+  <div class="q-text">El Niño is characterized by:</div>
+  <div class="opts" id="r12">
+    <label class="opt"><input type="radio" name="r12" value="A"><span class="dot"></span>Unusually cold water spreading across the central Pacific Ocean</label>
+    <label class="opt"><input type="radio" name="r12" value="B"><span class="dot"></span>Unusually warm water spreading east across the Pacific, disrupting global weather</label>
+    <label class="opt"><input type="radio" name="r12" value="C"><span class="dot"></span>Increased upwelling off the coast of South America</label>
+    <label class="opt"><input type="radio" name="r12" value="D"><span class="dot"></span>A sudden reversal of thermohaline circulation</label>
+  </div>
+</div>
+
+<!-- Q13 -->
+<div class="qcard" id="qc13">
+  <div class="q-num">Question 13</div>
+  <div class="q-text">Approximately what percentage of deep-sea animals are bioluminescent?</div>
+  <div class="opts" id="r13">
+    <label class="opt"><input type="radio" name="r13" value="A"><span class="dot"></span>About 10%</label>
+    <label class="opt"><input type="radio" name="r13" value="B"><span class="dot"></span>About 35%</label>
+    <label class="opt"><input type="radio" name="r13" value="C"><span class="dot"></span>About 76%</label>
+    <label class="opt"><input type="radio" name="r13" value="D"><span class="dot"></span>About 95%</label>
+  </div>
+</div>
+
+<!-- Q14 -->
+<div class="qcard" id="qc14">
+  <div class="q-num">Question 14</div>
+  <div class="q-text">What is a "keystone species" in a marine ecosystem?</div>
+  <div class="opts" id="r14">
+    <label class="opt"><input type="radio" name="r14" value="A"><span class="dot"></span>The most abundant species in the food web (usually phytoplankton)</label>
+    <label class="opt"><input type="radio" name="r14" value="B"><span class="dot"></span>A species with a disproportionately large effect on its ecosystem relative to its numbers</label>
+    <label class="opt"><input type="radio" name="r14" value="C"><span class="dot"></span>An apex predator that feeds on all other trophic levels</label>
+    <label class="opt"><input type="radio" name="r14" value="D"><span class="dot"></span>Any species discovered for the first time in a scientific expedition</label>
+  </div>
+</div>
+
+<!-- Q15 -->
+<div class="qcard" id="qc15">
+  <div class="q-num">Question 15</div>
+  <div class="q-text">What is the deepest point on Earth, and approximately how deep is it?</div>
+  <div class="opts" id="r15">
+    <label class="opt"><input type="radio" name="r15" value="A"><span class="dot"></span>Tonga Trench — approximately 8,000 meters</label>
+    <label class="opt"><input type="radio" name="r15" value="B"><span class="dot"></span>Puerto Rico Trench — approximately 9,200 meters</label>
+    <label class="opt"><input type="radio" name="r15" value="C"><span class="dot"></span>Challenger Deep, Mariana Trench — approximately 11,034 meters</label>
+    <label class="opt"><input type="radio" name="r15" value="D"><span class="dot"></span>Java Trench — approximately 7,258 meters</label>
+  </div>
+</div>
+
+<!-- ── PART 2: True/False (8 pts) ── -->
+<div class="section-hd" style="margin-top:20px;"><h3>✅ Part 2 — True or False</h3><span class="pts">8 pts · 1 pt each</span></div>
+
+<div class="qcard" id="qc16">
+  <div class="q-num">Question 16</div>
+  <div class="q-text">The Coriolis Effect deflects ocean currents clockwise in the Northern Hemisphere and counter-clockwise in the Southern Hemisphere.</div>
+  <div class="tf">
+    <button class="tfbtn" onclick="doTF(16,'TRUE',this)">✅ TRUE</button>
+    <button class="tfbtn" onclick="doTF(16,'FALSE',this)">❌ FALSE</button>
+  </div>
+</div>
+<div class="qcard" id="qc17">
+  <div class="q-num">Question 17</div>
+  <div class="q-text">The Mid-Atlantic Ridge is the longest mountain range on Earth.</div>
+  <div class="tf">
+    <button class="tfbtn" onclick="doTF(17,'TRUE',this)">✅ TRUE</button>
+    <button class="tfbtn" onclick="doTF(17,'FALSE',this)">❌ FALSE</button>
+  </div>
+</div>
+<div class="qcard" id="qc18">
+  <div class="q-num">Question 18</div>
+  <div class="q-text">Hydrothermal vent ecosystems depend on photosynthesis as their primary energy source.</div>
+  <div class="tf">
+    <button class="tfbtn" onclick="doTF(18,'TRUE',this)">✅ TRUE</button>
+    <button class="tfbtn" onclick="doTF(18,'FALSE',this)">❌ FALSE</button>
+  </div>
+</div>
+<div class="qcard" id="qc19">
+  <div class="q-num">Question 19</div>
+  <div class="q-text">Bioluminescence in the ocean is usually blue-green because blue light travels farthest through water.</div>
+  <div class="tf">
+    <button class="tfbtn" onclick="doTF(19,'TRUE',this)">✅ TRUE</button>
+    <button class="tfbtn" onclick="doTF(19,'FALSE',this)">❌ FALSE</button>
+  </div>
+</div>
+<div class="qcard" id="qc20">
+  <div class="q-num">Question 20</div>
+  <div class="q-text">The Southern Ocean was officially recognized as the 5th ocean in 2021.</div>
+  <div class="tf">
+    <button class="tfbtn" onclick="doTF(20,'TRUE',this)">✅ TRUE</button>
+    <button class="tfbtn" onclick="doTF(20,'FALSE',this)">❌ FALSE</button>
+  </div>
+</div>
+<div class="qcard" id="qc21">
+  <div class="q-num">Question 21</div>
+  <div class="q-text">Zooxanthellae are predatory bacteria that attack coral polyps and cause bleaching.</div>
+  <div class="tf">
+    <button class="tfbtn" onclick="doTF(21,'TRUE',this)">✅ TRUE</button>
+    <button class="tfbtn" onclick="doTF(21,'FALSE',this)">❌ FALSE</button>
+  </div>
+</div>
+<div class="qcard" id="qc22">
+  <div class="q-num">Question 22</div>
+  <div class="q-text">Phytoplankton produce approximately 50% of Earth's oxygen.</div>
+  <div class="tf">
+    <button class="tfbtn" onclick="doTF(22,'TRUE',this)">✅ TRUE</button>
+    <button class="tfbtn" onclick="doTF(22,'FALSE',this)">❌ FALSE</button>
+  </div>
+</div>
+<div class="qcard" id="qc23">
+  <div class="q-num">Question 23</div>
+  <div class="q-text">The average salinity of the ocean is about 3.5% (35 parts per thousand).</div>
+  <div class="tf">
+    <button class="tfbtn" onclick="doTF(23,'TRUE',this)">✅ TRUE</button>
+    <button class="tfbtn" onclick="doTF(23,'FALSE',this)">❌ FALSE</button>
+  </div>
+</div>
+
+<!-- ── PART 3: Fill in the Blank (7 pts) ── -->
+<div class="section-hd" style="margin-top:20px;"><h3>📝 Part 3 — Fill in the Blank</h3><span class="pts">7 pts · 1 pt each</span></div>
+
+<div class="qcard" id="qc24">
+  <div class="q-num">Question 24</div>
+  <div class="fill-wrap">The deep ocean current system driven by temperature and salt differences is called <input class="blank" id="b24" placeholder="____________"> circulation.</div>
+</div>
+<div class="qcard" id="qc25">
+  <div class="q-num">Question 25</div>
+  <div class="fill-wrap">The process by which bacteria make food using chemical energy instead of sunlight is called <input class="blank" id="b25" placeholder="____________">.</div>
+</div>
+<div class="qcard" id="qc26">
+  <div class="q-num">Question 26</div>
+  <div class="fill-wrap">Dead organic matter that drifts slowly from the surface to the deep ocean floor is called <input class="blank" id="b26" placeholder="____________"> snow.</div>
+</div>
+<div class="qcard" id="qc27">
+  <div class="q-num">Question 27</div>
+  <div class="fill-wrap">The symbiotic algae that live inside coral polyps and provide them with energy are called <input class="blank" id="b27" placeholder="____________">.</div>
+</div>
+<div class="qcard" id="qc28">
+  <div class="q-num">Question 28</div>
+  <div class="fill-wrap">The world's highest tidal range (about 16 meters) is found at the <input class="blank" id="b28" placeholder="____________"> in Canada.</div>
+</div>
+<div class="qcard" id="qc29">
+  <div class="q-num">Question 29</div>
+  <div class="fill-wrap">Since the industrial era, ocean pH has dropped from approximately 8.25 to <input class="blank" id="b29" placeholder="___">, a process called ocean acidification.</div>
+</div>
+<div class="qcard" id="qc30">
+  <div class="q-num">Question 30</div>
+  <div class="fill-wrap">Approximately <input class="blank" id="b30" placeholder="___"> % of the ocean has been mapped in detail — meaning most of it remains unexplored.</div>
+</div>
+
+<!-- ── PART 4: Short Answer (20 pts) ── -->
+<div class="section-hd" style="margin-top:20px;"><h3>✏️ Part 4 — Short Answer</h3><span class="pts">20 pts · 5 pts each</span></div>
+
+<div class="qcard" id="qcs1">
+  <div class="q-num">Question 31 (5 pts)</div>
+  <div class="q-text">Explain how bioluminescence works in deep-sea animals. Include the chemicals involved and describe TWO different reasons an animal might use bioluminescence.</div>
+  <textarea class="sa" id="sa31" placeholder="Write your answer here (3–5 sentences)..."></textarea>
+</div>
+<div class="qcard" id="qcs2">
+  <div class="q-num">Question 32 (5 pts)</div>
+  <div class="q-text">Describe thermohaline circulation. Why is it called the "ocean conveyor belt" and why is it important to Earth's climate?</div>
+  <textarea class="sa" id="sa32" placeholder="Write your answer here (3–5 sentences)..."></textarea>
+</div>
+<div class="qcard" id="qcs3">
+  <div class="q-num">Question 33 (5 pts)</div>
+  <div class="q-text">What is a trophic cascade? Give a specific ocean example and explain what would happen at each level of the food web.</div>
+  <textarea class="sa" id="sa33" placeholder="Write your answer here (3–5 sentences)..."></textarea>
+</div>
+<div class="qcard" id="qcs4">
+  <div class="q-num">Question 34 (5 pts)</div>
+  <div class="q-text">How does ocean acidification threaten coral reef ecosystems? Include the chemistry of what happens when CO₂ dissolves in ocean water and the biological consequences.</div>
+  <textarea class="sa" id="sa34" placeholder="Write your answer here (3–5 sentences)..."></textarea>
+</div>
+
+<div class="sub-wrap">
+  <button class="sub-btn" onclick="submit()">🌊 Submit Answers</button>
+</div>
+</div><!-- end quiz -->
+
+<div id="score-card">
+  <h2>Test Complete!</h2>
+  <div id="score-num">--/--</div>
+  <div id="score-pct-disp"></div>
+  <div id="score-emoji"></div>
+  <div id="score-msg"></div>
+  <div id="score-name" style="margin-top:10px;font-size:0.9rem;color:var(--silver);opacity:0.8;"></div>
+  <div id="sa-note" style="margin-top:8px;font-size:0.85rem;color:var(--aqua);"></div>
+  <button class="retry-btn" onclick="location.reload()">🔄 Try Again</button>
+</div>
+
+<div class="ocean-bar">🌊 🐋 🦈 🐙 🦑 ✨ 🪸 🔬 🌡️ 🌀 🌊</div>
+
+</div><!-- end page-wrap -->
+
+<script>
+const MC = { r1:'B', r2:'B', r3:'B', r4:'B', r5:'B', r6:'B', r7:'B', r8:'C', r9:'B', r10:'B', r11:'B', r12:'B', r13:'C', r14:'B', r15:'C' };
+const TF = { 16:'TRUE', 17:'TRUE', 18:'FALSE', 19:'TRUE', 20:'TRUE', 21:'FALSE', 22:'TRUE', 23:'TRUE' };
+const FILL = {
+  b24: ['thermohaline'],
+  b25: ['chemosynthesis'],
+  b26: ['marine'],
+  b27: ['zooxanthellae'],
+  b28: ['bay of fundy','fundy'],
+  b29: ['8.1'],
+  b30: ['20'],
+};
+const tfSel = {};
+const TOTAL_Q = 30;
+
+function countAnswered() {
+  let n = 0;
+  Object.keys(MC).forEach(nm => { if (document.querySelector(`input[name="${nm}"]:checked`)) n++; });
+  Object.keys(TF).forEach(k => { if (tfSel[k]) n++; });
+  Object.keys(FILL).forEach(id => { if (document.getElementById(id)?.value.trim()) n++; });
+  ['sa31','sa32','sa33','sa34'].forEach(id => { if (document.getElementById(id)?.value.trim().length > 5) n++; });
+  return n;
+}
+
+function updateProgress() {
+  const n = countAnswered();
+  const pct = Math.round(n / TOTAL_Q * 100);
+  document.getElementById('prog').style.width = pct + '%';
+  document.getElementById('prog-label').textContent = `${n} of ${TOTAL_Q} answered`;
+  document.getElementById('prog-pct').textContent = pct + '%';
+}
+
+// MC wiring
+document.querySelectorAll('.opt input[type="radio"]').forEach(inp => {
+  inp.addEventListener('change', function() {
+    document.querySelectorAll(`input[name="${this.name}"]`).forEach(r => r.closest('.opt').classList.remove('sel'));
+    this.closest('.opt').classList.add('sel');
+    updateProgress();
+  });
+});
+document.querySelectorAll('.blank,.sa').forEach(el => el.addEventListener('input', updateProgress));
+
+function doTF(qn, val, btn) {
+  document.getElementById(`qc${qn}`).querySelectorAll('.tfbtn').forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+  tfSel[qn] = val;
+  updateProgress();
+}
+
+function submit() {
+  let score = 0;
+
+  // MC grade
+  Object.entries(MC).forEach(([nm, correct]) => {
+    const qn = nm.replace('r','');
+    const card = document.getElementById(`qc${qn}`);
+    const sel = document.querySelector(`input[name="${nm}"]:checked`);
+    document.querySelectorAll(`input[name="${nm}"]`).forEach(r => {
+      if (r.value === correct) r.closest('.opt').classList.add('c-ok');
+    });
+    if (sel) {
+      if (sel.value === correct) { score++; card.classList.add('correct'); }
+      else { sel.closest('.opt').classList.add('c-no'); card.classList.add('wrong'); }
+    } else card.classList.add('wrong');
+    document.querySelectorAll(`input[name="${nm}"]`).forEach(r => r.disabled = true);
+  });
+
+  // TF grade
+  Object.entries(TF).forEach(([k, correct]) => {
+    const card = document.getElementById(`qc${k}`);
+    const given = tfSel[parseInt(k)];
+    card.querySelectorAll('.tfbtn').forEach(btn => {
+      const v = btn.textContent.includes('TRUE') ? 'TRUE' : 'FALSE';
+      if (v === correct) btn.classList.add('c-ok');
+      if (v === given && given !== correct) btn.classList.add('c-no');
+      btn.disabled = true; btn.style.cursor = 'default';
+    });
+    if (given === correct) { score++; card.classList.add('correct'); }
+    else card.classList.add('wrong');
+  });
+
+  // Fill grade
+  Object.entries(FILL).forEach(([id, accepts]) => {
+    const el = document.getElementById(id);
+    const qn = id.replace('b','');
+    const card = document.getElementById(`qc${qn}`);
+    const val = el.value.trim().toLowerCase();
+    if (accepts.some(a => val.includes(a.toLowerCase()))) {
+      score++; el.classList.add('c-ok'); card.classList.add('correct');
+    } else {
+      el.classList.add('c-no'); card.classList.add('wrong');
+    }
+    el.readOnly = true;
+  });
+
+  // Short answers: auto-award 5 pts each if written
+  let saScore = 0;
+  ['sa31','sa32','sa33','sa34'].forEach((id, i) => {
+    const el = document.getElementById(id);
+    const card = document.getElementById(['qcs1','qcs2','qcs3','qcs4'][i]);
+    if (el.value.trim().length > 15) { saScore += 5; card.classList.add('correct'); }
+    else card.classList.add('wrong');
+    el.readOnly = true;
+  });
+  score += saScore;
+
+  const name = document.getElementById('sname').value.trim() || 'Competitor';
+  const pct = Math.round(score / 50 * 100);
+  let emoji, msg;
+  if (pct >= 90) { emoji = '🏆🌟🌟'; msg = 'Outstanding! True Olympiad material!'; }
+  else if (pct >= 75) { emoji = '🥈🌊'; msg = 'Excellent work — you know the deep ocean!'; }
+  else if (pct >= 60) { emoji = '🐬👍'; msg = 'Good effort — review the tricky areas and try again!'; }
+  else { emoji = '📚🌊'; msg = 'Keep studying — the ocean has more secrets to teach you!'; }
+
+  document.getElementById('score-num').textContent = `${score}/50`;
+  document.getElementById('score-pct-disp').textContent = `${pct}% correct`;
+  document.getElementById('score-emoji').textContent = emoji;
+  document.getElementById('score-msg').textContent = msg;
+  document.getElementById('score-name').textContent = `${name}'s result`;
+  document.getElementById('sa-note').textContent = `✏️ Short answers (Q31–34): auto-scored for completion (${saScore}/20 pts) — have a teacher review for full grading.`;
+
+  document.querySelector('.sub-btn').style.display = 'none';
+  document.getElementById('score-card').style.display = 'block';
+  document.getElementById('score-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+</script>
+
+<script id="theme-logic">
+(function() {
+  function applyTheme(mode) {
+    const btn = document.getElementById('theme-toggle');
+    if (mode === 'light') {
+      document.body.classList.add('light-mode');
+      if (btn) btn.textContent = '🌙';
+    } else {
+      document.body.classList.remove('light-mode');
+      if (btn) btn.textContent = '☀️';
+    }
+  }
+  // Apply on load
+  const saved = localStorage.getItem('va-theme') || 'dark';
+  applyTheme(saved);
+  
+  window.toggleTheme = function() {
+    const isLight = document.body.classList.contains('light-mode');
+    const newMode = isLight ? 'dark' : 'light';
+    localStorage.setItem('va-theme', newMode);
+    applyTheme(newMode);
+  };
+})();
+</script>
+</body>
+</html>

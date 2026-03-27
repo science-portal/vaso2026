@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏗️ Tower Building Test — Grades 3–4</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Exo+2:ital,wght@0,700;0,800;1,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:     #1A1A2E;
+  --panel:  #16213E;
+  --steel:  #0F3460;
+  --gold:   #F5A623;
+  --amber:  #E94560;
+  --aqua:   #4FC3F7;
+  --lime:   #7BC67E;
+  --orange: #FF8C42;
+  --white:  #FFFFFF;
+  --silver: #C8D6E5;
+  --dark:   #0D0D1A;
+  --correct:#2ECC71;
+  --wrong:  #E74C3C;
+  --teal:   #00BFA5;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+  padding: 24px 16px 60px;
+  color: var(--silver);
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(245,166,35,0.06) 0%, transparent 45%),
+    radial-gradient(circle at 85% 75%, rgba(79,195,247,0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Grid pattern */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: linear-gradient(rgba(245,166,35,0.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(245,166,35,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.page-wrap {
+  max-width: 740px; margin: 0 auto; position: relative; z-index: 1;
+}
+
+/* HEADER */
+.header {
+  background: linear-gradient(135deg, var(--panel) 0%, #0a1628 100%);
+  border: 1px solid rgba(245,166,35,0.2);
+  border-top: 4px solid var(--gold);
+  border-radius: 16px 16px 0 0;
+  padding: 30px 36px 24px;
+}
+.header .badge {
+  display: inline-block;
+  background: rgba(245,166,35,0.12);
+  border: 1px solid rgba(245,166,35,0.35);
+  color: var(--gold);
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.12em; padding: 4px 12px;
+  border-radius: 999px; margin-bottom: 10px;
+  text-transform: uppercase;
+}
+.header h1 {
+  font-family: 'Exo 2', sans-serif;
+  font-size: 2.1rem; font-weight: 800;
+  color: var(--white); line-height: 1.1; margin-bottom: 6px;
+}
+.header .sub { font-size: 0.95rem; color: var(--silver); margin-bottom: 16px; }
+.header .sub span { color: var(--gold); font-weight: 600; }
+.prog-outer {
+  background: rgba(255,255,255,0.08); border-radius: 999px; height: 8px; overflow: hidden;
+}
+.prog-inner {
+  height: 100%;
+  background: linear-gradient(90deg, #c47d00, var(--gold));
+  border-radius: 999px; width: 0%; transition: width 0.4s ease;
+}
+.prog-meta {
+  display: flex; justify-content: space-between;
+  font-size: 0.78rem; color: rgba(200,214,229,0.6); margin-top: 5px;
+}
+
+/* NAME */
+.name-box {
+  background: var(--panel);
+  border: 1px solid rgba(245,166,35,0.15); border-top: none;
+  padding: 18px 28px;
+}
+.name-box label { font-size: 0.8rem; font-weight: 700; color: var(--gold); letter-spacing: 0.08em; display: block; margin-bottom: 6px; }
+.name-box input {
+  background: transparent; border: none;
+  border-bottom: 2px solid rgba(245,166,35,0.3);
+  width: 100%; padding: 7px 0;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.05rem; color: var(--white); outline: none;
+  transition: border-color 0.2s;
+}
+.name-box input:focus { border-bottom-color: var(--gold); }
+
+/* SECTION HD */
+.sec-hd {
+  margin-top: 20px;
+  background: linear-gradient(90deg, var(--steel) 0%, #061424 100%);
+  border-top: 3px solid var(--gold);
+  border-radius: 10px 10px 0 0;
+  padding: 11px 22px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.sec-hd h3 {
+  font-family: 'Exo 2', sans-serif;
+  font-size: 1rem; font-weight: 800; color: var(--white); letter-spacing: 0.04em;
+}
+.pts {
+  font-size: 0.78rem; font-weight: 700; color: var(--gold);
+  background: rgba(245,166,35,0.12);
+  border: 1px solid rgba(245,166,35,0.3);
+  padding: 3px 10px; border-radius: 999px;
+}
+
+/* QUESTION CARD */
+.qcard {
+  background: var(--panel);
+  border: 1px solid rgba(245,166,35,0.1); border-top: none;
+  padding: 20px 26px; transition: background 0.25s;
+}
+.qcard:last-of-type { border-radius: 0 0 12px 12px; }
+.qcard.correct { background: #051e14; border-left: 4px solid var(--correct); }
+.qcard.wrong   { background: #1c0505; border-left: 4px solid var(--wrong); }
+
+.q-num { font-size: 0.7rem; font-weight: 700; color: var(--gold); letter-spacing: 0.1em; margin-bottom: 7px; text-transform: uppercase; }
+.q-text { font-size: 1rem; font-weight: 600; color: var(--white); margin-bottom: 14px; line-height: 1.5; }
+
+/* Options */
+.opts { display: flex; flex-direction: column; gap: 7px; }
+.opt {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 10px 14px; border: 1.5px solid rgba(245,166,35,0.15);
+  border-radius: 9px; cursor: pointer; transition: all 0.15s;
+  font-size: 0.93rem; font-weight: 500;
+  color: var(--silver); background: rgba(255,255,255,0.02);
+  user-select: none; line-height: 1.45;
+}
+.opt:hover { border-color: var(--gold); background: rgba(245,166,35,0.07); color: var(--white); }
+.opt.sel   { border-color: var(--gold); background: rgba(245,166,35,0.12); color: var(--white); }
+.opt.c-ok  { border-color: var(--correct); background: rgba(46,204,113,0.1); color: #7fffc4; }
+.opt.c-no  { border-color: var(--wrong);   background: rgba(231,76,60,0.1);  color: #ffaaaa; }
+.opt input { display: none; }
+.dot {
+  width: 18px; height: 18px; flex-shrink: 0;
+  border-radius: 50%; border: 2px solid rgba(245,166,35,0.35);
+  margin-top: 2px; transition: all 0.15s;
+}
+.sel .dot  { border-color: var(--gold);    background: var(--gold); }
+.c-ok .dot { border-color: var(--correct); background: var(--correct); }
+.c-no .dot { border-color: var(--wrong);   background: var(--wrong); }
+
+/* T/F */
+.tf { display: flex; gap: 10px; }
+.tfbtn {
+  flex: 1; padding: 12px; border: 1.5px solid rgba(245,166,35,0.18);
+  border-radius: 10px; background: rgba(255,255,255,0.02);
+  color: var(--silver); font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.97rem; font-weight: 700;
+  cursor: pointer; transition: all 0.15s; text-align: center;
+}
+.tfbtn:hover { border-color: var(--gold); background: rgba(245,166,35,0.08); color: var(--white); }
+.tfbtn.sel   { border-color: var(--gold); background: rgba(245,166,35,0.14); color: var(--gold); }
+.tfbtn.c-ok  { border-color: var(--correct); background: rgba(46,204,113,0.1);  color: #7fffc4; }
+.tfbtn.c-no  { border-color: var(--wrong);   background: rgba(231,76,60,0.1);   color: #ffaaaa; }
+
+/* Fill blank */
+.fill-wrap { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 8px; font-size: 0.97rem; font-weight: 500; line-height: 2.2; color: var(--white); }
+.blank {
+  border: none; border-bottom: 2px solid rgba(245,166,35,0.5);
+  background: transparent; color: var(--gold);
+  font-family: 'Space Grotesk', sans-serif; font-size: 0.97rem; font-weight: 700;
+  width: 160px; padding: 3px 4px; outline: none; transition: border-color 0.2s;
+}
+.blank:focus { border-bottom-color: var(--gold); }
+.blank.c-ok { border-bottom-color: var(--correct); color: var(--correct); }
+.blank.c-no { border-bottom-color: var(--wrong);   color: var(--wrong); }
+
+/* Match */
+.match-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+.match-term { font-weight: 600; color: var(--white); font-size: 0.93rem; min-width: 220px; }
+.match-sel {
+  border: 1.5px solid rgba(245,166,35,0.25); border-radius: 8px; padding: 7px 10px;
+  background: rgba(15,52,96,0.8);
+  font-family: 'Space Grotesk', sans-serif; font-size: 0.88rem; font-weight: 600;
+  color: var(--silver); outline: none; cursor: pointer;
+  transition: border-color 0.2s; min-width: 260px;
+}
+.match-sel:focus { border-color: var(--gold); }
+.match-sel.c-ok { border-color: var(--correct); color: var(--correct); }
+.match-sel.c-no { border-color: var(--wrong);   color: var(--wrong); }
+
+/* Short answer */
+.sa {
+  width: 100%; padding: 12px 14px;
+  border: 1.5px solid rgba(245,166,35,0.2); border-radius: 10px;
+  background: rgba(15,52,96,0.4);
+  font-family: 'Space Grotesk', sans-serif; font-size: 0.95rem; font-weight: 500;
+  color: var(--white); resize: none; outline: none; min-height: 68px; line-height: 1.55;
+  transition: border-color 0.2s;
+}
+.sa:focus { border-color: var(--gold); }
+
+/* SUBMIT */
+.sub-wrap { margin: 28px 0 10px; text-align: center; }
+.sub-btn {
+  background: linear-gradient(135deg, #c47d00, var(--gold));
+  color: var(--dark); border: none; padding: 15px 50px; border-radius: 50px;
+  font-family: 'Exo 2', sans-serif; font-size: 1.15rem; font-weight: 800;
+  cursor: pointer; letter-spacing: 0.04em;
+  box-shadow: 0 6px 28px rgba(245,166,35,0.3);
+  transition: all 0.2s;
+}
+.sub-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 36px rgba(245,166,35,0.45); }
+
+/* SCORE */
+#score-card {
+  display: none;
+  background: linear-gradient(135deg, var(--panel) 0%, #080f1e 100%);
+  border: 1px solid rgba(245,166,35,0.25); border-top: 4px solid var(--gold);
+  border-radius: 16px; padding: 42px 36px; text-align: center; margin: 20px 0;
+  animation: pop 0.4s ease;
+}
+@keyframes pop { from { transform: scale(0.88); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+#score-card h2 { font-family: 'Exo 2', sans-serif; font-size: 1.6rem; color: var(--white); margin-bottom: 8px; }
+#score-num { font-family: 'Exo 2', sans-serif; font-size: 5.5rem; font-weight: 800; color: var(--gold); line-height: 1; margin: 12px 0 6px; }
+#score-pct { font-size: 1.1rem; color: var(--aqua); font-weight: 700; }
+#score-msg { font-size: 1.05rem; color: var(--silver); margin-top: 10px; }
+#score-emoji { font-size: 2.8rem; margin-top: 10px; }
+.retry-btn {
+  margin-top: 22px; background: transparent; color: var(--gold);
+  border: 1.5px solid var(--gold); padding: 10px 34px; border-radius: 50px;
+  font-family: 'Exo 2', sans-serif; font-size: 1rem; font-weight: 700;
+  cursor: pointer; transition: all 0.2s;
+}
+.retry-btn:hover { background: rgba(245,166,35,0.1); }
+
+.eng-bar { text-align: center; font-size: 1.3rem; padding: 16px 0 4px; letter-spacing: 6px; opacity: 0.3; }
+
+/* ── Global light-mode text readability ── */
+body.light-mode,
+body.light-mode .page,
+body.light-mode .tab-panel,
+body.light-mode .callout p,
+body.light-mode .callout li,
+body.light-mode .callout ul,
+body.light-mode .card p,
+body.light-mode .card li,
+body.light-mode .step-body p,
+body.light-mode .step-body li,
+body.light-mode .tip-card p,
+body.light-mode .mat-body p,
+body.light-mode .res-desc,
+body.light-mode .chk-text,
+body.light-mode .hero-sub,
+body.light-mode .ecard-desc,
+body.light-mode .about-card p,
+body.light-mode .about-card li,
+body.light-mode .shop-intro,
+body.light-mode .shop-tbl td,
+body.light-mode .stbl td,
+body.light-mode .truss-card p,
+body.light-mode .outline-subs li,
+body.light-mode .tab-btn,
+body.light-mode .sec-sub,
+body.light-mode .ecard-meta,
+body.light-mode .stat-dates,
+body.light-mode .hero-dates,
+body.light-mode .prog-meta,
+body.light-mode .shop-prog-label,
+body.light-mode .si-note,
+body.light-mode .si-dept,
+body.light-mode .mat-body p,
+body.light-mode .score-mini p { color: rgba(13,31,48,0.72) !important; }
+
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode h4,
+body.light-mode .hero h1,
+body.light-mode .sec-title,
+body.light-mode .section-title,
+body.light-mode .ecard-name,
+body.light-mode .res-title,
+body.light-mode .card h4,
+body.light-mode .step-body h4,
+body.light-mode .tip-card h4,
+body.light-mode .mat-body h4,
+body.light-mode .truss-name,
+body.light-mode .q-text,
+body.light-mode .fill-wrap,
+body.light-mode .test-header h2,
+body.light-mode #score-card h2,
+body.light-mode .si-name,
+body.light-mode .about-card h3,
+body.light-mode .stat-num,
+body.light-mode .gnav-logo { color: #0D1F30 !important; }
+
+body.light-mode .callout h4,
+body.light-mode .sec-hd h3,
+body.light-mode .section-heading { color: inherit !important; }
+
+body.light-mode .hero-eyebrow,
+body.light-mode .hero-ey,
+body.light-mode .hbadge,
+body.light-mode .hbadge-muted { color: rgba(13,31,48,0.55) !important;
+  background: rgba(0,0,0,.06) !important; border-color: rgba(0,0,0,.15) !important; }
+
+</style>
+
+<style id="theme-vars">
+/* ── Light/Dark mode variables ── */
+:root {
+  --mode-bg1: #1A1A2E;
+  --mode-bg2: rgba(4,43,69,0.7);
+  --mode-nav: rgba(8,8,24,0.97);
+  --mode-nav-border: rgba(255,255,255,0.08);
+  --mode-text: #B8D8E8;
+  --mode-text-strong: #FFFFFF;
+  --mode-text-muted: rgba(184,216,232,0.5);
+  --mode-card-bg: rgba(4,43,69,0.7);
+  --mode-card-border: rgba(255,255,255,0.08);
+  --mode-input-bg: transparent;
+  --mode-input-color: #fff;
+  --mode-table-even: rgba(255,255,255,0.025);
+  --mode-section-bg: rgba(255,255,255,0.03);
+}
+body.light-mode {
+  --mode-bg1: #F0F4F8;
+  --mode-bg2: #FFFFFF;
+  --mode-nav: rgba(255,255,255,0.97);
+  --mode-nav-border: rgba(0,0,0,0.1);
+  --mode-text: #2A3E52;
+  --mode-text-strong: #0D1F30;
+  --mode-text-muted: rgba(42,62,82,0.5);
+  --mode-card-bg: #FFFFFF;
+  --mode-card-border: rgba(0,0,0,0.09);
+  --mode-input-bg: #fff;
+  --mode-input-color: #0D1F30;
+  --mode-table-even: rgba(0,0,0,0.03);
+  --mode-section-bg: rgba(0,0,0,0.03);
+}
+
+/* ── Toggle button ── */
+#theme-toggle {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.75);
+  cursor: pointer;
+  font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  line-height: 1;
+}
+#theme-toggle:hover { background: rgba(255,255,255,0.14); }
+body.light-mode #theme-toggle {
+  border-color: rgba(0,0,0,0.15);
+  background: rgba(0,0,0,0.06);
+  color: rgba(0,0,0,0.6);
+}
+body.light-mode #theme-toggle:hover { background: rgba(0,0,0,0.1); }
+
+/* ── Light mode nav overrides ── */
+body.light-mode .gnav {
+  background: rgba(255,255,255,0.97) !important;
+  border-bottom-color: rgba(0,0,0,0.1) !important;
+}
+body.light-mode .gnav-logo { color: #0D1F30 !important; border-right-color: rgba(0,0,0,0.12) !important; }
+body.light-mode .gnav-logo span { color: rgba(13,31,48,0.5) !important; }
+body.light-mode .gnav-link { color: rgba(13,31,48,0.55) !important; }
+body.light-mode .gnav-link:hover { background: rgba(0,0,0,0.05) !important; color: #0D1F30 !important; }
+body.light-mode .gnav-link.active { background: rgba(0,0,0,0.08) !important; color: #0D1F30 !important; }
+body.light-mode .gnav-burger { color: rgba(0,0,0,0.55) !important; }
+body.light-mode .gnav-mobile { background: #fff; border-top-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .gnav-mlink { color: rgba(13,31,48,0.65) !important; border-bottom-color: rgba(0,0,0,0.06) !important; }
+body.light-mode .gnav-mlink.active { color: #0D1F30 !important; background: rgba(0,0,0,0.05) !important; }
+
+/* ── Light mode body/backgrounds ── */
+body.light-mode { background: #EEF2F7 !important; color: var(--mode-text) !important; }
+body.light-mode .bg-ocean,
+body.light-mode .bg-ocean .wave { filter: opacity(0.12); }
+body.light-mode body::after { opacity: 0.3; }
+
+/* ── Light mode cards and panels ── */
+body.light-mode .project-card,
+body.light-mode .oc-card,
+body.light-mode .res-card,
+body.light-mode .concept-card,
+body.light-mode .topic-card,
+body.light-mode .about-card,
+body.light-mode .tip-card,
+body.light-mode .step,
+body.light-mode .chk-item,
+body.light-mode .mat-item,
+body.light-mode .slide-card,
+body.light-mode .stat-box {
+  background: #FFFFFF !important;
+  border-color: rgba(0,0,0,0.09) !important;
+}
+body.light-mode .project-card:hover,
+body.light-mode .res-card:hover,
+body.light-mode .slide-card:hover { border-color: rgba(0,0,0,0.2) !important; }
+
+/* ── Light mode text ── */
+body.light-mode h1, body.light-mode h2, body.light-mode h3,
+body.light-mode .hero h1, body.light-mode .section-title,
+body.light-mode .sec-title, body.light-mode .pc-title,
+body.light-mode .res-title, body.light-mode .about-card h3,
+body.light-mode .step-body h4, body.light-mode .tip-card h4,
+body.light-mode .mat-body h4 { color: #0D1F30 !important; }
+body.light-mode .hero-sub, body.light-mode .section-subtitle,
+body.light-mode .sec-sub, body.light-mode .hero-sub,
+body.light-mode .pc-desc, body.light-mode .res-desc,
+body.light-mode .about-card p, body.light-mode .about-card li,
+body.light-mode .step-body p, body.light-mode .tip-card p,
+body.light-mode .mat-body p, body.light-mode p { color: rgba(13,31,48,0.65) !important; }
+body.light-mode .hero-eyebrow, body.light-mode .hbadge-muted,
+body.light-mode .hb-muted, body.light-mode .pc-tag,
+body.light-mode .res-pill, body.light-mode .pill { color: rgba(13,31,48,0.5) !important; background: rgba(0,0,0,0.05) !important; border-color: rgba(0,0,0,0.1) !important; }
+
+/* ── Light mode tables ── */
+body.light-mode .stbl th { background: rgba(0,0,0,0.08) !important; }
+body.light-mode .stbl td { border-color: rgba(0,0,0,0.07) !important; color: rgba(13,31,48,0.75) !important; }
+body.light-mode .stbl td:first-child { color: #0D1F30 !important; }
+body.light-mode .stbl tr:nth-child(even) td { background: rgba(0,0,0,0.025) !important; }
+body.light-mode .shop-tbl th { background: rgba(0,0,0,0.05) !important; color: rgba(13,31,48,0.5) !important; border-bottom-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .shop-tbl td { border-bottom-color: rgba(0,0,0,0.06) !important; color: rgba(13,31,48,0.75) !important; }
+body.light-mode .si-name { color: #0D1F30 !important; }
+
+/* ── Light mode callouts ── */
+body.light-mode .callout,
+body.light-mode .shop-intro,
+body.light-mode .safety-warn,
+body.light-mode .c-acc, body.light-mode .c-gold,
+body.light-mode .c-green, body.light-mode .c-aqua,
+body.light-mode .c-bl, body.light-mode .c-gd,
+body.light-mode .callout p, body.light-mode .callout li { color: rgba(13,31,48,0.72) !important; }
+body.light-mode .callout { background: rgba(0,0,0,0.04) !important; }
+body.light-mode .c-acc { background: rgba(0,0,0,0.04) !important; }
+
+/* ── Light mode quiz ── */
+body.light-mode .header { background: #FFFFFF !important; border-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .header h1 { color: #0D1F30 !important; }
+body.light-mode .header .sub { color: rgba(13,31,48,0.6) !important; }
+body.light-mode .name-box { background: rgba(0,0,0,0.03) !important; border-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .name-box input { color: #0D1F30 !important; border-bottom-color: rgba(0,0,0,0.2) !important; }
+body.light-mode .sec-hd { background: rgba(0,0,0,0.05) !important; border-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .sec-hd h3 { color: #0D1F30 !important; }
+body.light-mode .qcard { background: #FFFFFF !important; border-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .q-text { color: #0D1F30 !important; }
+body.light-mode .opt { background: #F8FAFB !important; border-color: rgba(0,0,0,0.1) !important; color: rgba(13,31,48,0.72) !important; }
+body.light-mode .opt:hover { background: rgba(0,0,0,0.05) !important; }
+body.light-mode .tfbtn { background: #F8FAFB !important; border-color: rgba(0,0,0,0.1) !important; color: rgba(13,31,48,0.65) !important; }
+body.light-mode .fill-wrap { color: #0D1F30 !important; }
+body.light-mode .data-block { background: rgba(0,0,0,0.04) !important; border-color: rgba(0,0,0,0.1) !important; color: rgba(13,31,48,0.8) !important; }
+body.light-mode .sa { background: #F8FAFB !important; border-color: rgba(0,0,0,0.12) !important; color: #0D1F30 !important; }
+body.light-mode #score-card { background: #FFFFFF !important; border-color: rgba(0,0,0,0.1) !important; }
+body.light-mode #score-card h2 { color: #0D1F30 !important; }
+body.light-mode #score-msg, body.light-mode #score-pct, body.light-mode #score-name, body.light-mode #score-sa-note { color: rgba(13,31,48,0.6) !important; }
+body.light-mode .prog-outer { background: rgba(0,0,0,0.08) !important; }
+
+/* ── Light mode tab nav ── */
+body.light-mode .tab-nav { border-bottom-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .tab-btn { color: rgba(13,31,48,0.4) !important; }
+body.light-mode .tab-btn:hover { color: rgba(13,31,48,0.75) !important; }
+
+/* ── Light mode hero badges ── */
+body.light-mode .hero-eyebrow,
+body.light-mode .hero-ey { background: rgba(0,0,0,0.05) !important; border-color: rgba(0,0,0,0.12) !important; }
+
+/* ── Light mode section labels ── */
+body.light-mode .section-eyebrow,
+body.light-mode .sec-label { opacity: 0.7; }
+
+/* ── Light mode about scoring boxes ── */
+body.light-mode [style*="background:rgba(245,166,35,.06)"],
+body.light-mode [style*="background:rgba(224,92,64,.06)"],
+body.light-mode [style*="background:rgba(123,94,167,.06)"] { background: rgba(0,0,0,0.04) !important; }
+
+/* ── Light mode footer ── */
+body.light-mode footer { border-top-color: rgba(0,0,0,0.08) !important; }
+body.light-mode footer p { color: rgba(13,31,48,0.3) !important; }
+
+/* ── Light mode dividers ── */
+body.light-mode .divider { background: rgba(0,0,0,0.1) !important; }
+
+/* ── Light mode prog/shopping ── */
+body.light-mode .shop-total { background: rgba(0,0,0,0.04) !important; border-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .shop-total-label { color: rgba(13,31,48,0.5) !important; }
+body.light-mode .shop-prog { background: rgba(0,0,0,0.08) !important; }
+body.light-mode .cb { border-color: rgba(0,0,0,0.2) !important; background: #fff !important; }
+body.light-mode .chk-box { border-color: rgba(0,0,0,0.2) !important; }
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+<div class="header">
+  <div class="badge">🏗️ Engineering Olympiad Prep</div>
+  <h1>Tower Building Test</h1>
+  <div class="sub">Structural Engineering · Grades 3–4 · <span>50 Points</span></div>
+  <div class="prog-outer"><div class="prog-inner" id="prog"></div></div>
+  <div class="prog-meta"><span id="prog-label">0 of 28 answered</span><span id="prog-pct">0%</span></div>
+</div>
+<div class="name-box">
+  <label>COMPETITOR NAME</label>
+  <input id="sname" type="text" placeholder="Enter your full name..." autocomplete="off">
+</div>
+
+<div id="quiz">
+
+<!-- ── PART 1: Multiple Choice (15 pts) ── -->
+<div class="sec-hd"><h3>⭕ Part 1 — Multiple Choice</h3><span class="pts">15 pts · 1 pt each</span></div>
+
+<div class="qcard" id="qc1">
+  <div class="q-num">Question 1</div>
+  <div class="q-text">What type of force squeezes material together (like the weight pushing down on a tower leg)?</div>
+  <div class="opts" id="r1">
+    <label class="opt"><input type="radio" name="r1" value="A"><span class="dot"></span>Tension</label>
+    <label class="opt"><input type="radio" name="r1" value="B"><span class="dot"></span>Compression</label>
+    <label class="opt"><input type="radio" name="r1" value="C"><span class="dot"></span>Shear</label>
+    <label class="opt"><input type="radio" name="r1" value="D"><span class="dot"></span>Torsion</label>
+  </div>
+</div>
+
+<div class="qcard" id="qc2">
+  <div class="q-num">Question 2</div>
+  <div class="q-text">Why is the triangle the strongest polygon for building structures?</div>
+  <div class="opts" id="r2">
+    <label class="opt"><input type="radio" name="r2" value="A"><span class="dot"></span>It has the most sides of any simple shape</label>
+    <label class="opt"><input type="radio" name="r2" value="B"><span class="dot"></span>It is the only polygon that cannot change shape without changing its side lengths</label>
+    <label class="opt"><input type="radio" name="r2" value="C"><span class="dot"></span>Triangles use the least amount of material</label>
+    <label class="opt"><input type="radio" name="r2" value="D"><span class="dot"></span>All forces in a triangle become compression only</label>
+  </div>
+</div>
+
+<div class="qcard" id="qc3">
+  <div class="q-num">Question 3</div>
+  <div class="q-text">When is a tower's stability at greatest risk of toppling?</div>
+  <div class="opts" id="r3">
+    <label class="opt"><input type="radio" name="r3" value="A"><span class="dot"></span>When the center of gravity is very low</label>
+    <label class="opt"><input type="radio" name="r3" value="B"><span class="dot"></span>When the base is very wide</label>
+    <label class="opt"><input type="radio" name="r3" value="C"><span class="dot"></span>When the center of gravity moves outside the base footprint</label>
+    <label class="opt"><input type="radio" name="r3" value="D"><span class="dot"></span>When the tower is built using a truss system</label>
+  </div>
+</div>
+
+<div class="qcard" id="qc4">
+  <div class="q-num">Question 4</div>
+  <div class="q-text">What is "buckling" in structural engineering?</div>
+  <div class="opts" id="r4">
+    <label class="opt"><input type="radio" name="r4" value="A"><span class="dot"></span>When a material breaks because it was stretched too far (tension failure)</label>
+    <label class="opt"><input type="radio" name="r4" value="B"><span class="dot"></span>When a column suddenly bends sideways and collapses under compression</label>
+    <label class="opt"><input type="radio" name="r4" value="C"><span class="dot"></span>When glue joints crack under a live load</label>
+    <label class="opt"><input type="radio" name="r4" value="D"><span class="dot"></span>When a tower sinks into the ground under its own weight</label>
+  </div>
+</div>
+
+<div class="qcard" id="qc5">
+  <div class="q-num">Question 5</div>
+  <div class="q-text">According to Euler's Law, if you double the length of a column, its buckling strength:</div>
+  <div class="opts" id="r5">
+    <label class="opt"><input type="radio" name="r5" value="A"><span class="dot"></span>Doubles</label>
+    <label class="opt"><input type="radio" name="r5" value="B"><span class="dot"></span>Stays the same</label>
+    <label class="opt"><input type="radio" name="r5" value="C"><span class="dot"></span>Is reduced by half</label>
+    <label class="opt"><input type="radio" name="r5" value="D"><span class="dot"></span>Is reduced to one quarter</label>
+  </div>
+</div>
+
+<div class="qcard" id="qc6">
+  <div class="q-num">Question 6</div>
+  <div class="q-text">The Tacoma Narrows Bridge collapsed in 1940 due to:</div>
+  <div class="opts" id="r6">
+    <label class="opt"><input type="radio" name="r6" value="A"><span class="dot"></span>Too much live load — too many cars on the bridge</label>
+    <label class="opt"><input type="radio" name="r6" value="B"><span class="dot"></span>An earthquake that caused the foundations to fail</label>
+    <label class="opt"><input type="radio" name="r6" value="C"><span class="dot"></span>Wind resonance — the bridge vibrated at its natural frequency until it failed</label>
+    <label class="opt"><input type="radio" name="r6" value="D"><span class="dot"></span>Corrosion of the main tension cables over 10 years</label>
+  </div>
+</div>
+
+<div class="qcard" id="qc7">
+  <div class="q-num">Question 7</div>
+  <div class="q-text">Which cross-section shape gives the most bending stiffness for the least material (most efficient)?</div>
+  <div class="opts" id="r7">
+    <label class="opt"><input type="radio" name="r7" value="A"><span class="dot"></span>Solid square rod</label>
+    <label class="opt"><input type="radio" name="r7" value="B"><span class="dot"></span>Solid round rod</label>
+    <label class="opt"><input type="radio" name="r7" value="C"><span class="dot"></span>Hollow tube or I-beam</label>
+    <label class="opt"><input type="radio" name="r7" value="D"><span class="dot"></span>Flat plate lying on its side</label>
+  </div>
+</div>
+
+<div class="qcard" id="qc8">
+  <div class="q-num">Question 8</div>
+  <div class="q-text">A truss is strong because:</div>
+  <div class="opts" id="r8">
+    <label class="opt"><input type="radio" name="r8" value="A"><span class="dot"></span>All its members are very thick and heavy</label>
+    <label class="opt"><input type="radio" name="r8" value="B"><span class="dot"></span>Each member carries only pure tension or pure compression — no bending</label>
+    <label class="opt"><input type="radio" name="r8" value="C"><span class="dot"></span>It uses rigid joints at every connection point</label>
+    <label class="opt"><input type="radio" name="r8" value="D"><span class="dot"></span>The arch shape distributes forces outward to the abutments</label>
+  </div>
+</div>
+
+<div class="qcard" id="qc9">
+  <div class="q-num">Question 9</div>
+  <div class="q-text">Which base design is the most naturally stable and never rocks on an uneven surface?</div>
+  <div class="opts" id="r9">
+    <label class="opt"><input type="radio" name="r9" value="A"><span class="dot"></span>4-legged square base</label>
+    <label class="opt"><input type="radio" name="r9" value="B"><span class="dot"></span>2-legged base with a center support</label>
+    <label class="opt"><input type="radio" name="r9" value="C"><span class="dot"></span>3-legged tripod base</label>
+    <label class="opt"><input type="radio" name="r9" value="D"><span class="dot"></span>6-legged hexagonal base</label>
+  </div>
+</div>
+
+<div class="qcard" id="qc10">
+  <div class="q-num">Question 10</div>
+  <div class="q-text">In a competition where score = height × load held, what is generally the best strategy?</div>
+  <div class="opts" id="r10">
+    <label class="opt"><input type="radio" name="r10" value="A"><span class="dot"></span>Always build as tall as possible, ignoring strength</label>
+    <label class="opt"><input type="radio" name="r10" value="B"><span class="dot"></span>Always build the strongest possible tower regardless of height</label>
+    <label class="opt"><input type="radio" name="r10" value="C"><span class="dot"></span>Balance height and strength — a moderate height with strong structure often wins</label>
+    <label class="opt"><input type="radio" name="r10" value="D"><span class="dot"></span>Use all materials, since unused materials cost penalty points</label>
+  </div>
+</div>
+
+<div class="qcard" id="qc11">
+  <div class="q-num">Question 11</div>
+  <div class="q-text">What does "triangulation" mean in engineering?</div>
+  <div class="opts" id="r11">
+    <label class="opt"><input type="radio" name="r11" value="A"><span class="dot"></span>Measuring angles of a structure using trigonometry</label>
+    <label class="opt"><input type="radio" name="r11" value="B"><span class="dot"></span>Dividing a structure into triangles to make it rigid and prevent deformation</label>
+    <label class="opt"><input type="radio" name="r11" value="C"><span class="dot"></span>Using exactly three columns in every structural frame</label>
+    <label class="opt"><input type="radio" name="r11" value="D"><span class="dot"></span>Testing a structure three times before competition</label>
+  </div>
+</div>
+
+<div class="qcard" id="qc12">
+  <div class="q-num">Question 12</div>
+  <div class="q-text">A gusset plate is used to:</div>
+  <div class="opts" id="r12">
+    <label class="opt"><input type="radio" name="r12" value="A"><span class="dot"></span>Increase the height of a tower by adding a flat extension plate</label>
+    <label class="opt"><input type="radio" name="r12" value="B"><span class="dot"></span>Reinforce a joint by spreading load over a larger area</label>
+    <label class="opt"><input type="radio" name="r12" value="C"><span class="dot"></span>Add weight to the base to lower the center of gravity</label>
+    <label class="opt"><input type="radio" name="r12" value="D"><span class="dot"></span>Measure how much load a column can carry before buckling</label>
+  </div>
+</div>
+
+<div class="qcard" id="qc13">
+  <div class="q-num">Question 13</div>
+  <div class="q-text">The Eiffel Tower uses which structural system?</div>
+  <div class="opts" id="r13">
+    <label class="opt"><input type="radio" name="r13" value="A"><span class="dot"></span>Solid iron columns with a concrete core</label>
+    <label class="opt"><input type="radio" name="r13" value="B"><span class="dot"></span>Open iron lattice truss structure</label>
+    <label class="opt"><input type="radio" name="r13" value="C"><span class="dot"></span>Reinforced arch system with stone abutments</label>
+    <label class="opt"><input type="radio" name="r13" value="D"><span class="dot"></span>Space frame geodesic dome design</label>
+  </div>
+</div>
+
+<div class="qcard" id="qc14">
+  <div class="q-num">Question 14</div>
+  <div class="q-text">Where do most tower competition failures begin?</div>
+  <div class="opts" id="r14">
+    <label class="opt"><input type="radio" name="r14" value="A"><span class="dot"></span>At the very top of the tower</label>
+    <label class="opt"><input type="radio" name="r14" value="B"><span class="dot"></span>In the middle of structural members (beams)</label>
+    <label class="opt"><input type="radio" name="r14" value="C"><span class="dot"></span>At the joints and connections</label>
+    <label class="opt"><input type="radio" name="r14" value="D"><span class="dot"></span>In the material itself fracturing under tension</label>
+  </div>
+</div>
+
+<div class="qcard" id="qc15">
+  <div class="q-num">Question 15</div>
+  <div class="q-text">Why does folding a flat sheet of paper into a tube dramatically increase its strength?</div>
+  <div class="opts" id="r15">
+    <label class="opt"><input type="radio" name="r15" value="A"><span class="dot"></span>Rolling adds more paper layers and therefore more material</label>
+    <label class="opt"><input type="radio" name="r15" value="B"><span class="dot"></span>Moving material away from the neutral axis greatly increases bending stiffness</label>
+    <label class="opt"><input type="radio" name="r15" value="C"><span class="dot"></span>Circular shapes distribute tension forces but not compression forces</label>
+    <label class="opt"><input type="radio" name="r15" value="D"><span class="dot"></span>Tubes are easier to connect at joints, reducing failure there</label>
+  </div>
+</div>
+
+<!-- ── PART 2: True/False (8 pts) ── -->
+<div class="sec-hd" style="margin-top:20px;"><h3>✅ Part 2 — True or False</h3><span class="pts">8 pts · 1 pt each</span></div>
+
+<div class="qcard" id="qc16"><div class="q-num">Question 16</div>
+  <div class="q-text">A square frame with no diagonal bracing is rigid and will resist shear forces effectively.</div>
+  <div class="tf"><button class="tfbtn" onclick="doTF(16,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(16,'FALSE',this)">❌ FALSE</button></div></div>
+
+<div class="qcard" id="qc17"><div class="q-num">Question 17</div>
+  <div class="q-text">Forces in a structure always travel through the stiffest available load path to reach the ground.</div>
+  <div class="tf"><button class="tfbtn" onclick="doTF(17,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(17,'FALSE',this)">❌ FALSE</button></div></div>
+
+<div class="qcard" id="qc18"><div class="q-num">Question 18</div>
+  <div class="q-text">A solid rod is more efficient in bending than a hollow tube of the same weight.</div>
+  <div class="tf"><button class="tfbtn" onclick="doTF(18,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(18,'FALSE',this)">❌ FALSE</button></div></div>
+
+<div class="qcard" id="qc19"><div class="q-num">Question 19</div>
+  <div class="q-text">Placing heavier materials at the top of a tower improves stability by raising the center of gravity.</div>
+  <div class="tf"><button class="tfbtn" onclick="doTF(19,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(19,'FALSE',this)">❌ FALSE</button></div></div>
+
+<div class="qcard" id="qc20"><div class="q-num">Question 20</div>
+  <div class="q-text">The geodesic dome is considered the strongest structure per unit of material ever designed.</div>
+  <div class="tf"><button class="tfbtn" onclick="doTF(20,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(20,'FALSE',this)">❌ FALSE</button></div></div>
+
+<div class="qcard" id="qc21"><div class="q-num">Question 21</div>
+  <div class="q-text">Cables and ropes are strong structural members because they carry compression forces efficiently.</div>
+  <div class="tf"><button class="tfbtn" onclick="doTF(21,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(21,'FALSE',this)">❌ FALSE</button></div></div>
+
+<div class="qcard" id="qc22"><div class="q-num">Question 22</div>
+  <div class="q-text">Adding a diagonal brace to a rectangular frame converts it into two triangles, making it rigid.</div>
+  <div class="tf"><button class="tfbtn" onclick="doTF(22,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(22,'FALSE',this)">❌ FALSE</button></div></div>
+
+<div class="qcard" id="qc23"><div class="q-num">Question 23</div>
+  <div class="q-text">The "dead load" of a tower refers to extra weights placed on it during testing.</div>
+  <div class="tf"><button class="tfbtn" onclick="doTF(23,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(23,'FALSE',this)">❌ FALSE</button></div></div>
+
+<!-- ── PART 3: Fill in the Blank (7 pts) ── -->
+<div class="sec-hd" style="margin-top:20px;"><h3>📝 Part 3 — Fill in the Blank</h3><span class="pts">7 pts · 1 pt each</span></div>
+
+<div class="qcard" id="qc24"><div class="q-num">Question 24</div>
+  <div class="fill-wrap">A twisting force that rotates part of a structure is called <input class="blank" id="b24" placeholder="____________">.</div></div>
+
+<div class="qcard" id="qc25"><div class="q-num">Question 25</div>
+  <div class="fill-wrap">The process of dividing a structure into triangles to make it rigid is called <input class="blank" id="b25" placeholder="____________">.</div></div>
+
+<div class="qcard" id="qc26"><div class="q-num">Question 26</div>
+  <div class="fill-wrap">The single point where a structure's total weight appears to act is called its <input class="blank" id="b26" placeholder="____________"> of gravity.</div></div>
+
+<div class="qcard" id="qc27"><div class="q-num">Question 27</div>
+  <div class="fill-wrap">When a slender column suddenly bends sideways under compression, this failure is called <input class="blank" id="b27" placeholder="____________">.</div></div>
+
+<div class="qcard" id="qc28"><div class="q-num">Question 28</div>
+  <div class="fill-wrap">The weight of the structure itself (not added weight) is called the <input class="blank" id="b28" placeholder="____________"> load.</div></div>
+
+<div class="qcard" id="qc29"><div class="q-num">Question 29</div>
+  <div class="fill-wrap">A flat reinforcing plate added at a joint to spread the load is called a <input class="blank" id="b29" placeholder="____________"> plate.</div></div>
+
+<div class="qcard" id="qc30"><div class="q-num">Question 30</div>
+  <div class="fill-wrap">A framework of triangulated members where each piece carries only tension or compression is called a <input class="blank" id="b30" placeholder="____________">.</div></div>
+
+<!-- ── PART 4: Short Answer (20 pts) ── -->
+<div class="sec-hd" style="margin-top:20px;"><h3>✏️ Part 4 — Short Answer</h3><span class="pts">20 pts · 5 pts each</span></div>
+
+<div class="qcard" id="qcs1">
+  <div class="q-num">Question 31 (5 pts)</div>
+  <div class="q-text">Explain the four main forces that act on structures (compression, tension, shear, torsion). Give a real-world example of each from a tower or bridge.</div>
+  <textarea class="sa" id="sa31" placeholder="Write your answer here..."></textarea>
+</div>
+<div class="qcard" id="qcs2">
+  <div class="q-num">Question 32 (5 pts)</div>
+  <div class="q-text">You are building a competition tower out of index cards and tape. Describe THREE specific design choices you would make to maximize both height and strength. Explain the engineering reason for each choice.</div>
+  <textarea class="sa" id="sa32" placeholder="Write your answer here..."></textarea>
+</div>
+<div class="qcard" id="qcs3">
+  <div class="q-num">Question 33 (5 pts)</div>
+  <div class="q-text">Why is the triangle the most important shape in structural engineering? Include in your answer why a square frame is weaker and how triangulation fixes that weakness.</div>
+  <textarea class="sa" id="sa33" placeholder="Write your answer here..."></textarea>
+</div>
+<div class="qcard" id="qcs4">
+  <div class="q-num">Question 34 (5 pts)</div>
+  <div class="q-text">Describe the structural engineering principle that caused the Tacoma Narrows Bridge to collapse. What should the engineers have done differently?</div>
+  <textarea class="sa" id="sa34" placeholder="Write your answer here..."></textarea>
+</div>
+
+<div class="sub-wrap">
+  <button class="sub-btn" onclick="submit()">🏗️ Submit Answers</button>
+</div>
+</div>
+
+<!-- Score -->
+<div id="score-card">
+  <h2>Test Complete! 🏗️</h2>
+  <div id="score-num">--/--</div>
+  <div id="score-pct"></div>
+  <div id="score-emoji"></div>
+  <div id="score-msg"></div>
+  <div id="score-name" style="margin-top:10px;font-size:0.9rem;color:var(--silver);opacity:0.8;"></div>
+  <div id="sa-note" style="margin-top:8px;font-size:0.85rem;color:var(--gold);"></div>
+  <button class="retry-btn" onclick="location.reload()">🔄 Try Again</button>
+</div>
+
+<div class="eng-bar">🏗️ 🔩 🔺 🏛️ ⚖️ 📐 🔧 🏙️ 🗼 📏 ⚙️</div>
+</div>
+
+<script>
+const MC = { r1:'B', r2:'B', r3:'C', r4:'B', r5:'D', r6:'C', r7:'C', r8:'B', r9:'C', r10:'C', r11:'B', r12:'B', r13:'B', r14:'C', r15:'B' };
+const TF = { 16:'FALSE', 17:'TRUE', 18:'FALSE', 19:'FALSE', 20:'TRUE', 21:'FALSE', 22:'TRUE', 23:'FALSE' };
+const FILL = {
+  b24: ['torsion'],
+  b25: ['triangulation'],
+  b26: ['center','centre'],
+  b27: ['buckling'],
+  b28: ['dead'],
+  b29: ['gusset'],
+  b30: ['truss'],
+};
+const tfSel = {};
+const TOTAL_Q = 28;
+
+function updateProgress() {
+  let n = 0;
+  Object.keys(MC).forEach(nm => { if (document.querySelector(`input[name="${nm}"]:checked`)) n++; });
+  Object.keys(TF).forEach(k => { if (tfSel[k]) n++; });
+  Object.keys(FILL).forEach(id => { if (document.getElementById(id)?.value.trim()) n++; });
+  ['sa31','sa32','sa33','sa34'].forEach(id => { if (document.getElementById(id)?.value.trim().length > 5) n++; });
+  const pct = Math.round(n/TOTAL_Q*100);
+  document.getElementById('prog').style.width = pct+'%';
+  document.getElementById('prog-label').textContent = `${n} of ${TOTAL_Q} answered`;
+  document.getElementById('prog-pct').textContent = pct+'%';
+}
+
+document.querySelectorAll('.opt input[type="radio"]').forEach(inp => {
+  inp.addEventListener('change', function() {
+    document.querySelectorAll(`input[name="${this.name}"]`).forEach(r => r.closest('.opt').classList.remove('sel'));
+    this.closest('.opt').classList.add('sel');
+    updateProgress();
+  });
+});
+document.querySelectorAll('.blank,.sa').forEach(el => el.addEventListener('input', updateProgress));
+
+function doTF(qn, val, btn) {
+  document.getElementById(`qc${qn}`).querySelectorAll('.tfbtn').forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+  tfSel[qn] = val;
+  updateProgress();
+}
+
+function submit() {
+  let score = 0;
+  Object.entries(MC).forEach(([nm, correct]) => {
+    const qn = nm.replace('r','');
+    const card = document.getElementById(`qc${qn}`);
+    const sel = document.querySelector(`input[name="${nm}"]:checked`);
+    document.querySelectorAll(`input[name="${nm}"]`).forEach(r => {
+      if (r.value === correct) r.closest('.opt').classList.add('c-ok');
+    });
+    if (sel) {
+      if (sel.value === correct) { score++; card.classList.add('correct'); }
+      else { sel.closest('.opt').classList.add('c-no'); card.classList.add('wrong'); }
+    } else card.classList.add('wrong');
+    document.querySelectorAll(`input[name="${nm}"]`).forEach(r => r.disabled = true);
+  });
+
+  Object.entries(TF).forEach(([k, correct]) => {
+    const card = document.getElementById(`qc${k}`);
+    const given = tfSel[parseInt(k)];
+    card.querySelectorAll('.tfbtn').forEach(btn => {
+      const v = btn.textContent.includes('TRUE') ? 'TRUE' : 'FALSE';
+      if (v === correct) btn.classList.add('c-ok');
+      if (v === given && given !== correct) btn.classList.add('c-no');
+      btn.disabled = true; btn.style.cursor = 'default';
+    });
+    if (given === correct) { score++; card.classList.add('correct'); }
+    else card.classList.add('wrong');
+  });
+
+  Object.entries(FILL).forEach(([id, accepts]) => {
+    const el = document.getElementById(id);
+    const qn = id.replace('b','');
+    const card = document.getElementById(`qc${qn}`);
+    const val = el.value.trim().toLowerCase();
+    if (accepts.some(a => val.includes(a))) {
+      score++; el.classList.add('c-ok'); card.classList.add('correct');
+    } else {
+      el.classList.add('c-no'); card.classList.add('wrong');
+    }
+    el.readOnly = true;
+  });
+
+  let saScore = 0;
+  ['sa31','sa32','sa33','sa34'].forEach((id,i) => {
+    const el = document.getElementById(id);
+    const card = document.getElementById(['qcs1','qcs2','qcs3','qcs4'][i]);
+    if (el.value.trim().length > 15) { saScore += 5; card.classList.add('correct'); }
+    else card.classList.add('wrong');
+    el.readOnly = true;
+  });
+  score += saScore;
+
+  const name = document.getElementById('sname').value.trim() || 'Competitor';
+  const pct = Math.round(score/50*100);
+  let emoji, msg;
+  if (pct >= 90) { emoji = '🏆🔺🏆'; msg = 'Master Engineer — Olympiad ready!'; }
+  else if (pct >= 75) { emoji = '🏗️🌟'; msg = 'Excellent structural thinking!'; }
+  else if (pct >= 60) { emoji = '🔩👍'; msg = 'Solid effort — review buckling and joints!'; }
+  else { emoji = '📐📚'; msg = 'Keep building your knowledge — review the slides!'; }
+
+  document.getElementById('score-num').textContent = `${score}/50`;
+  document.getElementById('score-pct').textContent = `${pct}% correct`;
+  document.getElementById('score-emoji').textContent = emoji;
+  document.getElementById('score-msg').textContent = msg;
+  document.getElementById('score-name').textContent = `${name}'s result`;
+  document.getElementById('sa-note').textContent = `✏️ Short answers (Q31–34): auto-scored for completion (${saScore}/20 pts) — have a teacher review for full credit.`;
+  document.querySelector('.sub-btn').style.display = 'none';
+  document.getElementById('score-card').style.display = 'block';
+  document.getElementById('score-card').scrollIntoView({ behavior:'smooth', block:'center' });
+}
+</script>
+
+<script id="theme-logic">
+(function() {
+  function applyTheme(mode) {
+    const btn = document.getElementById('theme-toggle');
+    if (mode === 'light') {
+      document.body.classList.add('light-mode');
+      if (btn) btn.textContent = '🌙';
+    } else {
+      document.body.classList.remove('light-mode');
+      if (btn) btn.textContent = '☀️';
+    }
+  }
+  // Apply on load
+  const saved = localStorage.getItem('va-theme') || 'dark';
+  applyTheme(saved);
+  
+  window.toggleTheme = function() {
+    const isLight = document.body.classList.contains('light-mode');
+    const newMode = isLight ? 'dark' : 'light';
+    localStorage.setItem('va-theme', newMode);
+    applyTheme(newMode);
+  };
+})();
+</script>
+</body>
+</html>

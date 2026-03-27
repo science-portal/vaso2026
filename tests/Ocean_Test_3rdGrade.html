@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌊 Ocean Test — 3rd Grade</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --deep: #065A82;
+    --teal: #1C7293;
+    --sky: #9DC4D0;
+    --foam: #D6EEF5;
+    --sand: #FFF8E7;
+    --gold: #F9C74F;
+    --white: #FFFFFF;
+    --dark: #021C30;
+    --correct: #2ECC71;
+    --wrong: #E74C3C;
+    --border: #B0D8E8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(160deg, #d6eef5 0%, #a8d8ea 40%, #d4f1f9 100%);
+    min-height: 100vh;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Animated bubbles background */
+  .bubble {
+    position: fixed;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.18);
+    animation: rise linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+  @keyframes rise {
+    0%   { transform: translateY(110vh) scale(1); opacity: 0.6; }
+    100% { transform: translateY(-20vh) scale(1.1); opacity: 0; }
+  }
+
+  .page-wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* HEADER CARD */
+  .header-card {
+    background: var(--deep);
+    border-radius: 16px 16px 0 0;
+    padding: 32px 36px 28px;
+    color: white;
+    border-top: 10px solid var(--gold);
+    margin-bottom: 0;
+    box-shadow: 0 8px 32px rgba(6,90,130,0.25);
+  }
+  .header-card .wave-emoji { font-size: 2.4rem; }
+  .header-card h1 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 2.1rem;
+    font-weight: 800;
+    margin: 8px 0 6px;
+    line-height: 1.15;
+  }
+  .header-card p { font-size: 1rem; opacity: 0.85; margin-bottom: 4px; }
+  .progress-bar-wrap {
+    margin-top: 18px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 999px;
+    height: 10px;
+    overflow: hidden;
+  }
+  .progress-bar {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 999px;
+    transition: width 0.5s ease;
+    width: 0%;
+  }
+  .progress-label {
+    font-size: 0.8rem;
+    opacity: 0.75;
+    margin-top: 5px;
+    text-align: right;
+  }
+
+  /* NAME CARD */
+  .name-card {
+    background: white;
+    border-left: 5px solid var(--teal);
+    border-radius: 0 0 0 0;
+    padding: 22px 28px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    margin-bottom: 0;
+  }
+  .name-card label { font-weight: 700; color: var(--dark); font-size: 0.95rem; display: block; margin-bottom: 6px; }
+  .name-card input {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid var(--border);
+    padding: 7px 0;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.05rem;
+    color: var(--dark);
+    background: transparent;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .name-card input:focus { border-bottom-color: var(--teal); }
+
+  /* SECTION HEADER */
+  .section-header {
+    background: var(--teal);
+    color: white;
+    font-family: 'Baloo 2', cursive;
+    font-weight: 700;
+    font-size: 1.15rem;
+    padding: 12px 28px;
+    margin-top: 18px;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  /* QUESTION CARD */
+  .question-card {
+    background: white;
+    padding: 22px 28px;
+    border-bottom: 1px solid #e3f0f5;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    transition: box-shadow 0.2s;
+    position: relative;
+  }
+  .question-card:last-of-type { border-radius: 0 0 12px 12px; border-bottom: none; }
+  .question-card.answered { background: #f7fdff; }
+  .question-card.correct-card { background: #edfff5; border-left: 5px solid var(--correct); }
+  .question-card.wrong-card  { background: #fff0f0; border-left: 5px solid var(--wrong); }
+
+  .q-number {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 7px;
+  }
+  .q-text {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 14px;
+    line-height: 1.45;
+  }
+
+  /* Multiple choice options */
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .option-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 15px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    font-size: 0.97rem;
+    font-weight: 600;
+    color: #2c4a5a;
+    background: var(--foam);
+    user-select: none;
+  }
+  .option-label:hover { border-color: var(--teal); background: #d0ecf5; }
+  .option-label input[type="radio"] { display: none; }
+  .option-label.selected { border-color: var(--deep); background: #c6e8f5; color: var(--deep); }
+  .option-label.correct-opt { border-color: var(--correct); background: #d5f5e3; color: #1a7a43; }
+  .option-label.wrong-opt   { border-color: var(--wrong); background: #fde8e8; color: #a93226; }
+  .option-dot {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--sky);
+    background: white;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem;
+    transition: all 0.18s;
+  }
+  .selected .option-dot { background: var(--deep); border-color: var(--deep); }
+  .correct-opt .option-dot { background: var(--correct); border-color: var(--correct); }
+  .wrong-opt .option-dot   { background: var(--wrong); border-color: var(--wrong); }
+
+  /* True/False */
+  .tf-options { display: flex; gap: 12px; }
+  .tf-btn {
+    flex: 1; padding: 13px; border: 2px solid var(--border);
+    border-radius: 12px; cursor: pointer; font-family: 'Nunito', sans-serif;
+    font-size: 1rem; font-weight: 800; background: var(--foam);
+    color: #2c4a5a; transition: all 0.18s; text-align: center;
+  }
+  .tf-btn:hover { border-color: var(--teal); background: #d0ecf5; }
+  .tf-btn.selected { border-color: var(--deep); background: #c6e8f5; color: var(--deep); }
+  .tf-btn.correct-opt { border-color: var(--correct); background: #d5f5e3; color: #1a7a43; }
+  .tf-btn.wrong-opt   { border-color: var(--wrong); background: #fde8e8; color: #a93226; }
+
+  /* Fill in the blank */
+  .blank-input {
+    border: none; border-bottom: 2px solid var(--teal);
+    width: 180px; padding: 5px 2px; font-size: 1rem;
+    font-family: 'Nunito', sans-serif; font-weight: 700;
+    color: var(--deep); background: transparent; outline: none;
+    transition: border-color 0.2s;
+  }
+  .blank-input:focus { border-bottom-color: var(--deep); }
+  .blank-input.correct-input { border-bottom-color: var(--correct); color: #1a7a43; }
+  .blank-input.wrong-input   { border-bottom-color: var(--wrong); color: #a93226; }
+  .fill-q { font-size: 1rem; font-weight: 700; color: var(--dark); display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+
+  /* Matching */
+  .match-row { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; flex-wrap: wrap; }
+  .match-term { font-weight: 700; color: var(--dark); font-size: 0.97rem; min-width: 220px; }
+  .match-select {
+    border: 2px solid var(--border); border-radius: 8px;
+    padding: 7px 12px; font-family: 'Nunito', sans-serif; font-size: 0.95rem;
+    font-weight: 600; color: var(--dark); background: var(--foam);
+    outline: none; cursor: pointer; transition: border-color 0.2s; min-width: 240px;
+  }
+  .match-select:focus { border-color: var(--teal); }
+  .match-select.correct-opt { border-color: var(--correct); background: #d5f5e3; }
+  .match-select.wrong-opt   { border-color: var(--wrong); background: #fde8e8; }
+
+  /* Short answer */
+  .short-answer {
+    width: 100%; padding: 12px 14px;
+    border: 2px solid var(--border); border-radius: 10px;
+    font-family: 'Nunito', sans-serif; font-size: 0.97rem; font-weight: 600;
+    color: var(--dark); background: var(--foam); outline: none; resize: none;
+    transition: border-color 0.2s; min-height: 70px; line-height: 1.5;
+  }
+  .short-answer:focus { border-color: var(--teal); }
+
+  /* Feedback bubble */
+  .feedback {
+    display: none; margin-top: 10px; padding: 9px 14px;
+    border-radius: 10px; font-size: 0.9rem; font-weight: 700;
+    animation: popIn 0.25s ease;
+  }
+  @keyframes popIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .feedback.correct { background: #d5f5e3; color: #1a7a43; display: block; }
+  .feedback.wrong   { background: #fde8e8; color: #a93226; display: block; }
+
+  /* SUBMIT BUTTON */
+  .submit-wrap { margin: 28px 0 10px; text-align: center; }
+  .submit-btn {
+    background: var(--deep); color: white;
+    border: none; padding: 16px 52px; border-radius: 50px;
+    font-family: 'Baloo 2', cursive; font-size: 1.2rem; font-weight: 700;
+    cursor: pointer; letter-spacing: 0.03em;
+    box-shadow: 0 6px 24px rgba(6,90,130,0.35);
+    transition: all 0.2s; position: relative; overflow: hidden;
+  }
+  .submit-btn:hover { background: var(--teal); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(6,90,130,0.4); }
+  .submit-btn:active { transform: translateY(0); }
+
+  /* SCORE CARD */
+  #score-card {
+    display: none;
+    background: var(--deep);
+    border-radius: 16px;
+    padding: 40px 36px;
+    text-align: center;
+    color: white;
+    margin: 20px 0;
+    box-shadow: 0 12px 40px rgba(6,90,130,0.4);
+    animation: popIn 0.4s ease;
+  }
+  #score-card h2 { font-family: 'Baloo 2', cursive; font-size: 2rem; margin-bottom: 10px; }
+  #score-display { font-family: 'Baloo 2', cursive; font-size: 5rem; font-weight: 800; color: var(--gold); line-height: 1; margin: 14px 0 8px; }
+  #score-card .score-sub { font-size: 1.1rem; opacity: 0.85; }
+  #score-emoji { font-size: 3rem; margin-top: 12px; }
+  #score-msg { font-size: 1.15rem; font-weight: 700; margin-top: 8px; color: var(--gold); }
+  .retake-btn {
+    margin-top: 22px; background: white; color: var(--deep);
+    border: none; padding: 12px 36px; border-radius: 50px;
+    font-family: 'Baloo 2', cursive; font-size: 1.1rem; font-weight: 700;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .retake-btn:hover { background: var(--gold); }
+
+  /* Correct answer reveal */
+  .answer-reveal {
+    display: none; font-size: 0.88rem; color: #a93226; font-weight: 700; margin-top: 6px;
+  }
+
+  /* Ocean fish decoration */
+  .fish-row { text-align: center; font-size: 1.5rem; padding: 10px 0; letter-spacing: 8px; opacity: 0.5; }
+
+  @media (max-width: 500px) {
+    .header-card h1 { font-size: 1.6rem; }
+    .question-card { padding: 18px 18px; }
+    .match-select { min-width: 180px; }
+    .match-term { min-width: 160px; }
+  }
+
+/* ── Global light-mode text readability ── */
+body.light-mode,
+body.light-mode .page,
+body.light-mode .tab-panel,
+body.light-mode .callout p,
+body.light-mode .callout li,
+body.light-mode .callout ul,
+body.light-mode .card p,
+body.light-mode .card li,
+body.light-mode .step-body p,
+body.light-mode .step-body li,
+body.light-mode .tip-card p,
+body.light-mode .mat-body p,
+body.light-mode .res-desc,
+body.light-mode .chk-text,
+body.light-mode .hero-sub,
+body.light-mode .ecard-desc,
+body.light-mode .about-card p,
+body.light-mode .about-card li,
+body.light-mode .shop-intro,
+body.light-mode .shop-tbl td,
+body.light-mode .stbl td,
+body.light-mode .truss-card p,
+body.light-mode .outline-subs li,
+body.light-mode .tab-btn,
+body.light-mode .sec-sub,
+body.light-mode .ecard-meta,
+body.light-mode .stat-dates,
+body.light-mode .hero-dates,
+body.light-mode .prog-meta,
+body.light-mode .shop-prog-label,
+body.light-mode .si-note,
+body.light-mode .si-dept,
+body.light-mode .mat-body p,
+body.light-mode .score-mini p { color: rgba(13,31,48,0.72) !important; }
+
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode h4,
+body.light-mode .hero h1,
+body.light-mode .sec-title,
+body.light-mode .section-title,
+body.light-mode .ecard-name,
+body.light-mode .res-title,
+body.light-mode .card h4,
+body.light-mode .step-body h4,
+body.light-mode .tip-card h4,
+body.light-mode .mat-body h4,
+body.light-mode .truss-name,
+body.light-mode .q-text,
+body.light-mode .fill-wrap,
+body.light-mode .test-header h2,
+body.light-mode #score-card h2,
+body.light-mode .si-name,
+body.light-mode .about-card h3,
+body.light-mode .stat-num,
+body.light-mode .gnav-logo { color: #0D1F30 !important; }
+
+body.light-mode .callout h4,
+body.light-mode .sec-hd h3,
+body.light-mode .section-heading { color: inherit !important; }
+
+body.light-mode .hero-eyebrow,
+body.light-mode .hero-ey,
+body.light-mode .hbadge,
+body.light-mode .hbadge-muted { color: rgba(13,31,48,0.55) !important;
+  background: rgba(0,0,0,.06) !important; border-color: rgba(0,0,0,.15) !important; }
+
+</style>
+
+<style id="theme-vars">
+/* ── Light/Dark mode variables ── */
+:root {
+  --mode-bg1: #1A1A2E;
+  --mode-bg2: rgba(4,43,69,0.7);
+  --mode-nav: rgba(8,8,24,0.97);
+  --mode-nav-border: rgba(255,255,255,0.08);
+  --mode-text: #B8D8E8;
+  --mode-text-strong: #FFFFFF;
+  --mode-text-muted: rgba(184,216,232,0.5);
+  --mode-card-bg: rgba(4,43,69,0.7);
+  --mode-card-border: rgba(255,255,255,0.08);
+  --mode-input-bg: transparent;
+  --mode-input-color: #fff;
+  --mode-table-even: rgba(255,255,255,0.025);
+  --mode-section-bg: rgba(255,255,255,0.03);
+}
+body.light-mode {
+  --mode-bg1: #F0F4F8;
+  --mode-bg2: #FFFFFF;
+  --mode-nav: rgba(255,255,255,0.97);
+  --mode-nav-border: rgba(0,0,0,0.1);
+  --mode-text: #2A3E52;
+  --mode-text-strong: #0D1F30;
+  --mode-text-muted: rgba(42,62,82,0.5);
+  --mode-card-bg: #FFFFFF;
+  --mode-card-border: rgba(0,0,0,0.09);
+  --mode-input-bg: #fff;
+  --mode-input-color: #0D1F30;
+  --mode-table-even: rgba(0,0,0,0.03);
+  --mode-section-bg: rgba(0,0,0,0.03);
+}
+
+/* ── Toggle button ── */
+#theme-toggle {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.75);
+  cursor: pointer;
+  font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  line-height: 1;
+}
+#theme-toggle:hover { background: rgba(255,255,255,0.14); }
+body.light-mode #theme-toggle {
+  border-color: rgba(0,0,0,0.15);
+  background: rgba(0,0,0,0.06);
+  color: rgba(0,0,0,0.6);
+}
+body.light-mode #theme-toggle:hover { background: rgba(0,0,0,0.1); }
+
+/* ── Light mode nav overrides ── */
+body.light-mode .gnav {
+  background: rgba(255,255,255,0.97) !important;
+  border-bottom-color: rgba(0,0,0,0.1) !important;
+}
+body.light-mode .gnav-logo { color: #0D1F30 !important; border-right-color: rgba(0,0,0,0.12) !important; }
+body.light-mode .gnav-logo span { color: rgba(13,31,48,0.5) !important; }
+body.light-mode .gnav-link { color: rgba(13,31,48,0.55) !important; }
+body.light-mode .gnav-link:hover { background: rgba(0,0,0,0.05) !important; color: #0D1F30 !important; }
+body.light-mode .gnav-link.active { background: rgba(0,0,0,0.08) !important; color: #0D1F30 !important; }
+body.light-mode .gnav-burger { color: rgba(0,0,0,0.55) !important; }
+body.light-mode .gnav-mobile { background: #fff; border-top-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .gnav-mlink { color: rgba(13,31,48,0.65) !important; border-bottom-color: rgba(0,0,0,0.06) !important; }
+body.light-mode .gnav-mlink.active { color: #0D1F30 !important; background: rgba(0,0,0,0.05) !important; }
+
+/* ── Light mode body/backgrounds ── */
+body.light-mode { background: #EEF2F7 !important; color: var(--mode-text) !important; }
+body.light-mode .bg-ocean,
+body.light-mode .bg-ocean .wave { filter: opacity(0.12); }
+body.light-mode body::after { opacity: 0.3; }
+
+/* ── Light mode cards and panels ── */
+body.light-mode .project-card,
+body.light-mode .oc-card,
+body.light-mode .res-card,
+body.light-mode .concept-card,
+body.light-mode .topic-card,
+body.light-mode .about-card,
+body.light-mode .tip-card,
+body.light-mode .step,
+body.light-mode .chk-item,
+body.light-mode .mat-item,
+body.light-mode .slide-card,
+body.light-mode .stat-box {
+  background: #FFFFFF !important;
+  border-color: rgba(0,0,0,0.09) !important;
+}
+body.light-mode .project-card:hover,
+body.light-mode .res-card:hover,
+body.light-mode .slide-card:hover { border-color: rgba(0,0,0,0.2) !important; }
+
+/* ── Light mode text ── */
+body.light-mode h1, body.light-mode h2, body.light-mode h3,
+body.light-mode .hero h1, body.light-mode .section-title,
+body.light-mode .sec-title, body.light-mode .pc-title,
+body.light-mode .res-title, body.light-mode .about-card h3,
+body.light-mode .step-body h4, body.light-mode .tip-card h4,
+body.light-mode .mat-body h4 { color: #0D1F30 !important; }
+body.light-mode .hero-sub, body.light-mode .section-subtitle,
+body.light-mode .sec-sub, body.light-mode .hero-sub,
+body.light-mode .pc-desc, body.light-mode .res-desc,
+body.light-mode .about-card p, body.light-mode .about-card li,
+body.light-mode .step-body p, body.light-mode .tip-card p,
+body.light-mode .mat-body p, body.light-mode p { color: rgba(13,31,48,0.65) !important; }
+body.light-mode .hero-eyebrow, body.light-mode .hbadge-muted,
+body.light-mode .hb-muted, body.light-mode .pc-tag,
+body.light-mode .res-pill, body.light-mode .pill { color: rgba(13,31,48,0.5) !important; background: rgba(0,0,0,0.05) !important; border-color: rgba(0,0,0,0.1) !important; }
+
+/* ── Light mode tables ── */
+body.light-mode .stbl th { background: rgba(0,0,0,0.08) !important; }
+body.light-mode .stbl td { border-color: rgba(0,0,0,0.07) !important; color: rgba(13,31,48,0.75) !important; }
+body.light-mode .stbl td:first-child { color: #0D1F30 !important; }
+body.light-mode .stbl tr:nth-child(even) td { background: rgba(0,0,0,0.025) !important; }
+body.light-mode .shop-tbl th { background: rgba(0,0,0,0.05) !important; color: rgba(13,31,48,0.5) !important; border-bottom-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .shop-tbl td { border-bottom-color: rgba(0,0,0,0.06) !important; color: rgba(13,31,48,0.75) !important; }
+body.light-mode .si-name { color: #0D1F30 !important; }
+
+/* ── Light mode callouts ── */
+body.light-mode .callout,
+body.light-mode .shop-intro,
+body.light-mode .safety-warn,
+body.light-mode .c-acc, body.light-mode .c-gold,
+body.light-mode .c-green, body.light-mode .c-aqua,
+body.light-mode .c-bl, body.light-mode .c-gd,
+body.light-mode .callout p, body.light-mode .callout li { color: rgba(13,31,48,0.72) !important; }
+body.light-mode .callout { background: rgba(0,0,0,0.04) !important; }
+body.light-mode .c-acc { background: rgba(0,0,0,0.04) !important; }
+
+/* ── Light mode quiz ── */
+body.light-mode .header { background: #FFFFFF !important; border-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .header h1 { color: #0D1F30 !important; }
+body.light-mode .header .sub { color: rgba(13,31,48,0.6) !important; }
+body.light-mode .name-box { background: rgba(0,0,0,0.03) !important; border-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .name-box input { color: #0D1F30 !important; border-bottom-color: rgba(0,0,0,0.2) !important; }
+body.light-mode .sec-hd { background: rgba(0,0,0,0.05) !important; border-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .sec-hd h3 { color: #0D1F30 !important; }
+body.light-mode .qcard { background: #FFFFFF !important; border-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .q-text { color: #0D1F30 !important; }
+body.light-mode .opt { background: #F8FAFB !important; border-color: rgba(0,0,0,0.1) !important; color: rgba(13,31,48,0.72) !important; }
+body.light-mode .opt:hover { background: rgba(0,0,0,0.05) !important; }
+body.light-mode .tfbtn { background: #F8FAFB !important; border-color: rgba(0,0,0,0.1) !important; color: rgba(13,31,48,0.65) !important; }
+body.light-mode .fill-wrap { color: #0D1F30 !important; }
+body.light-mode .data-block { background: rgba(0,0,0,0.04) !important; border-color: rgba(0,0,0,0.1) !important; color: rgba(13,31,48,0.8) !important; }
+body.light-mode .sa { background: #F8FAFB !important; border-color: rgba(0,0,0,0.12) !important; color: #0D1F30 !important; }
+body.light-mode #score-card { background: #FFFFFF !important; border-color: rgba(0,0,0,0.1) !important; }
+body.light-mode #score-card h2 { color: #0D1F30 !important; }
+body.light-mode #score-msg, body.light-mode #score-pct, body.light-mode #score-name, body.light-mode #score-sa-note { color: rgba(13,31,48,0.6) !important; }
+body.light-mode .prog-outer { background: rgba(0,0,0,0.08) !important; }
+
+/* ── Light mode tab nav ── */
+body.light-mode .tab-nav { border-bottom-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .tab-btn { color: rgba(13,31,48,0.4) !important; }
+body.light-mode .tab-btn:hover { color: rgba(13,31,48,0.75) !important; }
+
+/* ── Light mode hero badges ── */
+body.light-mode .hero-eyebrow,
+body.light-mode .hero-ey { background: rgba(0,0,0,0.05) !important; border-color: rgba(0,0,0,0.12) !important; }
+
+/* ── Light mode section labels ── */
+body.light-mode .section-eyebrow,
+body.light-mode .sec-label { opacity: 0.7; }
+
+/* ── Light mode about scoring boxes ── */
+body.light-mode [style*="background:rgba(245,166,35,.06)"],
+body.light-mode [style*="background:rgba(224,92,64,.06)"],
+body.light-mode [style*="background:rgba(123,94,167,.06)"] { background: rgba(0,0,0,0.04) !important; }
+
+/* ── Light mode footer ── */
+body.light-mode footer { border-top-color: rgba(0,0,0,0.08) !important; }
+body.light-mode footer p { color: rgba(13,31,48,0.3) !important; }
+
+/* ── Light mode dividers ── */
+body.light-mode .divider { background: rgba(0,0,0,0.1) !important; }
+
+/* ── Light mode prog/shopping ── */
+body.light-mode .shop-total { background: rgba(0,0,0,0.04) !important; border-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .shop-total-label { color: rgba(13,31,48,0.5) !important; }
+body.light-mode .shop-prog { background: rgba(0,0,0,0.08) !important; }
+body.light-mode .cb { border-color: rgba(0,0,0,0.2) !important; background: #fff !important; }
+body.light-mode .chk-box { border-color: rgba(0,0,0,0.2) !important; }
+</style>
+</head>
+<body>
+
+<!-- Animated bubbles -->
+<script>
+  const sizes = [18,26,14,32,20,10,24,16,28,12];
+  const positions = [5,14,23,33,42,51,60,68,77,88];
+  const durations = [9,12,7,15,10,8,13,11,6,14];
+  const delays = [0,2,4,1,5,3,6,2,8,1];
+  sizes.forEach((s,i) => {
+    const b = document.createElement('div');
+    b.className = 'bubble';
+    b.style.cssText = `width:${s}px;height:${s}px;left:${positions[i]}%;animation-duration:${durations[i]}s;animation-delay:${delays[i]}s`;
+    document.body.appendChild(b);
+  });
+</script>
+
+<div class="page-wrapper">
+
+  <!-- Header -->
+  <div class="header-card">
+    <div class="wave-emoji">🌊</div>
+    <h1>Ocean Test</h1>
+    <p>3rd Grade Science &nbsp;·&nbsp; 25 Points Total</p>
+    <p>Answer all questions, then click <strong>Submit</strong> to see your score!</p>
+    <div class="progress-bar-wrap"><div class="progress-bar" id="progress-bar"></div></div>
+    <div class="progress-label" id="progress-label">0 / 21 answered</div>
+  </div>
+
+  <!-- Name -->
+  <div class="name-card">
+    <label>👤 Your Name</label>
+    <input type="text" id="student-name" placeholder="Type your name here..." autocomplete="off">
+  </div>
+
+  <div id="quiz-form">
+
+  <!-- ── PART 1: MULTIPLE CHOICE ── -->
+  <div class="section-header">⭕ Part 1 — Multiple Choice <span style="margin-left:auto;font-size:0.85rem;opacity:0.8">5 pts</span></div>
+
+  <!-- Q1 -->
+  <div class="question-card" id="qc-1">
+    <div class="q-number">Question 1</div>
+    <div class="q-text">How much of Earth's surface is covered by oceans?</div>
+    <div class="options" id="q1">
+      <label class="option-label"><input type="radio" name="q1" value="A"><span class="option-dot"></span>About 30%</label>
+      <label class="option-label"><input type="radio" name="q1" value="B"><span class="option-dot"></span>About 50%</label>
+      <label class="option-label"><input type="radio" name="q1" value="C"><span class="option-dot"></span>About 71%</label>
+      <label class="option-label"><input type="radio" name="q1" value="D"><span class="option-dot"></span>About 90%</label>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="question-card" id="qc-2">
+    <div class="q-number">Question 2</div>
+    <div class="q-text">How many oceans are on Earth?</div>
+    <div class="options" id="q2">
+      <label class="option-label"><input type="radio" name="q2" value="A"><span class="option-dot"></span>3</label>
+      <label class="option-label"><input type="radio" name="q2" value="B"><span class="option-dot"></span>4</label>
+      <label class="option-label"><input type="radio" name="q2" value="C"><span class="option-dot"></span>5</label>
+      <label class="option-label"><input type="radio" name="q2" value="D"><span class="option-dot"></span>7</label>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="question-card" id="qc-3">
+    <div class="q-number">Question 3</div>
+    <div class="q-text">Which ocean is the BIGGEST? 🌏</div>
+    <div class="options" id="q3">
+      <label class="option-label"><input type="radio" name="q3" value="A"><span class="option-dot"></span>Atlantic Ocean</label>
+      <label class="option-label"><input type="radio" name="q3" value="B"><span class="option-dot"></span>Indian Ocean</label>
+      <label class="option-label"><input type="radio" name="q3" value="C"><span class="option-dot"></span>Pacific Ocean</label>
+      <label class="option-label"><input type="radio" name="q3" value="D"><span class="option-dot"></span>Arctic Ocean</label>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="question-card" id="qc-4">
+    <div class="q-number">Question 4</div>
+    <div class="q-text">Which ocean zone gets the most sunlight? ☀️</div>
+    <div class="options" id="q4">
+      <label class="option-label"><input type="radio" name="q4" value="A"><span class="option-dot"></span>Midnight Zone</label>
+      <label class="option-label"><input type="radio" name="q4" value="B"><span class="option-dot"></span>Twilight Zone</label>
+      <label class="option-label"><input type="radio" name="q4" value="C"><span class="option-dot"></span>Abyss Zone</label>
+      <label class="option-label"><input type="radio" name="q4" value="D"><span class="option-dot"></span>Sunlight Zone</label>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="question-card" id="qc-5" style="border-radius:0 0 12px 12px;border-bottom:none;">
+    <div class="q-number">Question 5</div>
+    <div class="q-text">What kind of water is found in oceans?</div>
+    <div class="options" id="q5">
+      <label class="option-label"><input type="radio" name="q5" value="A"><span class="option-dot"></span>Fresh water</label>
+      <label class="option-label"><input type="radio" name="q5" value="B"><span class="option-dot"></span>Salt water</label>
+      <label class="option-label"><input type="radio" name="q5" value="C"><span class="option-dot"></span>Rain water</label>
+      <label class="option-label"><input type="radio" name="q5" value="D"><span class="option-dot"></span>River water</label>
+    </div>
+  </div>
+
+  <!-- ── PART 2A: TRUE / FALSE ── -->
+  <div class="section-header" style="margin-top:22px;">✅ Part 2A — True or False <span style="margin-left:auto;font-size:0.85rem;opacity:0.8">5 pts</span></div>
+
+  <div class="question-card" id="qc-6">
+    <div class="q-number">Question 6</div>
+    <div class="q-text">The Arctic Ocean is the smallest and coldest ocean. 🧊</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="selectTF(6,'TRUE',this)">✅ TRUE</button>
+      <button class="tf-btn" onclick="selectTF(6,'FALSE',this)">❌ FALSE</button>
+    </div>
+  </div>
+  <div class="question-card" id="qc-7">
+    <div class="q-number">Question 7</div>
+    <div class="q-text">The Blue Whale is the biggest animal that ever lived on Earth. 🐋</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="selectTF(7,'TRUE',this)">✅ TRUE</button>
+      <button class="tf-btn" onclick="selectTF(7,'FALSE',this)">❌ FALSE</button>
+    </div>
+  </div>
+  <div class="question-card" id="qc-8">
+    <div class="q-number">Question 8</div>
+    <div class="q-text">Phytoplankton are tiny ocean animals. 🦠</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="selectTF(8,'TRUE',this)">✅ TRUE</button>
+      <button class="tf-btn" onclick="selectTF(8,'FALSE',this)">❌ FALSE</button>
+    </div>
+  </div>
+  <div class="question-card" id="qc-9">
+    <div class="q-number">Question 9</div>
+    <div class="q-text">The Midnight Zone of the ocean has no sunlight. ⚫</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="selectTF(9,'TRUE',this)">✅ TRUE</button>
+      <button class="tf-btn" onclick="selectTF(9,'FALSE',this)">❌ FALSE</button>
+    </div>
+  </div>
+  <div class="question-card" id="qc-10" style="border-radius:0 0 12px 12px;border-bottom:none;">
+    <div class="q-number">Question 10</div>
+    <div class="q-text">Plastic trash in the ocean can hurt sea animals. 🐢</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="selectTF(10,'TRUE',this)">✅ TRUE</button>
+      <button class="tf-btn" onclick="selectTF(10,'FALSE',this)">❌ FALSE</button>
+    </div>
+  </div>
+
+  <!-- ── PART 2B: FILL IN THE BLANK ── -->
+  <div class="section-header" style="margin-top:22px;">📝 Part 2B — Fill in the Blank <span style="margin-left:auto;font-size:0.85rem;opacity:0.8">5 pts</span></div>
+
+  <div class="question-card" id="qc-11">
+    <div class="q-number">Question 11</div>
+    <div class="fill-q">The ocean covers about <input class="blank-input" id="b11" placeholder="___"> % of Earth.</div>
+  </div>
+  <div class="question-card" id="qc-12">
+    <div class="q-number">Question 12</div>
+    <div class="fill-q">Oceans are filled with <input class="blank-input" id="b12" placeholder="___"> water.</div>
+  </div>
+  <div class="question-card" id="qc-13">
+    <div class="q-number">Question 13</div>
+    <div class="fill-q">The largest ocean is the <input class="blank-input" id="b13" placeholder="___"> Ocean.</div>
+  </div>
+  <div class="question-card" id="qc-14">
+    <div class="q-number">Question 14</div>
+    <div class="fill-q">Phytoplankton make a lot of the <input class="blank-input" id="b14" placeholder="___"> we breathe.</div>
+  </div>
+  <div class="question-card" id="qc-15" style="border-radius:0 0 12px 12px;border-bottom:none;">
+    <div class="q-number">Question 15</div>
+    <div class="fill-q">An octopus has <input class="blank-input" id="b15" placeholder="___"> arms.</div>
+  </div>
+
+  <!-- ── PART 3A: MATCHING ── -->
+  <div class="section-header" style="margin-top:22px;">🔗 Part 3A — Matching <span style="margin-left:auto;font-size:0.85rem;opacity:0.8">5 pts</span></div>
+
+  <div class="question-card" style="border-radius:0 0 12px 12px;border-bottom:none;" id="qc-match">
+    <div class="q-number">Questions 16–20 — Match each ocean to its description</div>
+    <div style="margin-bottom:14px;font-size:0.92rem;color:#4a7a90;font-weight:600;">Pick the correct description from the dropdown for each ocean.</div>
+
+    <div class="match-row">
+      <span class="match-term">16. 🌏 Pacific Ocean</span>
+      <select class="match-select" id="m16">
+        <option value="">— choose —</option>
+        <option value="B">B. The biggest ocean</option>
+        <option value="D">D. Separates America from Europe</option>
+        <option value="C">C. Warmest ocean</option>
+        <option value="E">E. Smallest and coldest</option>
+        <option value="A">A. Surrounds Antarctica</option>
+      </select>
+    </div>
+    <div class="match-row">
+      <span class="match-term">17. 🌊 Atlantic Ocean</span>
+      <select class="match-select" id="m17">
+        <option value="">— choose —</option>
+        <option value="B">B. The biggest ocean</option>
+        <option value="D">D. Separates America from Europe</option>
+        <option value="C">C. Warmest ocean</option>
+        <option value="E">E. Smallest and coldest</option>
+        <option value="A">A. Surrounds Antarctica</option>
+      </select>
+    </div>
+    <div class="match-row">
+      <span class="match-term">18. 🐠 Indian Ocean</span>
+      <select class="match-select" id="m18">
+        <option value="">— choose —</option>
+        <option value="B">B. The biggest ocean</option>
+        <option value="D">D. Separates America from Europe</option>
+        <option value="C">C. Warmest ocean</option>
+        <option value="E">E. Smallest and coldest</option>
+        <option value="A">A. Surrounds Antarctica</option>
+      </select>
+    </div>
+    <div class="match-row">
+      <span class="match-term">19. 🧊 Arctic Ocean</span>
+      <select class="match-select" id="m19">
+        <option value="">— choose —</option>
+        <option value="B">B. The biggest ocean</option>
+        <option value="D">D. Separates America from Europe</option>
+        <option value="C">C. Warmest ocean</option>
+        <option value="E">E. Smallest and coldest</option>
+        <option value="A">A. Surrounds Antarctica</option>
+      </select>
+    </div>
+    <div class="match-row">
+      <span class="match-term">20. 🐧 Southern Ocean</span>
+      <select class="match-select" id="m20">
+        <option value="">— choose —</option>
+        <option value="B">B. The biggest ocean</option>
+        <option value="D">D. Separates America from Europe</option>
+        <option value="C">C. Warmest ocean</option>
+        <option value="E">E. Smallest and coldest</option>
+        <option value="A">A. Surrounds Antarctica</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- ── PART 3B: SHORT ANSWER ── -->
+  <div class="section-header" style="margin-top:22px;">✏️ Part 3B — Short Answer <span style="margin-left:auto;font-size:0.85rem;opacity:0.8">5 pts</span></div>
+
+  <div class="question-card" style="border-radius:0 0 12px 12px;border-bottom:none;" id="qc-21">
+    <div class="q-number">Question 21</div>
+    <div class="q-text">Name ONE way you can help protect the ocean. 🌊♻️</div>
+    <textarea class="short-answer" id="sa21" placeholder="Write your answer here..."></textarea>
+    <div style="margin-top:8px;font-size:0.82rem;color:#5a8fa0;font-weight:600;">💡 There is no single wrong answer — just write something thoughtful!</div>
+  </div>
+
+  <!-- Submit -->
+  <div class="submit-wrap">
+    <button class="submit-btn" onclick="submitQuiz()">🌊 Submit My Answers</button>
+  </div>
+
+  </div><!-- end quiz-form -->
+
+  <!-- Score card -->
+  <div id="score-card">
+    <h2>Test Complete! 🎉</h2>
+    <div id="score-display">--/--</div>
+    <div class="score-sub" id="score-sub"></div>
+    <div id="score-emoji"></div>
+    <div id="score-msg"></div>
+    <br>
+    <div id="student-result" style="font-size:1rem;opacity:0.8;"></div>
+    <button class="retake-btn" onclick="retake()">🔄 Try Again</button>
+  </div>
+
+  <div class="fish-row">🐠 🐬 🦈 🐙 🐋 🦀 🐢 🦑</div>
+
+</div><!-- end page-wrapper -->
+
+<script>
+  // ── Answer key ──
+  const MC_ANSWERS = { q1:'C', q2:'C', q3:'C', q4:'D', q5:'B' };
+  const TF_ANSWERS = { 6:'TRUE', 7:'TRUE', 8:'FALSE', 9:'TRUE', 10:'TRUE' };
+  const FILL_ANSWERS = {
+    b11: ['71','71%'],
+    b12: ['salt','saltwater','salt water'],
+    b13: ['pacific'],
+    b14: ['oxygen','air','o2'],
+    b15: ['8','eight']
+  };
+  const MATCH_ANSWERS = { m16:'B', m17:'D', m18:'C', m19:'E', m20:'A' };
+
+  const tfAnswers = {};
+  let totalAnswered = 0;
+  const TOTAL_Q = 21;
+
+  function countAnswered() {
+    let n = 0;
+    // MC
+    ['q1','q2','q3','q4','q5'].forEach(q => { if(document.querySelector(`input[name="${q}"]:checked`)) n++; });
+    // TF
+    [6,7,8,9,10].forEach(i => { if(tfAnswers[i]) n++; });
+    // Fill
+    ['b11','b12','b13','b14','b15'].forEach(id => { if(document.getElementById(id)?.value.trim()) n++; });
+    // Match
+    ['m16','m17','m18','m19','m20'].forEach(id => { if(document.getElementById(id)?.value) n++; });
+    // Short
+    if(document.getElementById('sa21')?.value.trim()) n++;
+    return n;
+  }
+
+  function updateProgress() {
+    const n = countAnswered();
+    const pct = Math.round((n / TOTAL_Q) * 100);
+    document.getElementById('progress-bar').style.width = pct + '%';
+    document.getElementById('progress-label').textContent = `${n} / ${TOTAL_Q} answered`;
+  }
+
+  // MC selection
+  document.querySelectorAll('.option-label input[type="radio"]').forEach(input => {
+    input.addEventListener('change', function() {
+      const group = this.name;
+      document.querySelectorAll(`input[name="${group}"]`).forEach(r => {
+        r.closest('.option-label').classList.remove('selected');
+      });
+      this.closest('.option-label').classList.add('selected');
+      updateProgress();
+    });
+  });
+
+  // Fill in blank
+  document.querySelectorAll('.blank-input').forEach(el => {
+    el.addEventListener('input', updateProgress);
+  });
+  document.querySelectorAll('.match-select').forEach(el => {
+    el.addEventListener('change', updateProgress);
+  });
+  document.getElementById('sa21').addEventListener('input', updateProgress);
+
+  function selectTF(qNum, val, btn) {
+    const card = document.getElementById(`qc-${qNum}`);
+    card.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    tfAnswers[qNum] = val;
+    updateProgress();
+  }
+
+  function submitQuiz() {
+    let score = 0;
+    let maxAuto = 20; // short answer is teacher-graded, max 5 extra pts
+
+    // ── Grade MC ──
+    Object.entries(MC_ANSWERS).forEach(([name, correct]) => {
+      const selected = document.querySelector(`input[name="${name}"]:checked`);
+      const qNum = name.replace('q','');
+      const card = document.getElementById(`qc-${qNum}`);
+      card.querySelectorAll('.option-label').forEach(label => {
+        const val = label.querySelector('input').value;
+        if (val === correct) label.classList.add('correct-opt');
+      });
+      if (selected) {
+        if (selected.value === correct) {
+          score++;
+          card.classList.add('correct-card');
+        } else {
+          selected.closest('.option-label').classList.add('wrong-opt');
+          card.classList.add('wrong-card');
+        }
+      } else {
+        card.classList.add('wrong-card');
+      }
+      card.querySelectorAll('input[type="radio"]').forEach(r => r.disabled = true);
+    });
+
+    // ── Grade TF ──
+    Object.entries(TF_ANSWERS).forEach(([qNum, correct]) => {
+      const card = document.getElementById(`qc-${qNum}`);
+      const given = tfAnswers[parseInt(qNum)];
+      card.querySelectorAll('.tf-btn').forEach(btn => {
+        const val = btn.textContent.includes('TRUE') ? 'TRUE' : 'FALSE';
+        if (val === correct) btn.classList.add('correct-opt');
+        if (val === given && given !== correct) btn.classList.add('wrong-opt');
+        btn.disabled = true;
+        btn.style.cursor = 'default';
+      });
+      if (given === correct) { score++; card.classList.add('correct-card'); }
+      else card.classList.add('wrong-card');
+    });
+
+    // ── Grade Fill ──
+    Object.entries(FILL_ANSWERS).forEach(([id, acceptList]) => {
+      const el = document.getElementById(id);
+      const qNum = id.replace('b','');
+      const card = document.getElementById(`qc-${qNum}`);
+      const val = el.value.trim().toLowerCase();
+      if (acceptList.some(a => val === a.toLowerCase())) {
+        score++;
+        el.classList.add('correct-input');
+        card.classList.add('correct-card');
+      } else {
+        el.classList.add('wrong-input');
+        card.classList.add('wrong-card');
+      }
+      el.readOnly = true;
+    });
+
+    // ── Grade Match ──
+    let matchScore = 0;
+    Object.entries(MATCH_ANSWERS).forEach(([id, correct]) => {
+      const el = document.getElementById(id);
+      if (el.value === correct) { matchScore++; el.classList.add('correct-opt'); }
+      else el.classList.add('wrong-opt');
+      el.disabled = true;
+    });
+    score += matchScore;
+    if(matchScore === 5) document.getElementById('qc-match').classList.add('correct-card');
+    else document.getElementById('qc-match').classList.add('wrong-card');
+
+    // ── Short answer: teacher grades, give full credit if something was written ──
+    const sa = document.getElementById('sa21').value.trim();
+    let saMsg = '';
+    let saScore = 0;
+    if (sa.length > 3) {
+      saScore = 5;
+      score += saScore;
+      document.getElementById('qc-21').classList.add('correct-card');
+      saMsg = `<br><span style="font-size:0.9rem;opacity:0.8">✏️ Short answer: great job writing an answer! (5/5 pts)</span>`;
+    } else {
+      document.getElementById('qc-21').classList.add('wrong-card');
+      saMsg = `<br><span style="font-size:0.9rem;opacity:0.8">✏️ Short answer: no answer written (0/5 pts)</span>`;
+    }
+    document.getElementById('sa21').readOnly = true;
+
+    // ── Show score ──
+    const name = document.getElementById('student-name').value.trim() || 'Student';
+    const pct = Math.round((score / 25) * 100);
+    let emoji, msg;
+    if (pct >= 90) { emoji = '🌟🐋🌟'; msg = 'Amazing job, ocean explorer!'; }
+    else if (pct >= 75) { emoji = '🐬🎉'; msg = 'Great work — keep swimming!'; }
+    else if (pct >= 60) { emoji = '🐠👍'; msg = 'Good effort! Review the slides and try again.'; }
+    else { emoji = '🌊📚'; msg = 'Keep studying — you\'ll get it!'; }
+
+    document.getElementById('score-display').textContent = `${score}/25`;
+    document.getElementById('score-sub').textContent = `${pct}% correct`;
+    document.getElementById('score-emoji').textContent = emoji;
+    document.getElementById('score-msg').textContent = msg;
+    document.getElementById('student-result').innerHTML = `${name}'s result${saMsg}`;
+
+    document.querySelector('.submit-btn').style.display = 'none';
+    document.getElementById('score-card').style.display = 'block';
+    document.getElementById('score-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function retake() {
+    location.reload();
+  }
+</script>
+
+<script id="theme-logic">
+(function() {
+  function applyTheme(mode) {
+    const btn = document.getElementById('theme-toggle');
+    if (mode === 'light') {
+      document.body.classList.add('light-mode');
+      if (btn) btn.textContent = '🌙';
+    } else {
+      document.body.classList.remove('light-mode');
+      if (btn) btn.textContent = '☀️';
+    }
+  }
+  // Apply on load
+  const saved = localStorage.getItem('va-theme') || 'dark';
+  applyTheme(saved);
+  
+  window.toggleTheme = function() {
+    const isLight = document.body.classList.contains('light-mode');
+    const newMode = isLight ? 'dark' : 'light';
+    localStorage.setItem('va-theme', newMode);
+    applyTheme(newMode);
+  };
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>📊 Data Investigations — Practice Test</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Exo+2:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Space Grotesk',sans-serif;background:#0D1520;color:#CBD8E8;min-height:100vh;padding:0 0 60px;overflow-x:hidden;}
+body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 20%,rgba(79,195,247,.05)0%,transparent 50%);pointer-events:none;z-index:0;}
+.gnav{position:sticky;top:0;z-index:300;background:rgba(8,8,24,.97);border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(12px);}
+.gnav-inner{display:flex;align-items:center;max-width:1080px;margin:0 auto;padding:0 24px;height:54px;gap:4px;}
+.gnav-logo{font-size:14px;font-weight:700;color:rgba(255,255,255,.9);flex-shrink:0;padding-right:10px;border-right:1px solid rgba(255,255,255,.1);margin-right:5px;text-decoration:none;}
+.gnav-links{display:flex;gap:2px;flex:1;overflow-x:auto;scrollbar-width:none;}
+.gnav-link{padding:5px 10px;border-radius:7px;font-size:12px;font-weight:600;color:rgba(200,216,232,.6);white-space:nowrap;text-decoration:none;transition:all .15s;}
+.gnav-link:hover{background:rgba(255,255,255,.07);color:#fff;}
+.page{position:relative;z-index:1;max-width:740px;margin:0 auto;padding:0 20px 40px;}
+.header{background:rgba(255,255,255,.04);border:1px solid rgba(79,195,247,.2);border-top:4px solid #4FC3F7;border-radius:16px 16px 0 0;padding:28px 32px 22px;margin-top:24px;}
+.header .badge{display:inline-block;background:rgba(79,195,247,.12);border:1px solid rgba(79,195,247,.35);color:#4FC3F7;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:999px;margin-bottom:10px;}
+.header h1{font-family:'Exo 2',sans-serif;font-size:2rem;font-weight:800;color:#fff;margin-bottom:6px;}
+.header .sub{font-size:.95rem;color:rgba(192,204,224,.7);margin-bottom:16px;}
+.header .sub span{color:#4FC3F7;font-weight:600;}
+.prog-outer{background:rgba(255,255,255,.08);border-radius:999px;height:7px;overflow:hidden;}
+.prog-inner{height:100%;background:#4FC3F7;border-radius:999px;width:0%;transition:width .4s;}
+.prog-meta{display:flex;justify-content:space-between;font-size:.75rem;color:rgba(192,204,224,.5);margin-top:4px;}
+.name-box{background:rgba(255,255,255,.03);border:1px solid rgba(79,195,247,.15);border-top:none;padding:16px 28px;}
+.name-box label{font-size:.78rem;font-weight:700;color:#4FC3F7;letter-spacing:.08em;display:block;margin-bottom:5px;}
+.name-box input{background:transparent;border:none;border-bottom:2px solid rgba(79,195,247,.3);width:100%;padding:6px 0;font-family:'Space Grotesk',sans-serif;font-size:1rem;color:#fff;outline:none;}
+.name-box input:focus{border-bottom-color:#4FC3F7;}
+.sec-hd{background:rgba(79,195,247,.1);border:1px solid rgba(79,195,247,.2);border-top:none;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;}
+.sec-hd h3{font-family:'Exo 2',sans-serif;font-size:.95rem;font-weight:800;color:#fff;}
+.pts{font-size:.75rem;font-weight:700;color:#4FC3F7;background:rgba(79,195,247,.1);border:1px solid rgba(79,195,247,.25);padding:2px 9px;border-radius:999px;}
+.qcard{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-top:none;padding:18px 24px;transition:background .2s;}
+.qcard.correct{background:rgba(46,204,113,.06);border-left:4px solid #2ECC71;}
+.qcard.wrong{background:rgba(231,76,60,.06);border-left:4px solid #E74C3C;}
+.q-num{font-size:.7rem;font-weight:700;color:#4FC3F7;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
+.q-text{font-size:.97rem;font-weight:600;color:#fff;margin-bottom:13px;line-height:1.5;}
+.data-block{background:rgba(79,195,247,.06);border:1px solid rgba(79,195,247,.15);border-radius:9px;padding:12px 16px;margin-bottom:13px;font-size:.88rem;color:rgba(192,204,224,.85);line-height:1.7;font-family:monospace;}
+.opts{display:flex;flex-direction:column;gap:6px;}
+.opt{display:flex;align-items:flex-start;gap:11px;padding:9px 13px;border:1.5px solid rgba(255,255,255,.1);border-radius:9px;cursor:pointer;font-size:.9rem;color:rgba(192,204,224,.8);background:rgba(255,255,255,.02);transition:all .15s;user-select:none;line-height:1.45;}
+.opt:hover{border-color:#4FC3F7;background:rgba(79,195,247,.07);}
+.opt.sel{border-color:#4FC3F7;background:rgba(79,195,247,.12);color:#fff;}
+.opt.c-ok{border-color:#2ECC71;background:rgba(46,204,113,.1);color:#7fffc4;}
+.opt.c-no{border-color:#E74C3C;background:rgba(231,76,60,.1);color:#ffaaaa;}
+.opt input{display:none;}
+.dot{width:17px;height:17px;flex-shrink:0;border-radius:50%;border:2px solid rgba(255,255,255,.2);margin-top:2px;transition:all .15s;}
+.sel .dot{background:#4FC3F7;border-color:#4FC3F7;}
+.c-ok .dot{background:#2ECC71;border-color:#2ECC71;}
+.c-no .dot{background:#E74C3C;border-color:#E74C3C;}
+.tf{display:flex;gap:10px;}
+.tfbtn{flex:1;padding:11px;border:1.5px solid rgba(255,255,255,.12);border-radius:10px;background:rgba(255,255,255,.02);color:rgba(192,204,224,.7);font-family:'Space Grotesk',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .15s;}
+.tfbtn:hover{border-color:#4FC3F7;color:#fff;}
+.tfbtn.sel{border-color:#4FC3F7;background:rgba(79,195,247,.14);color:#4FC3F7;}
+.tfbtn.c-ok{border-color:#2ECC71;background:rgba(46,204,113,.1);color:#7fffc4;}
+.tfbtn.c-no{border-color:#E74C3C;background:rgba(231,76,60,.1);color:#ffaaaa;}
+.fill-wrap{font-size:.95rem;font-weight:500;color:#fff;display:flex;align-items:baseline;flex-wrap:wrap;gap:5px 7px;line-height:2.1;}
+.blank{border:none;border-bottom:2px solid rgba(79,195,247,.4);background:transparent;color:#4FC3F7;font-family:'Space Grotesk',sans-serif;font-size:.95rem;font-weight:700;width:160px;padding:3px 4px;outline:none;}
+.blank:focus{border-bottom-color:#4FC3F7;}
+.blank.c-ok{border-bottom-color:#2ECC71;color:#2ECC71;}
+.blank.c-no{border-bottom-color:#E74C3C;color:#E74C3C;}
+.sub-wrap{margin:24px 0 8px;text-align:center;}
+.sub-btn{background:#4FC3F7;color:#060a14;border:none;padding:14px 48px;border-radius:50px;font-family:'Exo 2',sans-serif;font-size:1.1rem;font-weight:800;cursor:pointer;transition:all .2s;box-shadow:0 6px 24px rgba(79,195,247,.3);}
+.sub-btn:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(79,195,247,.45);}
+#score-card{display:none;background:rgba(255,255,255,.04);border:1px solid rgba(79,195,247,.25);border-top:4px solid #4FC3F7;border-radius:16px;padding:38px 32px;text-align:center;margin:20px 0;animation:pop .4s ease;}
+@keyframes pop{from{transform:scale(.88);opacity:0}to{transform:scale(1);opacity:1}}
+#score-card h2{font-family:'Exo 2',sans-serif;font-size:1.5rem;color:#fff;margin-bottom:8px;}
+#score-num{font-family:'Exo 2',sans-serif;font-size:5rem;font-weight:800;color:#4FC3F7;line-height:1;margin:10px 0 5px;}
+#score-pct{font-size:1rem;color:rgba(192,204,224,.7);font-weight:600;}
+#score-emoji{font-size:2.5rem;margin-top:10px;}
+#score-msg{font-size:1rem;color:rgba(192,204,224,.7);margin-top:6px;}
+.retry-btn{margin-top:20px;background:transparent;color:#4FC3F7;border:1.5px solid #4FC3F7;padding:9px 30px;border-radius:50px;font-family:'Exo 2',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;}
+
+/* ── Global light-mode text readability ── */
+body.light-mode,
+body.light-mode .page,
+body.light-mode .tab-panel,
+body.light-mode .callout p,
+body.light-mode .callout li,
+body.light-mode .callout ul,
+body.light-mode .card p,
+body.light-mode .card li,
+body.light-mode .step-body p,
+body.light-mode .step-body li,
+body.light-mode .tip-card p,
+body.light-mode .mat-body p,
+body.light-mode .res-desc,
+body.light-mode .chk-text,
+body.light-mode .hero-sub,
+body.light-mode .ecard-desc,
+body.light-mode .about-card p,
+body.light-mode .about-card li,
+body.light-mode .shop-intro,
+body.light-mode .shop-tbl td,
+body.light-mode .stbl td,
+body.light-mode .truss-card p,
+body.light-mode .outline-subs li,
+body.light-mode .tab-btn,
+body.light-mode .sec-sub,
+body.light-mode .ecard-meta,
+body.light-mode .stat-dates,
+body.light-mode .hero-dates,
+body.light-mode .prog-meta,
+body.light-mode .shop-prog-label,
+body.light-mode .si-note,
+body.light-mode .si-dept,
+body.light-mode .mat-body p,
+body.light-mode .score-mini p { color: rgba(13,31,48,0.72) !important; }
+
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode h4,
+body.light-mode .hero h1,
+body.light-mode .sec-title,
+body.light-mode .section-title,
+body.light-mode .ecard-name,
+body.light-mode .res-title,
+body.light-mode .card h4,
+body.light-mode .step-body h4,
+body.light-mode .tip-card h4,
+body.light-mode .mat-body h4,
+body.light-mode .truss-name,
+body.light-mode .q-text,
+body.light-mode .fill-wrap,
+body.light-mode .test-header h2,
+body.light-mode #score-card h2,
+body.light-mode .si-name,
+body.light-mode .about-card h3,
+body.light-mode .stat-num,
+body.light-mode .gnav-logo { color: #0D1F30 !important; }
+
+body.light-mode .callout h4,
+body.light-mode .sec-hd h3,
+body.light-mode .section-heading { color: inherit !important; }
+
+body.light-mode .hero-eyebrow,
+body.light-mode .hero-ey,
+body.light-mode .hbadge,
+body.light-mode .hbadge-muted { color: rgba(13,31,48,0.55) !important;
+  background: rgba(0,0,0,.06) !important; border-color: rgba(0,0,0,.15) !important; }
+
+</style>
+
+<style id="theme-vars">
+/* ── Light/Dark mode variables ── */
+:root {
+  --mode-bg1: #1A1A2E;
+  --mode-bg2: rgba(4,43,69,0.7);
+  --mode-nav: rgba(8,8,24,0.97);
+  --mode-nav-border: rgba(255,255,255,0.08);
+  --mode-text: #B8D8E8;
+  --mode-text-strong: #FFFFFF;
+  --mode-text-muted: rgba(184,216,232,0.5);
+  --mode-card-bg: rgba(4,43,69,0.7);
+  --mode-card-border: rgba(255,255,255,0.08);
+  --mode-input-bg: transparent;
+  --mode-input-color: #fff;
+  --mode-table-even: rgba(255,255,255,0.025);
+  --mode-section-bg: rgba(255,255,255,0.03);
+}
+body.light-mode {
+  --mode-bg1: #F0F4F8;
+  --mode-bg2: #FFFFFF;
+  --mode-nav: rgba(255,255,255,0.97);
+  --mode-nav-border: rgba(0,0,0,0.1);
+  --mode-text: #2A3E52;
+  --mode-text-strong: #0D1F30;
+  --mode-text-muted: rgba(42,62,82,0.5);
+  --mode-card-bg: #FFFFFF;
+  --mode-card-border: rgba(0,0,0,0.09);
+  --mode-input-bg: #fff;
+  --mode-input-color: #0D1F30;
+  --mode-table-even: rgba(0,0,0,0.03);
+  --mode-section-bg: rgba(0,0,0,0.03);
+}
+
+/* ── Toggle button ── */
+#theme-toggle {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.75);
+  cursor: pointer;
+  font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  line-height: 1;
+}
+#theme-toggle:hover { background: rgba(255,255,255,0.14); }
+body.light-mode #theme-toggle {
+  border-color: rgba(0,0,0,0.15);
+  background: rgba(0,0,0,0.06);
+  color: rgba(0,0,0,0.6);
+}
+body.light-mode #theme-toggle:hover { background: rgba(0,0,0,0.1); }
+
+/* ── Light mode nav overrides ── */
+body.light-mode .gnav {
+  background: rgba(255,255,255,0.97) !important;
+  border-bottom-color: rgba(0,0,0,0.1) !important;
+}
+body.light-mode .gnav-logo { color: #0D1F30 !important; border-right-color: rgba(0,0,0,0.12) !important; }
+body.light-mode .gnav-logo span { color: rgba(13,31,48,0.5) !important; }
+body.light-mode .gnav-link { color: rgba(13,31,48,0.55) !important; }
+body.light-mode .gnav-link:hover { background: rgba(0,0,0,0.05) !important; color: #0D1F30 !important; }
+body.light-mode .gnav-link.active { background: rgba(0,0,0,0.08) !important; color: #0D1F30 !important; }
+body.light-mode .gnav-burger { color: rgba(0,0,0,0.55) !important; }
+body.light-mode .gnav-mobile { background: #fff; border-top-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .gnav-mlink { color: rgba(13,31,48,0.65) !important; border-bottom-color: rgba(0,0,0,0.06) !important; }
+body.light-mode .gnav-mlink.active { color: #0D1F30 !important; background: rgba(0,0,0,0.05) !important; }
+
+/* ── Light mode body/backgrounds ── */
+body.light-mode { background: #EEF2F7 !important; color: var(--mode-text) !important; }
+body.light-mode .bg-ocean,
+body.light-mode .bg-ocean .wave { filter: opacity(0.12); }
+body.light-mode body::after { opacity: 0.3; }
+
+/* ── Light mode cards and panels ── */
+body.light-mode .project-card,
+body.light-mode .oc-card,
+body.light-mode .res-card,
+body.light-mode .concept-card,
+body.light-mode .topic-card,
+body.light-mode .about-card,
+body.light-mode .tip-card,
+body.light-mode .step,
+body.light-mode .chk-item,
+body.light-mode .mat-item,
+body.light-mode .slide-card,
+body.light-mode .stat-box {
+  background: #FFFFFF !important;
+  border-color: rgba(0,0,0,0.09) !important;
+}
+body.light-mode .project-card:hover,
+body.light-mode .res-card:hover,
+body.light-mode .slide-card:hover { border-color: rgba(0,0,0,0.2) !important; }
+
+/* ── Light mode text ── */
+body.light-mode h1, body.light-mode h2, body.light-mode h3,
+body.light-mode .hero h1, body.light-mode .section-title,
+body.light-mode .sec-title, body.light-mode .pc-title,
+body.light-mode .res-title, body.light-mode .about-card h3,
+body.light-mode .step-body h4, body.light-mode .tip-card h4,
+body.light-mode .mat-body h4 { color: #0D1F30 !important; }
+body.light-mode .hero-sub, body.light-mode .section-subtitle,
+body.light-mode .sec-sub, body.light-mode .hero-sub,
+body.light-mode .pc-desc, body.light-mode .res-desc,
+body.light-mode .about-card p, body.light-mode .about-card li,
+body.light-mode .step-body p, body.light-mode .tip-card p,
+body.light-mode .mat-body p, body.light-mode p { color: rgba(13,31,48,0.65) !important; }
+body.light-mode .hero-eyebrow, body.light-mode .hbadge-muted,
+body.light-mode .hb-muted, body.light-mode .pc-tag,
+body.light-mode .res-pill, body.light-mode .pill { color: rgba(13,31,48,0.5) !important; background: rgba(0,0,0,0.05) !important; border-color: rgba(0,0,0,0.1) !important; }
+
+/* ── Light mode tables ── */
+body.light-mode .stbl th { background: rgba(0,0,0,0.08) !important; }
+body.light-mode .stbl td { border-color: rgba(0,0,0,0.07) !important; color: rgba(13,31,48,0.75) !important; }
+body.light-mode .stbl td:first-child { color: #0D1F30 !important; }
+body.light-mode .stbl tr:nth-child(even) td { background: rgba(0,0,0,0.025) !important; }
+body.light-mode .shop-tbl th { background: rgba(0,0,0,0.05) !important; color: rgba(13,31,48,0.5) !important; border-bottom-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .shop-tbl td { border-bottom-color: rgba(0,0,0,0.06) !important; color: rgba(13,31,48,0.75) !important; }
+body.light-mode .si-name { color: #0D1F30 !important; }
+
+/* ── Light mode callouts ── */
+body.light-mode .callout,
+body.light-mode .shop-intro,
+body.light-mode .safety-warn,
+body.light-mode .c-acc, body.light-mode .c-gold,
+body.light-mode .c-green, body.light-mode .c-aqua,
+body.light-mode .c-bl, body.light-mode .c-gd,
+body.light-mode .callout p, body.light-mode .callout li { color: rgba(13,31,48,0.72) !important; }
+body.light-mode .callout { background: rgba(0,0,0,0.04) !important; }
+body.light-mode .c-acc { background: rgba(0,0,0,0.04) !important; }
+
+/* ── Light mode quiz ── */
+body.light-mode .header { background: #FFFFFF !important; border-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .header h1 { color: #0D1F30 !important; }
+body.light-mode .header .sub { color: rgba(13,31,48,0.6) !important; }
+body.light-mode .name-box { background: rgba(0,0,0,0.03) !important; border-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .name-box input { color: #0D1F30 !important; border-bottom-color: rgba(0,0,0,0.2) !important; }
+body.light-mode .sec-hd { background: rgba(0,0,0,0.05) !important; border-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .sec-hd h3 { color: #0D1F30 !important; }
+body.light-mode .qcard { background: #FFFFFF !important; border-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .q-text { color: #0D1F30 !important; }
+body.light-mode .opt { background: #F8FAFB !important; border-color: rgba(0,0,0,0.1) !important; color: rgba(13,31,48,0.72) !important; }
+body.light-mode .opt:hover { background: rgba(0,0,0,0.05) !important; }
+body.light-mode .tfbtn { background: #F8FAFB !important; border-color: rgba(0,0,0,0.1) !important; color: rgba(13,31,48,0.65) !important; }
+body.light-mode .fill-wrap { color: #0D1F30 !important; }
+body.light-mode .data-block { background: rgba(0,0,0,0.04) !important; border-color: rgba(0,0,0,0.1) !important; color: rgba(13,31,48,0.8) !important; }
+body.light-mode .sa { background: #F8FAFB !important; border-color: rgba(0,0,0,0.12) !important; color: #0D1F30 !important; }
+body.light-mode #score-card { background: #FFFFFF !important; border-color: rgba(0,0,0,0.1) !important; }
+body.light-mode #score-card h2 { color: #0D1F30 !important; }
+body.light-mode #score-msg, body.light-mode #score-pct, body.light-mode #score-name, body.light-mode #score-sa-note { color: rgba(13,31,48,0.6) !important; }
+body.light-mode .prog-outer { background: rgba(0,0,0,0.08) !important; }
+
+/* ── Light mode tab nav ── */
+body.light-mode .tab-nav { border-bottom-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .tab-btn { color: rgba(13,31,48,0.4) !important; }
+body.light-mode .tab-btn:hover { color: rgba(13,31,48,0.75) !important; }
+
+/* ── Light mode hero badges ── */
+body.light-mode .hero-eyebrow,
+body.light-mode .hero-ey { background: rgba(0,0,0,0.05) !important; border-color: rgba(0,0,0,0.12) !important; }
+
+/* ── Light mode section labels ── */
+body.light-mode .section-eyebrow,
+body.light-mode .sec-label { opacity: 0.7; }
+
+/* ── Light mode about scoring boxes ── */
+body.light-mode [style*="background:rgba(245,166,35,.06)"],
+body.light-mode [style*="background:rgba(224,92,64,.06)"],
+body.light-mode [style*="background:rgba(123,94,167,.06)"] { background: rgba(0,0,0,0.04) !important; }
+
+/* ── Light mode footer ── */
+body.light-mode footer { border-top-color: rgba(0,0,0,0.08) !important; }
+body.light-mode footer p { color: rgba(13,31,48,0.3) !important; }
+
+/* ── Light mode dividers ── */
+body.light-mode .divider { background: rgba(0,0,0,0.1) !important; }
+
+/* ── Light mode prog/shopping ── */
+body.light-mode .shop-total { background: rgba(0,0,0,0.04) !important; border-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .shop-total-label { color: rgba(13,31,48,0.5) !important; }
+body.light-mode .shop-prog { background: rgba(0,0,0,0.08) !important; }
+body.light-mode .cb { border-color: rgba(0,0,0,0.2) !important; background: #fff !important; }
+body.light-mode .chk-box { border-color: rgba(0,0,0,0.2) !important; }
+</style>
+</head>
+<body>
+<style>
+.gnav{position:sticky;top:0;z-index:300;background:rgba(8,8,24,0.97);border-bottom:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(12px);}
+.gnav-inner{display:flex;align-items:center;max-width:1080px;margin:0 auto;padding:0 20px;height:54px;gap:6px;}
+.gnav-logo{font-size:14px;font-weight:700;color:rgba(255,255,255,0.9);flex-shrink:0;padding:0 10px 0 0;border-right:1px solid rgba(255,255,255,0.1);margin-right:4px;text-decoration:none;font-family:'Share Tech Mono',monospace;}
+.gnav-logo span{color:rgba(255,255,255,0.55);}
+.gnav-links{display:flex;gap:2px;flex:1;overflow-x:auto;scrollbar-width:none;}
+.gnav-links::-webkit-scrollbar{display:none;}
+.gnav-link{padding:5px 10px;border-radius:7px;font-size:12px;font-weight:600;color:rgba(200,216,232,0.6);white-space:nowrap;text-decoration:none;transition:all .15s;font-family:'Share Tech Mono',monospace;}
+.gnav-link:hover{background:rgba(255,255,255,0.07);color:#fff;}
+.gnav-link.active{background:rgba(255,255,255,0.1);color:#fff;}
+.gnav-burger{display:none;background:none;border:none;color:rgba(255,255,255,0.7);font-size:20px;cursor:pointer;padding:4px;}
+.gnav-mobile{display:none;flex-direction:column;border-top:1px solid rgba(255,255,255,0.08);}
+.gnav-mobile.open{display:flex;}
+.gnav-mlink{padding:12px 20px;font-size:13px;font-weight:600;color:rgba(200,216,232,0.7);border-bottom:1px solid rgba(255,255,255,0.05);text-decoration:none;}
+.gnav-mlink.active{color:#fff;background:rgba(255,255,255,0.06);}
+#theme-toggle{width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.75);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;line-height:1;}
+#theme-toggle:hover{background:rgba(255,255,255,0.14);}
+body.light-mode #theme-toggle{border-color:rgba(0,0,0,0.15);background:rgba(0,0,0,0.06);color:rgba(0,0,0,0.6);}
+@media(max-width:700px){.gnav-links{display:none;}.gnav-burger{display:block;}}
+</style>
+<script>function toggleMenu(){document.getElementById('gnav-mobile').classList.toggle('open');}</script>
+<nav class="gnav" id="gnav">
+  <div class="gnav-inner">
+    <a class="gnav-logo" href="../index.html">⚗️ <span>VA Olympiad</span></a>
+    <div class="gnav-links"><a class="gnav-link" href="../index.html">Home</a><a class="gnav-link" href="../bridge.html">🌉 Bridge</a><a class="gnav-link" href="../tower.html">🏗️ Tower</a><a class="gnav-link" href="../lander.html">🚀 Lander</a><a class="gnav-link" href="../bungee.html">🥚 Bungee</a><a class="gnav-link" href="../ocean.html">🌊 Ocean</a><a class="gnav-link" href="../data.html">📊 Data</a><a class="gnav-link" href="../nervous.html">🧠 Nervous Sys</a><a class="gnav-link" href="../shock.html">⚡ Shock Value</a></div>
+    <button class="gnav-burger" onclick="toggleMenu()" aria-label="menu">☰</button>
+    <button id="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode" aria-label="Toggle theme">🌙</button>
+  </div>
+  <div class="gnav-mobile" id="gnav-mobile"><a class="gnav-mlink" href="../index.html">Home</a><a class="gnav-mlink" href="../bridge.html">🌉 Bridge</a><a class="gnav-mlink" href="../tower.html">🏗️ Tower</a><a class="gnav-mlink" href="../lander.html">🚀 Lander</a><a class="gnav-mlink" href="../bungee.html">🥚 Bungee</a><a class="gnav-mlink" href="../ocean.html">🌊 Ocean</a><a class="gnav-mlink" href="../data.html">📊 Data</a><a class="gnav-mlink" href="../nervous.html">🧠 Nervous Sys</a><a class="gnav-mlink" href="../shock.html">⚡ Shock Value</a></div>
+</nav>
+<div class="page">
+  <div class="header">
+    <div class="badge">Practice Test</div>
+    <h1>📊 Data Investigations</h1>
+    <div class="sub">VA Division A · Grades 3–4 · <span>40 points</span></div>
+    <div class="prog-outer"><div class="prog-inner" id="prog"></div></div>
+    <div class="prog-meta"><span id="prog-label">0 answered</span><span id="prog-pct">0%</span></div>
+  </div>
+  <div class="name-box">
+    <label>NAME</label>
+    <input id="sname" type="text" placeholder="Enter your name..." autocomplete="off">
+  </div>
+
+  <!-- PART 1: MC -->
+  <div class="sec-hd"><h3>⭕ Part 1 — Multiple Choice</h3><span class="pts">15 pts · 1 pt each</span></div>
+
+  <div class="qcard" id="qc-d1"><div class="q-num">Question 1</div><div class="q-text">Which of the following is an example of QUANTITATIVE data?</div><div class="opts">
+    <label class="opt"><input type="radio" name="d1" value="A"><span class="dot"></span>The flower is bright yellow</label>
+    <label class="opt"><input type="radio" name="d1" value="B"><span class="dot"></span>The liquid had a strong smell</label>
+    <label class="opt"><input type="radio" name="d1" value="C"><span class="dot"></span>The plant grew 8.5 centimeters in one week</label>
+    <label class="opt"><input type="radio" name="d1" value="D"><span class="dot"></span>The rock felt rough when touched</label>
+  </div></div>
+
+  <div class="qcard" id="qc-d2"><div class="q-num">Question 2</div>
+    <div class="data-block">Data set: 3, 7, 5, 7, 8, 2, 7</div>
+    <div class="q-text">What is the MODE of this data set?</div><div class="opts">
+    <label class="opt"><input type="radio" name="d2" value="A"><span class="dot"></span>5</label>
+    <label class="opt"><input type="radio" name="d2" value="B"><span class="dot"></span>7</label>
+    <label class="opt"><input type="radio" name="d2" value="C"><span class="dot"></span>8</label>
+    <label class="opt"><input type="radio" name="d2" value="D"><span class="dot"></span>3</label>
+  </div></div>
+
+  <div class="qcard" id="qc-d3"><div class="q-num">Question 3</div>
+    <div class="data-block">Data set: 4, 6, 8, 10, 12</div>
+    <div class="q-text">What is the MEAN of this data set?</div><div class="opts">
+    <label class="opt"><input type="radio" name="d3" value="A"><span class="dot"></span>6</label>
+    <label class="opt"><input type="radio" name="d3" value="B"><span class="dot"></span>7</label>
+    <label class="opt"><input type="radio" name="d3" value="C"><span class="dot"></span>8</label>
+    <label class="opt"><input type="radio" name="d3" value="D"><span class="dot"></span>10</label>
+  </div></div>
+
+  <div class="qcard" id="qc-d4"><div class="q-num">Question 4</div><div class="q-text">A scientist tests how different amounts of water affect the growth of bean plants. What is the INDEPENDENT variable?</div><div class="opts">
+    <label class="opt"><input type="radio" name="d4" value="A"><span class="dot"></span>The height of the bean plants</label>
+    <label class="opt"><input type="radio" name="d4" value="B"><span class="dot"></span>The type of soil used</label>
+    <label class="opt"><input type="radio" name="d4" value="C"><span class="dot"></span>The amount of water given to each plant</label>
+    <label class="opt"><input type="radio" name="d4" value="D"><span class="dot"></span>The number of days the experiment runs</label>
+  </div></div>
+
+  <div class="qcard" id="qc-d5"><div class="q-num">Question 5</div><div class="q-text">In the same experiment (different water amounts → bean plant growth), what is the DEPENDENT variable?</div><div class="opts">
+    <label class="opt"><input type="radio" name="d5" value="A"><span class="dot"></span>The amount of water given</label>
+    <label class="opt"><input type="radio" name="d5" value="B"><span class="dot"></span>The height of the bean plants (measured in cm)</label>
+    <label class="opt"><input type="radio" name="d5" value="C"><span class="dot"></span>The type of soil</label>
+    <label class="opt"><input type="radio" name="d5" value="D"><span class="dot"></span>The temperature of the room</label>
+  </div></div>
+
+  <div class="qcard" id="qc-d6"><div class="q-num">Question 6</div><div class="q-text">Which type of graph is BEST for showing how temperature changed every hour throughout a school day?</div><div class="opts">
+    <label class="opt"><input type="radio" name="d6" value="A"><span class="dot"></span>Bar graph</label>
+    <label class="opt"><input type="radio" name="d6" value="B"><span class="dot"></span>Pie chart</label>
+    <label class="opt"><input type="radio" name="d6" value="C"><span class="dot"></span>Line graph</label>
+    <label class="opt"><input type="radio" name="d6" value="D"><span class="dot"></span>Data table only — no graph needed</label>
+  </div></div>
+
+  <div class="qcard" id="qc-d7"><div class="q-num">Question 7</div>
+    <div class="data-block">Data set: 10, 11, 12, 13, 47</div>
+    <div class="q-text">Which value in this data set is most likely an OUTLIER?</div><div class="opts">
+    <label class="opt"><input type="radio" name="d7" value="A"><span class="dot"></span>10</label>
+    <label class="opt"><input type="radio" name="d7" value="B"><span class="dot"></span>11</label>
+    <label class="opt"><input type="radio" name="d7" value="C"><span class="dot"></span>13</label>
+    <label class="opt"><input type="radio" name="d7" value="D"><span class="dot"></span>47</label>
+  </div></div>
+
+  <div class="qcard" id="qc-d8"><div class="q-num">Question 8</div>
+    <div class="data-block">Data set: 2, 4, 5, 6, 8, 9, 11</div>
+    <div class="q-text">What is the MEDIAN of this data set?</div><div class="opts">
+    <label class="opt"><input type="radio" name="d8" value="A"><span class="dot"></span>5</label>
+    <label class="opt"><input type="radio" name="d8" value="B"><span class="dot"></span>6</label>
+    <label class="opt"><input type="radio" name="d8" value="C"><span class="dot"></span>7</label>
+    <label class="opt"><input type="radio" name="d8" value="D"><span class="dot"></span>8</label>
+  </div></div>
+
+  <div class="qcard" id="qc-d9"><div class="q-num">Question 9</div><div class="q-text">A student measures a block's mass 5 times and gets: 48g, 49g, 48g, 49g, 48g. The true mass is 65g. Which statement best describes these measurements?</div><div class="opts">
+    <label class="opt"><input type="radio" name="d9" value="A"><span class="dot"></span>Accurate and precise</label>
+    <label class="opt"><input type="radio" name="d9" value="B"><span class="dot"></span>Accurate but not precise</label>
+    <label class="opt"><input type="radio" name="d9" value="C"><span class="dot"></span>Precise but not accurate</label>
+    <label class="opt"><input type="radio" name="d9" value="D"><span class="dot"></span>Neither accurate nor precise</label>
+  </div></div>
+
+  <div class="qcard" id="qc-d10"><div class="q-num">Question 10</div><div class="q-text">Which type of graph would BEST show what percentage of students chose each of three favorite colors?</div><div class="opts">
+    <label class="opt"><input type="radio" name="d10" value="A"><span class="dot"></span>Line graph</label>
+    <label class="opt"><input type="radio" name="d10" value="B"><span class="dot"></span>Pie chart</label>
+    <label class="opt"><input type="radio" name="d10" value="C"><span class="dot"></span>Bar graph</label>
+    <label class="opt"><input type="radio" name="d10" value="D"><span class="dot"></span>Scatter plot</label>
+  </div></div>
+
+  <div class="qcard" id="qc-d11"><div class="q-num">Question 11</div>
+    <div class="data-block">Data set: 5, 8, 8, 9, 10</div>
+    <div class="q-text">What is the RANGE of this data set?</div><div class="opts">
+    <label class="opt"><input type="radio" name="d11" value="A"><span class="dot"></span>3</label>
+    <label class="opt"><input type="radio" name="d11" value="B"><span class="dot"></span>5</label>
+    <label class="opt"><input type="radio" name="d11" value="C"><span class="dot"></span>8</label>
+    <label class="opt"><input type="radio" name="d11" value="D"><span class="dot"></span>10</label>
+  </div></div>
+
+  <div class="qcard" id="qc-d12"><div class="q-num">Question 12</div><div class="q-text">A scientist records that "the solution turned bright pink." This is an example of:</div><div class="opts">
+    <label class="opt"><input type="radio" name="d12" value="A"><span class="dot"></span>Quantitative data</label>
+    <label class="opt"><input type="radio" name="d12" value="B"><span class="dot"></span>Qualitative data</label>
+    <label class="opt"><input type="radio" name="d12" value="C"><span class="dot"></span>A conclusion</label>
+    <label class="opt"><input type="radio" name="d12" value="D"><span class="dot"></span>A hypothesis</label>
+  </div></div>
+
+  <div class="qcard" id="qc-d13"><div class="q-num">Question 13</div><div class="q-text">Using a graph, you estimate the temperature at hour 3 by looking between the data points at hour 2 and hour 4. This technique is called:</div><div class="opts">
+    <label class="opt"><input type="radio" name="d13" value="A"><span class="dot"></span>Extrapolation</label>
+    <label class="opt"><input type="radio" name="d13" value="B"><span class="dot"></span>Interpolation</label>
+    <label class="opt"><input type="radio" name="d13" value="C"><span class="dot"></span>Calibration</label>
+    <label class="opt"><input type="radio" name="d13" value="D"><span class="dot"></span>Approximation</label>
+  </div></div>
+
+  <div class="qcard" id="qc-d14"><div class="q-num">Question 14</div><div class="q-text">In a controlled experiment, which variables should be kept the same in all groups?</div><div class="opts">
+    <label class="opt"><input type="radio" name="d14" value="A"><span class="dot"></span>The independent variable</label>
+    <label class="opt"><input type="radio" name="d14" value="B"><span class="dot"></span>The dependent variable</label>
+    <label class="opt"><input type="radio" name="d14" value="C"><span class="dot"></span>The controlled variables (constants)</label>
+    <label class="opt"><input type="radio" name="d14" value="D"><span class="dot"></span>All variables should be changed at once</label>
+  </div></div>
+
+  <div class="qcard" id="qc-d15"><div class="q-num">Question 15</div>
+    <div class="data-block">Data set: 20, 22, 21, 23, 19, 21, 22</div>
+    <div class="q-text">What is the MEAN of this data set? (Use your calculator)</div><div class="opts">
+    <label class="opt"><input type="radio" name="d15" value="A"><span class="dot"></span>20</label>
+    <label class="opt"><input type="radio" name="d15" value="B"><span class="dot"></span>21</label>
+    <label class="opt"><input type="radio" name="d15" value="C"><span class="dot"></span>21.14</label>
+    <label class="opt"><input type="radio" name="d15" value="D"><span class="dot"></span>22</label>
+  </div></div>
+
+  <!-- PART 2: T/F -->
+  <div class="sec-hd" style="margin-top:20px;"><h3>✅ Part 2 — True or False</h3><span class="pts">8 pts · 1 pt each</span></div>
+
+  <div class="qcard" id="qc-tf16"><div class="q-num">Question 16</div><div class="q-text">The dependent variable is always plotted on the X-axis (horizontal axis) of a graph.</div><div class="tf"><button class="tfbtn" onclick="doTF(16,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(16,'FALSE',this)">❌ FALSE</button></div></div>
+  <div class="qcard" id="qc-tf17"><div class="q-num">Question 17</div><div class="q-text">A data set can have more than one mode.</div><div class="tf"><button class="tfbtn" onclick="doTF(17,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(17,'FALSE',this)">❌ FALSE</button></div></div>
+  <div class="qcard" id="qc-tf18"><div class="q-num">Question 18</div><div class="q-text">A measurement can be precise without being accurate.</div><div class="tf"><button class="tfbtn" onclick="doTF(18,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(18,'FALSE',this)">❌ FALSE</button></div></div>
+  <div class="qcard" id="qc-tf19"><div class="q-num">Question 19</div><div class="q-text">An outlier always means a scientist made a mistake and should be deleted from the data.</div><div class="tf"><button class="tfbtn" onclick="doTF(19,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(19,'FALSE',this)">❌ FALSE</button></div></div>
+  <div class="qcard" id="qc-tf20"><div class="q-num">Question 20</div><div class="q-text">A line graph is the best choice for comparing the favorite subjects of students in 3 different classes.</div><div class="tf"><button class="tfbtn" onclick="doTF(20,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(20,'FALSE',this)">❌ FALSE</button></div></div>
+  <div class="qcard" id="qc-tf21"><div class="q-num">Question 21</div><div class="q-text">In an experiment, there should only be ONE independent variable to make it a controlled (fair) test.</div><div class="tf"><button class="tfbtn" onclick="doTF(21,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(21,'FALSE',this)">❌ FALSE</button></div></div>
+  <div class="qcard" id="qc-tf22"><div class="q-num">Question 22</div><div class="q-text">Adding an outlier to a data set always makes the mean higher.</div><div class="tf"><button class="tfbtn" onclick="doTF(22,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(22,'FALSE',this)">❌ FALSE</button></div></div>
+  <div class="qcard" id="qc-tf23"><div class="q-num">Question 23</div><div class="q-text">Qualitative data uses descriptions and words rather than numbers.</div><div class="tf"><button class="tfbtn" onclick="doTF(23,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(23,'FALSE',this)">❌ FALSE</button></div></div>
+
+  <!-- PART 3: Fill -->
+  <div class="sec-hd" style="margin-top:20px;"><h3>📝 Part 3 — Fill in the Blank</h3><span class="pts">7 pts · 1 pt each</span></div>
+  <div class="qcard" id="qc-df1"><div class="q-num">Question 24</div><div class="fill-wrap">Data that uses numbers and measurements is called <input class="blank" id="df1" placeholder="____________"> data.</div></div>
+  <div class="qcard" id="qc-df2"><div class="q-num">Question 25</div><div class="fill-wrap">The middle value in a sorted data set is called the <input class="blank" id="df2" placeholder="____________">.</div></div>
+  <div class="qcard" id="qc-df3"><div class="q-num">Question 26</div><div class="fill-wrap">The variable a scientist intentionally changes is the <input class="blank" id="df3" placeholder="____________"> variable.</div></div>
+  <div class="qcard" id="qc-df4"><div class="q-num">Question 27</div><div class="fill-wrap">Estimating a value beyond the known data range by extending the trend is called <input class="blank" id="df4" placeholder="____________">.</div></div>
+  <div class="qcard" id="qc-df5"><div class="q-num">Question 28</div><div class="fill-wrap">How close a measurement is to the true value is called <input class="blank" id="df5" placeholder="____________">.</div></div>
+  <div class="qcard" id="qc-df6"><div class="q-num">Question 29</div>
+    <div class="data-block">Data: 3, 5, 9, 9, 12 → Range = ___</div>
+    <div class="fill-wrap">The range of this data set is <input class="blank" id="df6" placeholder="___">.</div></div>
+  <div class="qcard" id="qc-df7"><div class="q-num">Question 30</div><div class="fill-wrap">Teams competing in Data Investigations must bring pencils and a four-function <input class="blank" id="df7" placeholder="____________">.</div></div>
+
+  <div class="sub-wrap"><button class="sub-btn" onclick="submitData()">Submit Answers</button></div>
+</div>
+<div class="page">
+  <div id="score-card">
+    <h2>Test Complete! 📊</h2>
+    <div id="score-num">--</div>
+    <div id="score-pct"></div>
+    <div id="score-emoji"></div>
+    <div id="score-msg"></div>
+    <div id="score-name" style="margin-top:8px;font-size:.85rem;color:rgba(192,204,224,.6);"></div>
+    <button class="retry-btn" onclick="location.reload()">Try Again</button>
+  </div>
+</div>
+
+<script>
+const MC={d1:'C',d2:'B',d3:'C',d4:'C',d5:'B',d6:'C',d7:'D',d8:'B',d9:'C',d10:'B',d11:'B',d12:'B',d13:'B',d14:'C',d15:'C'};
+const TF={16:'FALSE',17:'TRUE',18:'TRUE',19:'FALSE',20:'FALSE',21:'TRUE',22:'FALSE',23:'TRUE'};
+const FILL={df1:['quantitative'],df2:['median'],df3:['independent'],df4:['extrapolation','extrapolate'],df5:['accuracy','accurate'],df6:['9'],df7:['calculator']};
+const TOTAL=30;const tfSel={};
+
+function cnt(){
+  let n=0;
+  Object.keys(MC).forEach(nm=>{if(document.querySelector('input[name="'+nm+'"]:checked'))n++;});
+  Object.keys(TF).forEach(k=>{if(tfSel[k])n++;});
+  Object.keys(FILL).forEach(id=>{if(document.getElementById(id)?.value.trim())n++;});
+  return n;
+}
+function upProg(){
+  const n=cnt();const p=Math.round(n/TOTAL*100);
+  document.getElementById('prog').style.width=p+'%';
+  document.getElementById('prog-label').textContent=n+' of '+TOTAL+' answered';
+  document.getElementById('prog-pct').textContent=p+'%';
+}
+document.querySelectorAll('.opt input[type="radio"]').forEach(inp=>{
+  inp.addEventListener('change',function(){
+    document.querySelectorAll('input[name="'+this.name+'"]').forEach(r=>r.closest('.opt').classList.remove('sel'));
+    this.closest('.opt').classList.add('sel');upProg();
+  });
+});
+document.querySelectorAll('.blank').forEach(el=>el.addEventListener('input',upProg));
+function doTF(qn,val,btn){
+  document.getElementById('qc-tf'+qn).querySelectorAll('.tfbtn').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');tfSel[qn]=val;upProg();
+}
+function submitData(){
+  let score=0;
+  Object.entries(MC).forEach(([nm,correct])=>{
+    const card=document.getElementById('qc-'+nm);
+    const sel=document.querySelector('input[name="'+nm+'"]:checked');
+    document.querySelectorAll('input[name="'+nm+'"]').forEach(r=>{if(r.value===correct)r.closest('.opt').classList.add('c-ok');});
+    if(sel){if(sel.value===correct){score++;card.classList.add('correct');}else{sel.closest('.opt').classList.add('c-no');card.classList.add('wrong');}}
+    else card.classList.add('wrong');
+    document.querySelectorAll('input[name="'+nm+'"]').forEach(r=>r.disabled=true);
+  });
+  Object.entries(TF).forEach(([k,correct])=>{
+    const card=document.getElementById('qc-tf'+k);const given=tfSel[parseInt(k)];
+    card.querySelectorAll('.tfbtn').forEach(btn=>{
+      const v=btn.textContent.includes('TRUE')?'TRUE':'FALSE';
+      if(v===correct)btn.classList.add('c-ok');
+      if(v===given&&given!==correct)btn.classList.add('c-no');
+      btn.disabled=true;btn.style.cursor='default';
+    });
+    if(given===correct){score++;card.classList.add('correct');}else card.classList.add('wrong');
+  });
+  Object.entries(FILL).forEach(([id,accepts])=>{
+    const el=document.getElementById(id);const card=document.getElementById('qc-'+id);
+    const val=el.value.trim().toLowerCase();
+    if(accepts.some(a=>val.includes(a))){score++;el.classList.add('c-ok');card.classList.add('correct');}
+    else{el.classList.add('c-no');card.classList.add('wrong');}
+    el.readOnly=true;
+  });
+  const name=document.getElementById('sname').value.trim()||'Student';
+  const pct=Math.round(score/TOTAL*100);
+  let emoji,msg;
+  if(pct>=90){emoji='🏆📊';msg='Data master — excellent work!';}
+  else if(pct>=75){emoji='📈🌟';msg='Great job — you know your data science!';}
+  else if(pct>=60){emoji='📊👍';msg='Good effort — review graphs and variables!';}
+  else{emoji='📚🔄';msg='Review the study slides and try again!';}
+  document.getElementById('score-num').textContent=score+'/'+TOTAL;
+  document.getElementById('score-pct').textContent=pct+'% correct';
+  document.getElementById('score-emoji').textContent=emoji;
+  document.getElementById('score-msg').textContent=msg;
+  document.getElementById('score-name').textContent=name+"'s result";
+  document.querySelector('.sub-btn').style.display='none';
+  document.getElementById('score-card').style.display='block';
+  document.getElementById('score-card').scrollIntoView({behavior:'smooth',block:'center'});
+}
+</script>
+
+<script id="theme-logic">
+(function() {
+  function applyTheme(mode) {
+    const btn = document.getElementById('theme-toggle');
+    if (mode === 'light') {
+      document.body.classList.add('light-mode');
+      if (btn) btn.textContent = '🌙';
+    } else {
+      document.body.classList.remove('light-mode');
+      if (btn) btn.textContent = '☀️';
+    }
+  }
+  // Apply on load
+  const saved = localStorage.getItem('va-theme') || 'dark';
+  applyTheme(saved);
+  
+  window.toggleTheme = function() {
+    const isLight = document.body.classList.contains('light-mode');
+    const newMode = isLight ? 'dark' : 'light';
+    localStorage.setItem('va-theme', newMode);
+    applyTheme(newMode);
+  };
+})();
+</script>
+</body>
+</html>

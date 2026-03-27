@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>🥚 Bungee Egg Drop — Practice Test</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Exo+2:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Space Grotesk',sans-serif;background:#0D1B2A;color:#CBD8E8;min-height:100vh;padding:0 0 60px;overflow-x:hidden;}
+body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 20%,rgba(224,92,64,.05)0%,transparent 50%);pointer-events:none;z-index:0;}
+.gnav{position:sticky;top:0;z-index:300;background:rgba(8,8,24,.97);border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(12px);}
+.gnav-inner{display:flex;align-items:center;max-width:1080px;margin:0 auto;padding:0 24px;height:54px;gap:4px;}
+.gnav-logo{font-size:14px;font-weight:700;color:rgba(255,255,255,.9);flex-shrink:0;padding-right:10px;border-right:1px solid rgba(255,255,255,.1);margin-right:6px;text-decoration:none;}
+.gnav-links{display:flex;gap:2px;flex:1;overflow-x:auto;scrollbar-width:none;}
+.gnav-link{padding:5px 11px;border-radius:7px;font-size:12px;font-weight:600;color:rgba(200,216,232,.6);white-space:nowrap;text-decoration:none;transition:all .15s;}
+.gnav-link:hover{background:rgba(255,255,255,.07);color:#fff;}
+.gnav-mobile{display:none;}
+.page{position:relative;z-index:1;max-width:740px;margin:0 auto;padding:0 20px 40px;}
+.header{background:rgba(255,255,255,.04);border:1px solid rgba(224,92,64,.2);border-top:4px solid #E05C40;border-radius:16px 16px 0 0;padding:28px 32px 22px;margin-top:24px;}
+.header .badge{display:inline-block;background:rgba(224,92,64,.12);border:1px solid rgba(224,92,64,.35);color:#E05C40;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:999px;margin-bottom:10px;}
+.header h1{font-family:'Exo 2',sans-serif;font-size:2rem;font-weight:800;color:#fff;margin-bottom:6px;}
+.header .sub{font-size:.95rem;color:rgba(192,204,224,.7);margin-bottom:16px;}
+.header .sub span{color:#E05C40;font-weight:600;}
+.prog-outer{background:rgba(255,255,255,.08);border-radius:999px;height:7px;overflow:hidden;}
+.prog-inner{height:100%;background:#E05C40;border-radius:999px;width:0%;transition:width .4s;}
+.prog-meta{display:flex;justify-content:space-between;font-size:.75rem;color:rgba(192,204,224,.5);margin-top:4px;}
+.name-box{background:rgba(255,255,255,.03);border:1px solid rgba(224,92,64,.15);border-top:none;padding:16px 28px;}
+.name-box label{font-size:.78rem;font-weight:700;color:#E05C40;letter-spacing:.08em;display:block;margin-bottom:5px;}
+.name-box input{background:transparent;border:none;border-bottom:2px solid rgba(224,92,64,.3);width:100%;padding:6px 0;font-family:'Space Grotesk',sans-serif;font-size:1rem;color:#fff;outline:none;}
+.name-box input:focus{border-bottom-color:#E05C40;}
+.sec-hd{background:rgba(224,92,64,.15);border:1px solid rgba(224,92,64,.25);border-top:none;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;}
+.sec-hd h3{font-family:'Exo 2',sans-serif;font-size:.95rem;font-weight:800;color:#fff;letter-spacing:.03em;}
+.pts{font-size:.75rem;font-weight:700;color:#E05C40;background:rgba(224,92,64,.12);border:1px solid rgba(224,92,64,.3);padding:2px 9px;border-radius:999px;}
+.qcard{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-top:none;padding:18px 24px;transition:background .2s;}
+.qcard.correct{background:rgba(46,204,113,.06);border-left:4px solid #2ECC71;}
+.qcard.wrong{background:rgba(231,76,60,.06);border-left:4px solid #E74C3C;}
+.q-num{font-size:.7rem;font-weight:700;color:#E05C40;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
+.q-text{font-size:.98rem;font-weight:600;color:#fff;margin-bottom:13px;line-height:1.5;}
+.opts{display:flex;flex-direction:column;gap:6px;}
+.opt{display:flex;align-items:flex-start;gap:11px;padding:9px 13px;border:1.5px solid rgba(255,255,255,.1);border-radius:9px;cursor:pointer;font-size:.9rem;color:rgba(192,204,224,.8);background:rgba(255,255,255,.02);transition:all .15s;user-select:none;line-height:1.45;}
+.opt:hover{border-color:#E05C40;background:rgba(224,92,64,.07);}
+.opt.sel{border-color:#E05C40;background:rgba(224,92,64,.12);color:#fff;}
+.opt.c-ok{border-color:#2ECC71;background:rgba(46,204,113,.1);color:#7fffc4;}
+.opt.c-no{border-color:#E74C3C;background:rgba(231,76,60,.1);color:#ffaaaa;}
+.opt input{display:none;}
+.dot{width:17px;height:17px;flex-shrink:0;border-radius:50%;border:2px solid rgba(255,255,255,.2);margin-top:2px;transition:all .15s;}
+.sel .dot{background:#E05C40;border-color:#E05C40;}
+.c-ok .dot{background:#2ECC71;border-color:#2ECC71;}
+.c-no .dot{background:#E74C3C;border-color:#E74C3C;}
+.tf{display:flex;gap:10px;}
+.tfbtn{flex:1;padding:11px;border:1.5px solid rgba(255,255,255,.12);border-radius:10px;background:rgba(255,255,255,.02);color:rgba(192,204,224,.7);font-family:'Space Grotesk',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .15s;}
+.tfbtn:hover{border-color:#E05C40;color:#fff;}
+.tfbtn.sel{border-color:#E05C40;background:rgba(224,92,64,.14);color:#E05C40;}
+.tfbtn.c-ok{border-color:#2ECC71;background:rgba(46,204,113,.1);color:#7fffc4;}
+.tfbtn.c-no{border-color:#E74C3C;background:rgba(231,76,60,.1);color:#ffaaaa;}
+.fill-wrap{font-size:.95rem;font-weight:500;color:#fff;display:flex;align-items:baseline;flex-wrap:wrap;gap:5px 7px;line-height:2.1;}
+.blank{border:none;border-bottom:2px solid rgba(224,92,64,.4);background:transparent;color:#E05C40;font-family:'Space Grotesk',sans-serif;font-size:.95rem;font-weight:700;width:160px;padding:3px 4px;outline:none;}
+.blank:focus{border-bottom-color:#E05C40;}
+.blank.c-ok{border-bottom-color:#2ECC71;color:#2ECC71;}
+.blank.c-no{border-bottom-color:#E74C3C;color:#E74C3C;}
+.sa{width:100%;padding:11px 13px;border:1.5px solid rgba(255,255,255,.12);border-radius:10px;background:rgba(255,255,255,.03);font-family:'Space Grotesk',sans-serif;font-size:.92rem;color:#fff;resize:none;outline:none;min-height:65px;line-height:1.55;transition:border-color .2s;}
+.sa:focus{border-color:#E05C40;}
+.sub-wrap{margin:24px 0 8px;text-align:center;}
+.sub-btn{background:#E05C40;color:#060a14;border:none;padding:14px 48px;border-radius:50px;font-family:'Exo 2',sans-serif;font-size:1.1rem;font-weight:800;cursor:pointer;transition:all .2s;box-shadow:0 6px 24px rgba(224,92,64,.3);}
+.sub-btn:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(224,92,64,.45);}
+#score-card{display:none;background:rgba(255,255,255,.04);border:1px solid rgba(224,92,64,.25);border-top:4px solid #E05C40;border-radius:16px;padding:38px 32px;text-align:center;margin:20px 0;animation:pop .4s ease;}
+@keyframes pop{from{transform:scale(.88);opacity:0}to{transform:scale(1);opacity:1}}
+#score-card h2{font-family:'Exo 2',sans-serif;font-size:1.5rem;color:#fff;margin-bottom:8px;}
+#score-num{font-family:'Exo 2',sans-serif;font-size:5rem;font-weight:800;color:#E05C40;line-height:1;margin:10px 0 5px;}
+#score-pct{font-size:1rem;color:rgba(192,204,224,.7);font-weight:600;}
+#score-emoji{font-size:2.5rem;margin-top:10px;}
+#score-msg{font-size:1rem;color:rgba(192,204,224,.7);margin-top:6px;}
+.retry-btn{margin-top:20px;background:transparent;color:#E05C40;border:1.5px solid #E05C40;padding:9px 30px;border-radius:50px;font-family:'Exo 2',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;}
+@media(max-width:500px){.header h1{font-size:1.6rem;}.page{padding:0 14px 40px;}}
+
+/* ── Global light-mode text readability ── */
+body.light-mode,
+body.light-mode .page,
+body.light-mode .tab-panel,
+body.light-mode .callout p,
+body.light-mode .callout li,
+body.light-mode .callout ul,
+body.light-mode .card p,
+body.light-mode .card li,
+body.light-mode .step-body p,
+body.light-mode .step-body li,
+body.light-mode .tip-card p,
+body.light-mode .mat-body p,
+body.light-mode .res-desc,
+body.light-mode .chk-text,
+body.light-mode .hero-sub,
+body.light-mode .ecard-desc,
+body.light-mode .about-card p,
+body.light-mode .about-card li,
+body.light-mode .shop-intro,
+body.light-mode .shop-tbl td,
+body.light-mode .stbl td,
+body.light-mode .truss-card p,
+body.light-mode .outline-subs li,
+body.light-mode .tab-btn,
+body.light-mode .sec-sub,
+body.light-mode .ecard-meta,
+body.light-mode .stat-dates,
+body.light-mode .hero-dates,
+body.light-mode .prog-meta,
+body.light-mode .shop-prog-label,
+body.light-mode .si-note,
+body.light-mode .si-dept,
+body.light-mode .mat-body p,
+body.light-mode .score-mini p { color: rgba(13,31,48,0.72) !important; }
+
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode h4,
+body.light-mode .hero h1,
+body.light-mode .sec-title,
+body.light-mode .section-title,
+body.light-mode .ecard-name,
+body.light-mode .res-title,
+body.light-mode .card h4,
+body.light-mode .step-body h4,
+body.light-mode .tip-card h4,
+body.light-mode .mat-body h4,
+body.light-mode .truss-name,
+body.light-mode .q-text,
+body.light-mode .fill-wrap,
+body.light-mode .test-header h2,
+body.light-mode #score-card h2,
+body.light-mode .si-name,
+body.light-mode .about-card h3,
+body.light-mode .stat-num,
+body.light-mode .gnav-logo { color: #0D1F30 !important; }
+
+body.light-mode .callout h4,
+body.light-mode .sec-hd h3,
+body.light-mode .section-heading { color: inherit !important; }
+
+body.light-mode .hero-eyebrow,
+body.light-mode .hero-ey,
+body.light-mode .hbadge,
+body.light-mode .hbadge-muted { color: rgba(13,31,48,0.55) !important;
+  background: rgba(0,0,0,.06) !important; border-color: rgba(0,0,0,.15) !important; }
+
+</style>
+
+<style id="theme-vars">
+/* ── Light/Dark mode variables ── */
+:root {
+  --mode-bg1: #1A1A2E;
+  --mode-bg2: rgba(4,43,69,0.7);
+  --mode-nav: rgba(8,8,24,0.97);
+  --mode-nav-border: rgba(255,255,255,0.08);
+  --mode-text: #B8D8E8;
+  --mode-text-strong: #FFFFFF;
+  --mode-text-muted: rgba(184,216,232,0.5);
+  --mode-card-bg: rgba(4,43,69,0.7);
+  --mode-card-border: rgba(255,255,255,0.08);
+  --mode-input-bg: transparent;
+  --mode-input-color: #fff;
+  --mode-table-even: rgba(255,255,255,0.025);
+  --mode-section-bg: rgba(255,255,255,0.03);
+}
+body.light-mode {
+  --mode-bg1: #F0F4F8;
+  --mode-bg2: #FFFFFF;
+  --mode-nav: rgba(255,255,255,0.97);
+  --mode-nav-border: rgba(0,0,0,0.1);
+  --mode-text: #2A3E52;
+  --mode-text-strong: #0D1F30;
+  --mode-text-muted: rgba(42,62,82,0.5);
+  --mode-card-bg: #FFFFFF;
+  --mode-card-border: rgba(0,0,0,0.09);
+  --mode-input-bg: #fff;
+  --mode-input-color: #0D1F30;
+  --mode-table-even: rgba(0,0,0,0.03);
+  --mode-section-bg: rgba(0,0,0,0.03);
+}
+
+/* ── Toggle button ── */
+#theme-toggle {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.75);
+  cursor: pointer;
+  font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  line-height: 1;
+}
+#theme-toggle:hover { background: rgba(255,255,255,0.14); }
+body.light-mode #theme-toggle {
+  border-color: rgba(0,0,0,0.15);
+  background: rgba(0,0,0,0.06);
+  color: rgba(0,0,0,0.6);
+}
+body.light-mode #theme-toggle:hover { background: rgba(0,0,0,0.1); }
+
+/* ── Light mode nav overrides ── */
+body.light-mode .gnav {
+  background: rgba(255,255,255,0.97) !important;
+  border-bottom-color: rgba(0,0,0,0.1) !important;
+}
+body.light-mode .gnav-logo { color: #0D1F30 !important; border-right-color: rgba(0,0,0,0.12) !important; }
+body.light-mode .gnav-logo span { color: rgba(13,31,48,0.5) !important; }
+body.light-mode .gnav-link { color: rgba(13,31,48,0.55) !important; }
+body.light-mode .gnav-link:hover { background: rgba(0,0,0,0.05) !important; color: #0D1F30 !important; }
+body.light-mode .gnav-link.active { background: rgba(0,0,0,0.08) !important; color: #0D1F30 !important; }
+body.light-mode .gnav-burger { color: rgba(0,0,0,0.55) !important; }
+body.light-mode .gnav-mobile { background: #fff; border-top-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .gnav-mlink { color: rgba(13,31,48,0.65) !important; border-bottom-color: rgba(0,0,0,0.06) !important; }
+body.light-mode .gnav-mlink.active { color: #0D1F30 !important; background: rgba(0,0,0,0.05) !important; }
+
+/* ── Light mode body/backgrounds ── */
+body.light-mode { background: #EEF2F7 !important; color: var(--mode-text) !important; }
+body.light-mode .bg-ocean,
+body.light-mode .bg-ocean .wave { filter: opacity(0.12); }
+body.light-mode body::after { opacity: 0.3; }
+
+/* ── Light mode cards and panels ── */
+body.light-mode .project-card,
+body.light-mode .oc-card,
+body.light-mode .res-card,
+body.light-mode .concept-card,
+body.light-mode .topic-card,
+body.light-mode .about-card,
+body.light-mode .tip-card,
+body.light-mode .step,
+body.light-mode .chk-item,
+body.light-mode .mat-item,
+body.light-mode .slide-card,
+body.light-mode .stat-box {
+  background: #FFFFFF !important;
+  border-color: rgba(0,0,0,0.09) !important;
+}
+body.light-mode .project-card:hover,
+body.light-mode .res-card:hover,
+body.light-mode .slide-card:hover { border-color: rgba(0,0,0,0.2) !important; }
+
+/* ── Light mode text ── */
+body.light-mode h1, body.light-mode h2, body.light-mode h3,
+body.light-mode .hero h1, body.light-mode .section-title,
+body.light-mode .sec-title, body.light-mode .pc-title,
+body.light-mode .res-title, body.light-mode .about-card h3,
+body.light-mode .step-body h4, body.light-mode .tip-card h4,
+body.light-mode .mat-body h4 { color: #0D1F30 !important; }
+body.light-mode .hero-sub, body.light-mode .section-subtitle,
+body.light-mode .sec-sub, body.light-mode .hero-sub,
+body.light-mode .pc-desc, body.light-mode .res-desc,
+body.light-mode .about-card p, body.light-mode .about-card li,
+body.light-mode .step-body p, body.light-mode .tip-card p,
+body.light-mode .mat-body p, body.light-mode p { color: rgba(13,31,48,0.65) !important; }
+body.light-mode .hero-eyebrow, body.light-mode .hbadge-muted,
+body.light-mode .hb-muted, body.light-mode .pc-tag,
+body.light-mode .res-pill, body.light-mode .pill { color: rgba(13,31,48,0.5) !important; background: rgba(0,0,0,0.05) !important; border-color: rgba(0,0,0,0.1) !important; }
+
+/* ── Light mode tables ── */
+body.light-mode .stbl th { background: rgba(0,0,0,0.08) !important; }
+body.light-mode .stbl td { border-color: rgba(0,0,0,0.07) !important; color: rgba(13,31,48,0.75) !important; }
+body.light-mode .stbl td:first-child { color: #0D1F30 !important; }
+body.light-mode .stbl tr:nth-child(even) td { background: rgba(0,0,0,0.025) !important; }
+body.light-mode .shop-tbl th { background: rgba(0,0,0,0.05) !important; color: rgba(13,31,48,0.5) !important; border-bottom-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .shop-tbl td { border-bottom-color: rgba(0,0,0,0.06) !important; color: rgba(13,31,48,0.75) !important; }
+body.light-mode .si-name { color: #0D1F30 !important; }
+
+/* ── Light mode callouts ── */
+body.light-mode .callout,
+body.light-mode .shop-intro,
+body.light-mode .safety-warn,
+body.light-mode .c-acc, body.light-mode .c-gold,
+body.light-mode .c-green, body.light-mode .c-aqua,
+body.light-mode .c-bl, body.light-mode .c-gd,
+body.light-mode .callout p, body.light-mode .callout li { color: rgba(13,31,48,0.72) !important; }
+body.light-mode .callout { background: rgba(0,0,0,0.04) !important; }
+body.light-mode .c-acc { background: rgba(0,0,0,0.04) !important; }
+
+/* ── Light mode quiz ── */
+body.light-mode .header { background: #FFFFFF !important; border-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .header h1 { color: #0D1F30 !important; }
+body.light-mode .header .sub { color: rgba(13,31,48,0.6) !important; }
+body.light-mode .name-box { background: rgba(0,0,0,0.03) !important; border-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .name-box input { color: #0D1F30 !important; border-bottom-color: rgba(0,0,0,0.2) !important; }
+body.light-mode .sec-hd { background: rgba(0,0,0,0.05) !important; border-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .sec-hd h3 { color: #0D1F30 !important; }
+body.light-mode .qcard { background: #FFFFFF !important; border-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .q-text { color: #0D1F30 !important; }
+body.light-mode .opt { background: #F8FAFB !important; border-color: rgba(0,0,0,0.1) !important; color: rgba(13,31,48,0.72) !important; }
+body.light-mode .opt:hover { background: rgba(0,0,0,0.05) !important; }
+body.light-mode .tfbtn { background: #F8FAFB !important; border-color: rgba(0,0,0,0.1) !important; color: rgba(13,31,48,0.65) !important; }
+body.light-mode .fill-wrap { color: #0D1F30 !important; }
+body.light-mode .data-block { background: rgba(0,0,0,0.04) !important; border-color: rgba(0,0,0,0.1) !important; color: rgba(13,31,48,0.8) !important; }
+body.light-mode .sa { background: #F8FAFB !important; border-color: rgba(0,0,0,0.12) !important; color: #0D1F30 !important; }
+body.light-mode #score-card { background: #FFFFFF !important; border-color: rgba(0,0,0,0.1) !important; }
+body.light-mode #score-card h2 { color: #0D1F30 !important; }
+body.light-mode #score-msg, body.light-mode #score-pct, body.light-mode #score-name, body.light-mode #score-sa-note { color: rgba(13,31,48,0.6) !important; }
+body.light-mode .prog-outer { background: rgba(0,0,0,0.08) !important; }
+
+/* ── Light mode tab nav ── */
+body.light-mode .tab-nav { border-bottom-color: rgba(0,0,0,0.1) !important; }
+body.light-mode .tab-btn { color: rgba(13,31,48,0.4) !important; }
+body.light-mode .tab-btn:hover { color: rgba(13,31,48,0.75) !important; }
+
+/* ── Light mode hero badges ── */
+body.light-mode .hero-eyebrow,
+body.light-mode .hero-ey { background: rgba(0,0,0,0.05) !important; border-color: rgba(0,0,0,0.12) !important; }
+
+/* ── Light mode section labels ── */
+body.light-mode .section-eyebrow,
+body.light-mode .sec-label { opacity: 0.7; }
+
+/* ── Light mode about scoring boxes ── */
+body.light-mode [style*="background:rgba(245,166,35,.06)"],
+body.light-mode [style*="background:rgba(224,92,64,.06)"],
+body.light-mode [style*="background:rgba(123,94,167,.06)"] { background: rgba(0,0,0,0.04) !important; }
+
+/* ── Light mode footer ── */
+body.light-mode footer { border-top-color: rgba(0,0,0,0.08) !important; }
+body.light-mode footer p { color: rgba(13,31,48,0.3) !important; }
+
+/* ── Light mode dividers ── */
+body.light-mode .divider { background: rgba(0,0,0,0.1) !important; }
+
+/* ── Light mode prog/shopping ── */
+body.light-mode .shop-total { background: rgba(0,0,0,0.04) !important; border-color: rgba(0,0,0,0.08) !important; }
+body.light-mode .shop-total-label { color: rgba(13,31,48,0.5) !important; }
+body.light-mode .shop-prog { background: rgba(0,0,0,0.08) !important; }
+body.light-mode .cb { border-color: rgba(0,0,0,0.2) !important; background: #fff !important; }
+body.light-mode .chk-box { border-color: rgba(0,0,0,0.2) !important; }
+</style>
+</head>
+<body>
+<style>
+.gnav{position:sticky;top:0;z-index:300;background:rgba(8,8,24,0.97);border-bottom:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(12px);}
+.gnav-inner{display:flex;align-items:center;max-width:1080px;margin:0 auto;padding:0 20px;height:54px;gap:6px;}
+.gnav-logo{font-size:14px;font-weight:700;color:rgba(255,255,255,0.9);flex-shrink:0;padding:0 10px 0 0;border-right:1px solid rgba(255,255,255,0.1);margin-right:4px;text-decoration:none;font-family:'Share Tech Mono',monospace;}
+.gnav-logo span{color:rgba(255,255,255,0.55);}
+.gnav-links{display:flex;gap:2px;flex:1;overflow-x:auto;scrollbar-width:none;}
+.gnav-links::-webkit-scrollbar{display:none;}
+.gnav-link{padding:5px 10px;border-radius:7px;font-size:12px;font-weight:600;color:rgba(200,216,232,0.6);white-space:nowrap;text-decoration:none;transition:all .15s;font-family:'Share Tech Mono',monospace;}
+.gnav-link:hover{background:rgba(255,255,255,0.07);color:#fff;}
+.gnav-link.active{background:rgba(255,255,255,0.1);color:#fff;}
+.gnav-burger{display:none;background:none;border:none;color:rgba(255,255,255,0.7);font-size:20px;cursor:pointer;padding:4px;}
+.gnav-mobile{display:none;flex-direction:column;border-top:1px solid rgba(255,255,255,0.08);}
+.gnav-mobile.open{display:flex;}
+.gnav-mlink{padding:12px 20px;font-size:13px;font-weight:600;color:rgba(200,216,232,0.7);border-bottom:1px solid rgba(255,255,255,0.05);text-decoration:none;}
+.gnav-mlink.active{color:#fff;background:rgba(255,255,255,0.06);}
+#theme-toggle{width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.75);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;line-height:1;}
+#theme-toggle:hover{background:rgba(255,255,255,0.14);}
+body.light-mode #theme-toggle{border-color:rgba(0,0,0,0.15);background:rgba(0,0,0,0.06);color:rgba(0,0,0,0.6);}
+@media(max-width:700px){.gnav-links{display:none;}.gnav-burger{display:block;}}
+</style>
+<script>function toggleMenu(){document.getElementById('gnav-mobile').classList.toggle('open');}</script>
+<nav class="gnav" id="gnav">
+  <div class="gnav-inner">
+    <a class="gnav-logo" href="../index.html">⚗️ <span>VA Olympiad</span></a>
+    <div class="gnav-links"><a class="gnav-link" href="../index.html">Home</a><a class="gnav-link" href="../bridge.html">🌉 Bridge</a><a class="gnav-link" href="../tower.html">🏗️ Tower</a><a class="gnav-link" href="../lander.html">🚀 Lander</a><a class="gnav-link" href="../bungee.html">🥚 Bungee</a><a class="gnav-link" href="../ocean.html">🌊 Ocean</a><a class="gnav-link" href="../data.html">📊 Data</a><a class="gnav-link" href="../nervous.html">🧠 Nervous Sys</a><a class="gnav-link" href="../shock.html">⚡ Shock Value</a></div>
+    <button class="gnav-burger" onclick="toggleMenu()" aria-label="menu">☰</button>
+    <button id="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode" aria-label="Toggle theme">🌙</button>
+  </div>
+  <div class="gnav-mobile" id="gnav-mobile"><a class="gnav-mlink" href="../index.html">Home</a><a class="gnav-mlink" href="../bridge.html">🌉 Bridge</a><a class="gnav-mlink" href="../tower.html">🏗️ Tower</a><a class="gnav-mlink" href="../lander.html">🚀 Lander</a><a class="gnav-mlink" href="../bungee.html">🥚 Bungee</a><a class="gnav-mlink" href="../ocean.html">🌊 Ocean</a><a class="gnav-mlink" href="../data.html">📊 Data</a><a class="gnav-mlink" href="../nervous.html">🧠 Nervous Sys</a><a class="gnav-mlink" href="../shock.html">⚡ Shock Value</a></div>
+</nav>
+<div class="page">
+  <div class="header">
+    <div class="badge">Practice Test</div>
+    <h1>🥚 Bungee Egg Drop</h1>
+    <div class="sub">VA Division A · Grades 3–4 · <span>50 points</span></div>
+    <div class="prog-outer"><div class="prog-inner" id="prog"></div></div>
+    <div class="prog-meta"><span id="prog-label">0 answered</span><span id="prog-pct">0%</span></div>
+  </div>
+  <div class="name-box">
+    <label>NAME</label>
+    <input id="sname" type="text" placeholder="Enter your name..." autocomplete="off">
+  </div>
+  
+<div class="sec-hd" style="margin-top:20px;">
+  <h3>⭕ Part 1 — Multiple Choice</h3><span class="pts">15 pts · 1 pt each</span>
+</div>
+<div class="qcard" id="qc-b1">
+  <div class="q-num">Question 1</div>
+  <div class="q-text">What is the goal of the Bungee Egg Drop event?</div>
+  <div class="opts">
+    <label class="opt"><input type="radio" name="b1" value="A"><span class="dot"></span>Drop the egg as fast as possible to the ground</label>
+    <label class="opt"><input type="radio" name="b1" value="B"><span class="dot"></span>Stop the egg as close as possible to the Artificial Horizon without going past it</label>
+    <label class="opt"><input type="radio" name="b1" value="C"><span class="dot"></span>Build the longest rubber band chain</label>
+    <label class="opt"><input type="radio" name="b1" value="D"><span class="dot"></span>Make the egg bounce back to the starting height</label>
+  </div>
+</div>
+<div class="qcard" id="qc-b2">
+  <div class="q-num">Question 2</div>
+  <div class="q-text">Which formula represents Gravitational Potential Energy?</div>
+  <div class="opts">
+    <label class="opt"><input type="radio" name="b2" value="A"><span class="dot"></span>KE = ½mv²</label>
+    <label class="opt"><input type="radio" name="b2" value="B"><span class="dot"></span>F = ma</label>
+    <label class="opt"><input type="radio" name="b2" value="C"><span class="dot"></span>GPE = mgh</label>
+    <label class="opt"><input type="radio" name="b2" value="D"><span class="dot"></span>EPE = ½kx²</label>
+  </div>
+</div>
+<div class="qcard" id="qc-b3">
+  <div class="q-num">Question 3</div>
+  <div class="q-text">At the lowest point of the bungee drop (momentarily stopped), most energy is in the form of:</div>
+  <div class="opts">
+    <label class="opt"><input type="radio" name="b3" value="A"><span class="dot"></span>Gravitational Potential Energy</label>
+    <label class="opt"><input type="radio" name="b3" value="B"><span class="dot"></span>Kinetic Energy</label>
+    <label class="opt"><input type="radio" name="b3" value="C"><span class="dot"></span>Elastic Potential Energy</label>
+    <label class="opt"><input type="radio" name="b3" value="D"><span class="dot"></span>Heat</label>
+  </div>
+</div>
+<div class="qcard" id="qc-b4">
+  <div class="q-num">Question 4</div>
+  <div class="q-text">What does the Law of Conservation of Energy state?</div>
+  <div class="opts">
+    <label class="opt"><input type="radio" name="b4" value="A"><span class="dot"></span>Energy is created when an object falls</label>
+    <label class="opt"><input type="radio" name="b4" value="B"><span class="dot"></span>Energy is destroyed when an object stops</label>
+    <label class="opt"><input type="radio" name="b4" value="C"><span class="dot"></span>Energy cannot be created or destroyed, only transformed</label>
+    <label class="opt"><input type="radio" name="b4" value="D"><span class="dot"></span>Faster objects always have more energy</label>
+  </div>
+</div>
+<div class="qcard" id="qc-b5">
+  <div class="q-num">Question 5</div>
+  <div class="q-text">Connecting rubber bands end-to-end (in series) compared to side-by-side (in parallel) creates a bungee that:</div>
+  <div class="opts">
+    <label class="opt"><input type="radio" name="b5" value="A"><span class="dot"></span>Is shorter and stiffer</label>
+    <label class="opt"><input type="radio" name="b5" value="B"><span class="dot"></span>Is longer with more total stretch</label>
+    <label class="opt"><input type="radio" name="b5" value="C"><span class="dot"></span>Has less elastic potential energy</label>
+    <label class="opt"><input type="radio" name="b5" value="D"><span class="dot"></span>Cannot be cut or adjusted</label>
+  </div>
+</div>
+<div class="qcard" id="qc-b6">
+  <div class="q-num">Question 6</div>
+  <div class="q-text">The Artificial Horizon chart is marked from:</div>
+  <div class="opts">
+    <label class="opt"><input type="radio" name="b6" value="A"><span class="dot"></span>-200 cm to +200 cm</label>
+    <label class="opt"><input type="radio" name="b6" value="B"><span class="dot"></span>-100 cm to +100 cm</label>
+    <label class="opt"><input type="radio" name="b6" value="C"><span class="dot"></span>0 to 300 cm</label>
+    <label class="opt"><input type="radio" name="b6" value="D"><span class="dot"></span>-50 cm to +50 cm</label>
+  </div>
+</div>
+<div class="qcard" id="qc-b7">
+  <div class="q-num">Question 7</div>
+  <div class="q-text">If your egg passes BELOW the Artificial Horizon, your Drop Distance (DD) is recorded as:</div>
+  <div class="opts">
+    <label class="opt"><input type="radio" name="b7" value="A"><span class="dot"></span>0 cm</label>
+    <label class="opt"><input type="radio" name="b7" value="B"><span class="dot"></span>The actual distance below the line</label>
+    <label class="opt"><input type="radio" name="b7" value="C"><span class="dot"></span>200 cm (maximum penalty)</label>
+    <label class="opt"><input type="radio" name="b7" value="D"><span class="dot"></span>Your estimated distance</label>
+  </div>
+</div>
+<div class="qcard" id="qc-b8">
+  <div class="q-num">Question 8</div>
+  <div class="q-text">What type of safety goggles are required for the Bungee Egg Drop?</div>
+  <div class="opts">
+    <label class="opt"><input type="radio" name="b8" value="A"><span class="dot"></span>Any safety glasses labeled Z87+</label>
+    <label class="opt"><input type="radio" name="b8" value="B"><span class="dot"></span>ANSI Z87 D3 Splash/Droplet standard goggles (full seal)</label>
+    <label class="opt"><input type="radio" name="b8" value="C"><span class="dot"></span>Standard lab safety goggles</label>
+    <label class="opt"><input type="radio" name="b8" value="D"><span class="dot"></span>Regular eyeglasses are acceptable</label>
+  </div>
+</div>
+<div class="qcard" id="qc-b9">
+  <div class="q-num">Question 9</div>
+  <div class="q-text">How many drops are allowed in the competition?</div>
+  <div class="opts">
+    <label class="opt"><input type="radio" name="b9" value="A"><span class="dot"></span>One</label>
+    <label class="opt"><input type="radio" name="b9" value="B"><span class="dot"></span>Two</label>
+    <label class="opt"><input type="radio" name="b9" value="C"><span class="dot"></span>Three</label>
+    <label class="opt"><input type="radio" name="b9" value="D"><span class="dot"></span>As many as needed</label>
+  </div>
+</div>
+<div class="qcard" id="qc-b10">
+  <div class="q-num">Question 10</div>
+  <div class="q-text">Masking tape in this event may ONLY be used to:</div>
+  <div class="opts">
+    <label class="opt"><input type="radio" name="b10" value="A"><span class="dot"></span>Strengthen the plastic bag</label>
+    <label class="opt"><input type="radio" name="b10" value="B"><span class="dot"></span>Wrap around the egg for protection</label>
+    <label class="opt"><input type="radio" name="b10" value="C"><span class="dot"></span>Attach the bungee cord to the plastic bag</label>
+    <label class="opt"><input type="radio" name="b10" value="D"><span class="dot"></span>Hold rubber bands together</label>
+  </div>
+</div>
+<div class="qcard" id="qc-b11">
+  <div class="q-num">Question 11</div>
+  <div class="q-text">If your raw assessment score is 8 and the best score among all teams is 10, your Assessment Score is:</div>
+  <div class="opts">
+    <label class="opt"><input type="radio" name="b11" value="A"><span class="dot"></span>8 points</label>
+    <label class="opt"><input type="radio" name="b11" value="B"><span class="dot"></span>40 points</label>
+    <label class="opt"><input type="radio" name="b11" value="C"><span class="dot"></span>45 points</label>
+    <label class="opt"><input type="radio" name="b11" value="D"><span class="dot"></span>80 points</label>
+  </div>
+</div>
+<div class="qcard" id="qc-b12">
+  <div class="q-num">Question 12</div>
+  <div class="q-text">When does Kinetic Energy reach its maximum during a bungee drop?</div>
+  <div class="opts">
+    <label class="opt"><input type="radio" name="b12" value="A"><span class="dot"></span>At the very top, just before release</label>
+    <label class="opt"><input type="radio" name="b12" value="B"><span class="dot"></span>Just as the rubber bands become taut and start to stretch</label>
+    <label class="opt"><input type="radio" name="b12" value="C"><span class="dot"></span>At the lowest point</label>
+    <label class="opt"><input type="radio" name="b12" value="D"><span class="dot"></span>When the egg bounces back to the top</label>
+  </div>
+</div>
+<div class="qcard" id="qc-b13">
+  <div class="q-num">Question 13</div>
+  <div class="q-text">An egg is considered broken in this event when:</div>
+  <div class="opts">
+    <label class="opt"><input type="radio" name="b13" value="A"><span class="dot"></span>The shell has any visible cracks</label>
+    <label class="opt"><input type="radio" name="b13" value="B"><span class="dot"></span>The egg makes contact with the floor</label>
+    <label class="opt"><input type="radio" name="b13" value="C"><span class="dot"></span>There is visible leakage when the egg is rolled on a paper towel</label>
+    <label class="opt"><input type="radio" name="b13" value="D"><span class="dot"></span>The plastic bag tears</label>
+  </div>
+</div>
+<div class="qcard" id="qc-b14">
+  <div class="q-num">Question 14</div>
+  <div class="q-text">Tiebreaker 1 is won by the team with:</div>
+  <div class="opts">
+    <label class="opt"><input type="radio" name="b14" value="A"><span class="dot"></span>The longest rubber band chain</label>
+    <label class="opt"><input type="radio" name="b14" value="B"><span class="dot"></span>The fastest drop time</label>
+    <label class="opt"><input type="radio" name="b14" value="C"><span class="dot"></span>The smallest difference between estimated and actual drop distance</label>
+    <label class="opt"><input type="radio" name="b14" value="D"><span class="dot"></span>The highest assessment score</label>
+  </div>
+</div>
+<div class="qcard" id="qc-b15">
+  <div class="q-num">Question 15</div>
+  <div class="q-text">In the formula EPE = ½kx², what does "k" represent?</div>
+  <div class="opts">
+    <label class="opt"><input type="radio" name="b15" value="A"><span class="dot"></span>The mass of the egg</label>
+    <label class="opt"><input type="radio" name="b15" value="B"><span class="dot"></span>The drop height</label>
+    <label class="opt"><input type="radio" name="b15" value="C"><span class="dot"></span>The stiffness (spring constant) of the bungee cord</label>
+    <label class="opt"><input type="radio" name="b15" value="D"><span class="dot"></span>The velocity at impact</label>
+  </div>
+</div>
+<div class="sec-hd" style="margin-top:20px;">
+  <h3>✅ Part 2 — True or False</h3><span class="pts">8 pts · 1 pt each</span>
+</div>
+<div class="qcard" id="qc-tf16">
+  <div class="q-num">Question 16</div>
+  <div class="q-text">At the very start of the drop (before the egg moves), all energy is stored as Gravitational Potential Energy.</div>
+  <div class="tf">
+    <button class="tfbtn" onclick="doTF(16,'TRUE',this)">✅ TRUE</button>
+    <button class="tfbtn" onclick="doTF(16,'FALSE',this)">❌ FALSE</button>
+  </div>
+</div>
+<div class="qcard" id="qc-tf17">
+  <div class="q-num">Question 17</div>
+  <div class="q-text">You may use tape to strengthen the plastic bag around the egg.</div>
+  <div class="tf">
+    <button class="tfbtn" onclick="doTF(17,'TRUE',this)">✅ TRUE</button>
+    <button class="tfbtn" onclick="doTF(17,'FALSE',this)">❌ FALSE</button>
+  </div>
+</div>
+<div class="qcard" id="qc-tf18">
+  <div class="q-num">Question 18</div>
+  <div class="q-text">The Target Drop Distance (TDD) is announced by the Event Supervisor at the start of the construction phase.</div>
+  <div class="tf">
+    <button class="tfbtn" onclick="doTF(18,'TRUE',this)">✅ TRUE</button>
+    <button class="tfbtn" onclick="doTF(18,'FALSE',this)">❌ FALSE</button>
+  </div>
+</div>
+<div class="qcard" id="qc-tf19">
+  <div class="q-num">Question 19</div>
+  <div class="q-text">In a perfect (ideal) bungee system, the egg would bounce back to exactly its starting height.</div>
+  <div class="tf">
+    <button class="tfbtn" onclick="doTF(19,'TRUE',this)">✅ TRUE</button>
+    <button class="tfbtn" onclick="doTF(19,'FALSE',this)">❌ FALSE</button>
+  </div>
+</div>
+<div class="qcard" id="qc-tf20">
+  <div class="q-num">Question 20</div>
+  <div class="q-text">Adding more rubber bands in parallel makes the bungee cord longer.</div>
+  <div class="tf">
+    <button class="tfbtn" onclick="doTF(20,'TRUE',this)">✅ TRUE</button>
+    <button class="tfbtn" onclick="doTF(20,'FALSE',this)">❌ FALSE</button>
+  </div>
+</div>
+<div class="qcard" id="qc-tf21">
+  <div class="q-num">Question 21</div>
+  <div class="q-text">The written assessment is answered before the build phase begins.</div>
+  <div class="tf">
+    <button class="tfbtn" onclick="doTF(21,'TRUE',this)">✅ TRUE</button>
+    <button class="tfbtn" onclick="doTF(21,'FALSE',this)">❌ FALSE</button>
+  </div>
+</div>
+<div class="qcard" id="qc-tf22">
+  <div class="q-num">Question 22</div>
+  <div class="q-text">Cutting a rubber band shorter makes it effectively stiffer.</div>
+  <div class="tf">
+    <button class="tfbtn" onclick="doTF(22,'TRUE',this)">✅ TRUE</button>
+    <button class="tfbtn" onclick="doTF(22,'FALSE',this)">❌ FALSE</button>
+  </div>
+</div>
+<div class="qcard" id="qc-tf23">
+  <div class="q-num">Question 23</div>
+  <div class="q-text">Both drop scores are averaged together to determine your final time score.</div>
+  <div class="tf">
+    <button class="tfbtn" onclick="doTF(23,'TRUE',this)">✅ TRUE</button>
+    <button class="tfbtn" onclick="doTF(23,'FALSE',this)">❌ FALSE</button>
+  </div>
+</div>
+<div class="sec-hd" style="margin-top:20px;">
+  <h3>📝 Part 3 — Fill in the Blank</h3><span class="pts">7 pts · 1 pt each</span>
+</div>
+<div class="qcard" id="qc-bfill1">
+  <div class="q-num">Question 24</div>
+  <div class="fill-wrap">Energy stored in a stretched rubber band is called<input class="blank" id="bfill1" placeholder="____________"></div>
+</div>
+<div class="qcard" id="qc-bfill2">
+  <div class="q-num">Question 25</div>
+  <div class="fill-wrap">GPE stands for<input class="blank" id="bfill2" placeholder="____________"></div>
+</div>
+<div class="qcard" id="qc-bfill3">
+  <div class="q-num">Question 26</div>
+  <div class="fill-wrap">The formula for Kinetic Energy is KE =<input class="blank" id="bfill3" placeholder="____________"></div>
+</div>
+<div class="qcard" id="qc-bfill4">
+  <div class="q-num">Question 27</div>
+  <div class="fill-wrap">The minimum Target Drop Distance (TDD) is<input class="blank" id="bfill4" placeholder="____________"></div>
+</div>
+<div class="qcard" id="qc-bfill5">
+  <div class="q-num">Question 28</div>
+  <div class="fill-wrap">The Final Score formula is: FS = Assessment Score +<input class="blank" id="bfill5" placeholder="____________"></div>
+</div>
+<div class="qcard" id="qc-bfill6">
+  <div class="q-num">Question 29</div>
+  <div class="fill-wrap">Rubber band size #19 is the __________ and stiffest.<input class="blank" id="bfill6" placeholder="____________"></div>
+</div>
+<div class="qcard" id="qc-bfill7">
+  <div class="q-num">Question 30</div>
+  <div class="fill-wrap">A Tier 2 violation reduces a team's score by<input class="blank" id="bfill7" placeholder="____________"></div>
+</div>
+<div class="sec-hd" style="margin-top:20px;">
+  <h3>✏️ Part 4 — Short Answer</h3><span class="pts">20 pts · 5 pts each</span>
+</div>
+<div class="qcard" id="qc-sa1">
+  <div class="q-num">Question 31 (5 pts pts)</div>
+  <div class="q-text">Describe all the energy transformations that occur during a complete bungee drop — from the moment of release at the top to the moment the egg stops at its lowest point. Name the type of energy at each stage.</div>
+  <textarea class="sa" id="sa1" placeholder="Write your answer here..."></textarea>
+</div>
+<div class="qcard" id="qc-sa2">
+  <div class="q-num">Question 32 (5 pts pts)</div>
+  <div class="q-text">Your first drop stops 45 cm above the Artificial Horizon. What adjustment should you make to your bungee cord before the second drop, and why? Use what you know about rubber band properties.</div>
+  <textarea class="sa" id="sa2" placeholder="Write your answer here..."></textarea>
+</div>
+<div class="qcard" id="qc-sa3">
+  <div class="q-num">Question 33 (5 pts pts)</div>
+  <div class="q-text">Why is your estimated drop distance important beyond just providing a number? Explain how it affects your final score.</div>
+  <textarea class="sa" id="sa3" placeholder="Write your answer here..."></textarea>
+</div>
+<div class="qcard" id="qc-sa4">
+  <div class="q-num">Question 34 (5 pts pts)</div>
+  <div class="q-text">Explain why the egg does not bounce back to its exact starting height in a real bungee drop, even though the Law of Conservation of Energy says energy cannot be destroyed.</div>
+  <textarea class="sa" id="sa4" placeholder="Write your answer here..."></textarea>
+</div>
+  <div class="sub-wrap"><button class="sub-btn" onclick="submit()">Submit Answers</button></div>
+</div>
+<div class="page">
+  <div id="score-card">
+    <h2>Test Complete!</h2>
+    <div id="score-num">--</div>
+    <div id="score-pct"></div>
+    <div id="score-emoji"></div>
+    <div id="score-msg"></div>
+    <div id="score-name" style="margin-top:8px;font-size:.85rem;color:rgba(192,204,224,.6);"></div>
+    <div id="score-sa-note" style="margin-top:6px;font-size:.82rem;color:#E05C40;"></div>
+    <button class="retry-btn" onclick="location.reload()">Try Again</button>
+  </div>
+</div>
+<script>
+const MC={"b1":"B","b2":"C","b3":"C","b4":"C","b5":"B","b6":"B","b7":"C","b8":"B","b9":"B","b10":"C","b11":"B","b12":"B","b13":"C","b14":"C","b15":"C"};
+const TF={"16":"TRUE","17":"FALSE","18":"TRUE","19":"TRUE","20":"FALSE","21":"FALSE","22":"TRUE","23":"FALSE"};
+const FILL={"bfill1":["elastic potential","epe","elastic"],"bfill2":["gravitational potential energy","gravitational potential"],"bfill3":["½mv²","1/2mv2","half mv squared","0.5mv2"],"bfill4":["200","200 cm","200cm"],"bfill5":["max(ds1, ds2)","max drop score","best drop score","max(drop score"],"bfill6":["shortest","short"],"bfill7":["20%","20 percent","20"]};
+const TOTAL_AUTO=50;
+const tfSel={};
+let totalQ=Object.keys(MC).length+Object.keys(TF).length+Object.keys(FILL).length;
+const saIds=[];
+document.querySelectorAll('.sa').forEach(el=>saIds.push(el.id));
+totalQ+=saIds.length;
+
+function countAnswered(){
+  let n=0;
+  Object.keys(MC).forEach(nm=>{if(document.querySelector('input[name="'+nm+'"]:checked'))n++;});
+  Object.keys(TF).forEach(k=>{if(tfSel[k])n++;});
+  Object.keys(FILL).forEach(id=>{if(document.getElementById(id)?.value.trim())n++;});
+  saIds.forEach(id=>{if(document.getElementById(id)?.value.trim().length>4)n++;});
+  return n;
+}
+function updateProg(){
+  const n=countAnswered();const pct=Math.round(n/totalQ*100);
+  document.getElementById('prog').style.width=pct+'%';
+  document.getElementById('prog-label').textContent=n+' of '+totalQ+' answered';
+  document.getElementById('prog-pct').textContent=pct+'%';
+}
+document.querySelectorAll('.opt input[type="radio"]').forEach(inp=>{
+  inp.addEventListener('change',function(){
+    document.querySelectorAll('input[name="'+this.name+'"]').forEach(r=>r.closest('.opt').classList.remove('sel'));
+    this.closest('.opt').classList.add('sel');updateProg();
+  });
+});
+document.querySelectorAll('.blank,.sa').forEach(el=>el.addEventListener('input',updateProg));
+function doTF(qn,val,btn){
+  document.getElementById('qc-tf'+qn).querySelectorAll('.tfbtn').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');tfSel[qn]=val;updateProg();
+}
+function submit(){
+  let score=0;
+  Object.entries(MC).forEach(([nm,correct])=>{
+    const qn=nm;const card=document.getElementById('qc-'+qn);
+    const sel=document.querySelector('input[name="'+nm+'"]:checked');
+    document.querySelectorAll('input[name="'+nm+'"]').forEach(r=>{if(r.value===correct)r.closest('.opt').classList.add('c-ok');});
+    if(sel){if(sel.value===correct){score++;card.classList.add('correct');}else{sel.closest('.opt').classList.add('c-no');card.classList.add('wrong');}}
+    else card.classList.add('wrong');
+    document.querySelectorAll('input[name="'+nm+'"]').forEach(r=>r.disabled=true);
+  });
+  Object.entries(TF).forEach(([k,correct])=>{
+    const card=document.getElementById('qc-tf'+k);const given=tfSel[parseInt(k)];
+    card.querySelectorAll('.tfbtn').forEach(btn=>{
+      const v=btn.textContent.includes('TRUE')?'TRUE':'FALSE';
+      if(v===correct)btn.classList.add('c-ok');
+      if(v===given&&given!==correct)btn.classList.add('c-no');
+      btn.disabled=true;btn.style.cursor='default';
+    });
+    if(given===correct){score++;card.classList.add('correct');}else card.classList.add('wrong');
+  });
+  Object.entries(FILL).forEach(([id,accepts])=>{
+    const el=document.getElementById(id);const card=document.getElementById('qc-'+id);
+    const val=el.value.trim().toLowerCase();
+    if(accepts.some(a=>val.includes(a.toLowerCase()))){score++;el.classList.add('c-ok');card.classList.add('correct');}
+    else{el.classList.add('c-no');card.classList.add('wrong');}
+    el.readOnly=true;
+  });
+  let saScore=0;
+  saIds.forEach((id,i)=>{
+    const el=document.getElementById(id);
+    const card=document.getElementById('qc-sa'+(i+1));
+    if(el.value.trim().length>10){saScore+=5;if(card)card.classList.add('correct');}
+    else if(card)card.classList.add('wrong');
+    el.readOnly=true;
+  });
+  score+=saScore;
+  const name=document.getElementById('sname').value.trim()||'Student';
+  const pct=Math.round(score/TOTAL_AUTO*100);
+  let emoji,msg;
+  if(pct>=90){emoji='🏆🌟';msg='Outstanding performance!';}
+  else if(pct>=75){emoji='🌟👍';msg='Great work — keep it up!';}
+  else if(pct>=60){emoji='💪📚';msg='Good effort — review the weak areas!';}
+  else{emoji='📖🔄';msg='Review the study slides and try again!';}
+  document.getElementById('score-num').textContent=score+'/'+TOTAL_AUTO;
+  document.getElementById('score-pct').textContent=pct+'% correct';
+  document.getElementById('score-emoji').textContent=emoji;
+  document.getElementById('score-msg').textContent=msg;
+  document.getElementById('score-name').textContent=name+"'s result";
+  if(saIds.length>0)document.getElementById('score-sa-note').textContent='Short answers: auto-scored for completion ('+saScore+'/'+(saIds.length*5)+' pts) — have a teacher review for full credit.';
+  document.querySelector('.sub-btn').style.display='none';
+  document.getElementById('score-card').style.display='block';
+  document.getElementById('score-card').scrollIntoView({behavior:'smooth',block:'center'});
+}
+</script>
+
+<script id="theme-logic">
+(function() {
+  function applyTheme(mode) {
+    const btn = document.getElementById('theme-toggle');
+    if (mode === 'light') {
+      document.body.classList.add('light-mode');
+      if (btn) btn.textContent = '🌙';
+    } else {
+      document.body.classList.remove('light-mode');
+      if (btn) btn.textContent = '☀️';
+    }
+  }
+  // Apply on load
+  const saved = localStorage.getItem('va-theme') || 'dark';
+  applyTheme(saved);
+  
+  window.toggleTheme = function() {
+    const isLight = document.body.classList.contains('light-mode');
+    const newMode = isLight ? 'dark' : 'light';
+    localStorage.setItem('va-theme', newMode);
+    applyTheme(newMode);
+  };
+})();
+</script>
+</body>
+</html>
