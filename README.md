@@ -8,7 +8,7 @@ A self-contained student study portal for the **2025–2026 Virginia Association
 
 ## What's Included
 
-### Build Events (4)
+### Build Events (6)
 
 | Event | Page | Highlights |
 |---|---|---|
@@ -16,6 +16,8 @@ A self-contained student study portal for the **2025–2026 Virginia Association
 | 🗼 Tower Building | `tower.html` | Tower types, stability concepts, checklist, practice test |
 | 🚀 Astronaut Lander | `lander.html` | Forces, microgravity, parachute physics, practice test |
 | 🥚 Bungee Egg Drop | `bungee.html` | GPE/KE/EPE, rubber band design, scoring, practice test |
+| 🚗 Gravity Vehicle | `gravity.html` | Six simple machines, gravity & friction, K'nex build strategy, practice test |
+| 🏰 Storm the Castle | `castle.html` | Catapult history & types, Trebuchet/Ballista/Onager/Mangonel, build strategy, practice test |
 
 ### Written Events (4)
 
@@ -46,11 +48,13 @@ A self-contained student study portal for the **2025–2026 Virginia Association
 
 ```
 /
-├── index.html                          # Home page — event cards + about section
+├── index.html                          # Home page — dropdown nav + event cards
 ├── bridge.html                         # Bridge Building
 ├── tower.html                          # Tower Building
 ├── lander.html                         # Astronaut Lander
 ├── bungee.html                         # Bungee Egg Drop
+├── gravity.html                        # Gravity Vehicle
+├── castle.html                         # Storm the Castle
 ├── ocean.html                          # Ocean Science
 ├── data.html                           # Data Investigations
 ├── nervous.html                        # Anatomy — Nervous System
@@ -97,6 +101,8 @@ A self-contained student study portal for the **2025–2026 Virginia Association
 | Tower Building | ANSI Z87+ impact glasses |
 | Astronaut Lander | ANSI Z87+ impact glasses |
 | Bungee Egg Drop | ANSI Z87 **D3** splash/droplet goggles (full seal, "D3" on label) |
+| Gravity Vehicle | ANSI Z87+ impact glasses |
+| Storm the Castle | ANSI Z87+ impact glasses |
 | Ocean, Data, Nervous System, Shock Value | None required |
 
 Safety gear is **not provided** at events. Teams must bring their own. Competing without proper eyewear results in a no-show score.
