@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>🏰 Storm the Castle — VA Division A</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Exo+2:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--acc:#E05C40;--bg:#150803;--panel:#1E0D05;}
+*{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:#C0CCE0;min-height:100vh;overflow-x:hidden;}
+a{text-decoration:none;}
+body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(224,92,64,.05)0%,transparent 50%);pointer-events:none;z-index:0;}
+.gnav{position:sticky;top:0;z-index:300;background:rgba(8,8,24,.97);border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(12px);}
+.gnav-inner{display:flex;align-items:center;max-width:1100px;margin:0 auto;padding:0 20px;height:54px;gap:5px;}
+.gnav-logo{font-size:13px;font-weight:700;color:rgba(255,255,255,.9);flex-shrink:0;padding:0 10px 0 0;border-right:1px solid rgba(255,255,255,.1);margin-right:4px;text-decoration:none;}
+.gnav-logo span{color:rgba(255,255,255,.5);}
+.gnav-links{display:flex;gap:2px;flex:1;overflow-x:auto;scrollbar-width:none;}
+.gnav-links::-webkit-scrollbar{display:none;}
+.gnav-link{padding:4px 8px;border-radius:6px;font-size:11.5px;font-weight:600;color:rgba(200,216,232,.6);white-space:nowrap;text-decoration:none;transition:all .15s;}
+.gnav-link:hover{background:rgba(255,255,255,.07);color:#fff;}
+.gnav-link.active{background:rgba(255,255,255,.1);color:#fff;}
+.gnav-burger{display:none;background:none;border:none;color:rgba(255,255,255,.7);font-size:20px;cursor:pointer;padding:4px;}
+.gnav-mobile{display:none;flex-direction:column;border-top:1px solid rgba(255,255,255,.08);}
+.gnav-mobile.open{display:flex;}
+.gnav-mlink{padding:12px 20px;font-size:13px;font-weight:600;color:rgba(200,216,232,.7);border-bottom:1px solid rgba(255,255,255,.05);text-decoration:none;}
+.gnav-mlink.active{color:#fff;background:rgba(255,255,255,.06);}
+#theme-toggle{width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:rgba(255,255,255,.75);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;}
+#theme-toggle:hover{background:rgba(255,255,255,.14);}
+body.light-mode #theme-toggle{border-color:rgba(0,0,0,.15)!important;background:rgba(0,0,0,.06)!important;color:rgba(0,0,0,.6)!important;}
+@media(max-width:800px){.gnav-links{display:none;}.gnav-burger{display:block;}}
+.page{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 24px 80px;}
+.hero{padding:52px 0 36px;}
+.hero-ey{display:inline-block;background:rgba(224,92,64,.12);border:1px solid rgba(224,92,64,.3);color:var(--acc);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:4px 14px;border-radius:999px;margin-bottom:14px;}
+.hero h1{font-family:'Exo 2',sans-serif;font-size:clamp(2.2rem,5vw,3.4rem);font-weight:800;color:#fff;line-height:1.08;margin-bottom:10px;}
+.hero h1 span{color:var(--acc);}
+.hero-sub{font-size:1rem;color:rgba(192,204,224,.7);max-width:620px;line-height:1.7;margin-bottom:20px;}
+.hbadges{display:flex;gap:8px;flex-wrap:wrap;}
+.hb{padding:4px 14px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(224,92,64,.12);border:1px solid rgba(224,92,64,.3);color:var(--acc);}
+.hb-m{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);color:rgba(192,204,224,.5);}
+.tab-nav{display:flex;gap:0;border-bottom:1px solid rgba(255,255,255,.1);margin:0 0 36px;overflow-x:auto;scrollbar-width:none;}
+.tab-nav::-webkit-scrollbar{display:none;}
+.tab-btn{padding:12px 18px;font-size:13px;font-weight:700;color:rgba(192,204,224,.5);background:none;border:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s;font-family:'Space Grotesk',sans-serif;}
+.tab-btn:hover{color:rgba(192,204,224,.85);}
+.tab-btn.active{color:var(--acc);border-bottom-color:var(--acc);}
+.tab-panel{display:none;animation:fi .2s ease;}
+.tab-panel.active{display:block;}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.sec-title{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;color:#fff;margin-bottom:4px;}
+.sec-sub{font-size:.82rem;color:rgba(192,204,224,.4);letter-spacing:.05em;text-transform:uppercase;margin-bottom:20px;}
+.divider{height:1px;background:linear-gradient(90deg,rgba(224,92,64,.3),transparent);margin:28px 0;}
+.callout{border-radius:12px;padding:16px 20px;margin-bottom:16px;border-left:4px solid;}
+.c-a{background:rgba(224,92,64,.07);border-color:var(--acc);}.c-a h4{color:var(--acc);}
+.c-g{background:rgba(123,198,126,.07);border-color:#7BC67E;}.c-g h4{color:#7BC67E;}
+.c-r{background:rgba(224,92,64,.07);border-color:#E05C40;}.c-r h4{color:#E05C40;}
+.c-y{background:rgba(244,196,48,.07);border-color:#F4C430;}.c-y h4{color:#F4C430;}
+.callout h4{font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;}
+.callout p,.callout li{font-size:.9rem;line-height:1.7;color:rgba(192,204,224,.8);}
+.callout ul,.callout ol{padding-left:18px;display:flex;flex-direction:column;gap:5px;}
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:10px;margin-bottom:24px;}
+.stat-box{background:var(--panel);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:13px 10px;text-align:center;}
+.stat-val{font-family:'Exo 2',sans-serif;font-size:1.5rem;font-weight:800;color:var(--acc);line-height:1;}
+.stat-label{font-size:10.5px;color:rgba(192,204,224,.5);margin-top:4px;line-height:1.3;}
+.stbl{width:100%;border-collapse:collapse;margin-bottom:16px;}
+.stbl th{background:rgba(224,92,64,.18);color:var(--acc);font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:9px 13px;text-align:left;border:1px solid rgba(224,92,64,.2);}
+.stbl td{padding:9px 13px;border:1px solid rgba(255,255,255,.07);font-size:.88rem;color:rgba(192,204,224,.8);vertical-align:top;line-height:1.55;}
+.stbl tr:nth-child(even) td{background:rgba(255,255,255,.025);}
+.stbl td:first-child{font-weight:700;color:#fff;width:30%;}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:16px;}
+.card{background:var(--panel);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:16px 18px;}
+.card h4{font-size:.92rem;font-weight:700;color:var(--acc);margin-bottom:8px;}
+.card p,.card li{font-size:.86rem;color:rgba(192,204,224,.7);line-height:1.6;}
+.card ul{padding-left:16px;display:flex;flex-direction:column;gap:4px;}
+.steps{display:flex;flex-direction:column;gap:14px;}
+.step{display:flex;gap:16px;background:var(--panel);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:17px 20px;}
+.step-num{width:36px;height:36px;flex-shrink:0;border-radius:50%;background:var(--acc);display:flex;align-items:center;justify-content:center;font-family:'Exo 2',sans-serif;font-size:1rem;font-weight:800;color:#000;}
+.step-body h4{font-size:.97rem;font-weight:700;color:#fff;margin-bottom:3px;}
+.step-time{font-size:.78rem;color:var(--acc);font-weight:600;margin-bottom:5px;}
+.step-body p{font-size:.88rem;color:rgba(192,204,224,.7);line-height:1.6;}
+.step-body ul{padding-left:18px;margin-top:6px;display:flex;flex-direction:column;gap:3px;}
+.step-body li{font-size:.86rem;color:rgba(192,204,224,.65);line-height:1.5;}
+.tips-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;}
+.tip-card{background:var(--panel);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:18px;position:relative;overflow:hidden;}
+.tip-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc);}
+.tip-icon{font-size:1.5rem;margin-bottom:8px;display:block;}
+.tip-card h4{font-size:.92rem;font-weight:700;color:#fff;margin-bottom:6px;}
+.tip-card p{font-size:.85rem;color:rgba(192,204,224,.6);line-height:1.6;}
+.mat-list{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
+.mat-item{display:flex;align-items:flex-start;gap:14px;background:var(--panel);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:13px 16px;}
+.mat-emoji{font-size:1.5rem;flex-shrink:0;}
+.mat-body h4{font-size:.92rem;font-weight:700;color:#fff;margin-bottom:2px;}
+.mat-body p{font-size:.83rem;color:rgba(192,204,224,.6);line-height:1.5;}
+.mat-qty{margin-left:auto;flex-shrink:0;font-size:.82rem;font-weight:700;padding:3px 10px;border-radius:999px;background:rgba(224,92,64,.14);color:var(--acc);border:1px solid rgba(224,92,64,.3);white-space:nowrap;}
+.slides-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:20px;}
+.slide-card{background:var(--panel);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:10px;transition:all .2s;text-decoration:none;}
+.slide-card:hover{border-color:rgba(224,92,64,.4);}
+.slide-card-icon{font-size:2rem;}
+.slide-card h4{font-size:.95rem;font-weight:700;color:#fff;}
+.slide-card p{font-size:.83rem;color:rgba(192,204,224,.55);line-height:1.55;flex:1;}
+.slide-card-cta{font-size:.83rem;font-weight:700;color:var(--acc);}
+.shop-intro{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px 18px;margin-bottom:16px;font-size:.88rem;color:rgba(192,204,224,.65);line-height:1.65;}
+.shop-intro strong{color:#fff;}
+.safety-warn{background:rgba(244,196,48,.07);border:1px solid rgba(244,196,48,.25);border-radius:12px;padding:14px 18px;margin-bottom:16px;}
+.safety-warn h4{font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#F4C430;margin-bottom:8px;}
+.safety-warn p{font-size:.88rem;color:rgba(192,204,224,.75);line-height:1.6;}
+.shop-tbl{width:100%;border-collapse:collapse;margin-bottom:10px;}
+.shop-tbl th{background:rgba(255,255,255,.05);color:rgba(192,204,224,.5);font-size:.73rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:8px 12px;text-align:left;border-bottom:1px solid rgba(255,255,255,.08);}
+.shop-tbl td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.05);font-size:.87rem;color:rgba(192,204,224,.8);vertical-align:top;line-height:1.5;}
+.shop-tbl tr:last-child td{border-bottom:none;}
+.shop-tbl tr.done td{opacity:.4;}.shop-tbl tr.done .si-name{text-decoration:line-through;}
+.si-name{font-weight:600;color:#fff;display:block;margin-bottom:2px;}
+.si-note{font-size:.78rem;color:rgba(192,204,224,.5);}
+.si-dept{font-size:.79rem;color:rgba(192,204,224,.45);}
+.si-price{font-weight:700;color:var(--acc);white-space:nowrap;}
+.cb{width:16px;height:16px;border:1.5px solid rgba(255,255,255,.2);border-radius:3px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;}
+.cb.checked{background:var(--acc);border-color:var(--acc);}
+.cb.checked::after{content:'✓';font-size:10px;color:#000;font-weight:700;}
+.shop-total{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px 16px;margin-top:12px;}
+.shop-total-label{font-size:.85rem;color:rgba(192,204,224,.55);}
+.shop-total-val{font-family:'Exo 2',sans-serif;font-size:1.4rem;font-weight:800;color:var(--acc);}
+.shop-prog{height:3px;background:rgba(255,255,255,.08);border-radius:2px;margin-top:8px;}
+.shop-prog-fill{height:3px;background:#7BC67E;border-radius:2px;transition:width .3s;}
+.shop-prog-label{font-size:.75rem;color:rgba(192,204,224,.35);margin-top:4px;}
+.checklist{display:flex;flex-direction:column;gap:8px;}
+.chk-item{display:flex;align-items:flex-start;gap:12px;background:var(--panel);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:12px 14px;}
+.chk-box{width:20px;height:20px;flex-shrink:0;border:1.5px solid rgba(255,255,255,.2);border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;margin-top:1px;}
+.chk-box.chk-done{background:var(--acc);border-color:var(--acc);}
+.chk-box.chk-done::after{content:'✓';font-size:11px;color:#000;font-weight:700;}
+.chk-text{font-size:.9rem;color:rgba(192,204,224,.8);line-height:1.5;}
+.chk-text strong{color:#fff;}
+.formula{background:rgba(0,0,0,.3);border:1px solid rgba(224,92,64,.2);border-radius:10px;padding:14px 18px;font-family:monospace;font-size:1rem;color:#F4C430;margin:10px 0 16px;line-height:1.9;}
+.sec-hd{background:rgba(224,92,64,.1);border:1px solid rgba(224,92,64,.2);border-top:none;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;}
+.sec-hd h3{font-family:'Exo 2',sans-serif;font-size:.92rem;font-weight:800;color:#fff;}
+.pts{font-size:.72rem;font-weight:700;color:var(--acc);background:rgba(224,92,64,.1);border:1px solid rgba(224,92,64,.25);padding:2px 9px;border-radius:999px;}
+.test-header{background:rgba(255,255,255,.04);border:1px solid rgba(224,92,64,.2);border-top:4px solid var(--acc);border-radius:14px 14px 0 0;padding:24px 28px 18px;margin-top:4px;}
+.test-header h2{font-family:'Exo 2',sans-serif;font-size:1.6rem;font-weight:800;color:#fff;margin-bottom:6px;}
+.test-header .sub{font-size:.9rem;color:rgba(192,204,224,.65);margin-bottom:14px;}
+.prog-bar{background:rgba(255,255,255,.08);border-radius:999px;height:6px;overflow:hidden;}
+.prog-fill{height:100%;background:var(--acc);border-radius:999px;width:0%;transition:width .4s;}
+.prog-meta{display:flex;justify-content:space-between;font-size:.72rem;color:rgba(192,204,224,.45);margin-top:4px;}
+.name-row{background:rgba(255,255,255,.03);border:1px solid rgba(224,92,64,.15);border-top:none;padding:12px 24px;}
+.name-row label{font-size:.72rem;font-weight:700;color:var(--acc);letter-spacing:.08em;display:block;margin-bottom:4px;}
+.name-row input{background:transparent;border:none;border-bottom:2px solid rgba(224,92,64,.3);width:100%;padding:5px 0;font-family:'Space Grotesk',sans-serif;font-size:.98rem;color:#fff;outline:none;}
+.qcard{background:var(--panel);border:1px solid rgba(255,255,255,.07);border-top:none;padding:17px 22px;transition:background .2s;}
+.qcard.correct{background:rgba(46,204,113,.06);border-left:4px solid #2ECC71;}
+.qcard.wrong{background:rgba(231,76,60,.06);border-left:4px solid #E74C3C;}
+.q-num{font-size:.68rem;font-weight:700;color:var(--acc);letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px;}
+.q-text{font-size:.97rem;font-weight:600;color:#fff;margin-bottom:12px;line-height:1.5;}
+.opts{display:flex;flex-direction:column;gap:6px;}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:9px 13px;border:1.5px solid rgba(255,255,255,.1);border-radius:9px;cursor:pointer;font-size:.9rem;color:rgba(192,204,224,.8);background:rgba(255,255,255,.02);transition:all .15s;user-select:none;line-height:1.4;}
+.opt:hover{border-color:var(--acc);background:rgba(224,92,64,.07);}
+.opt.sel{border-color:var(--acc);background:rgba(224,92,64,.12);color:#fff;}
+.opt.c-ok{border-color:#2ECC71!important;background:rgba(46,204,113,.1)!important;color:#7fffc4!important;}
+.opt.c-no{border-color:#E74C3C!important;background:rgba(231,76,60,.1)!important;color:#ffaaaa!important;}
+.opt input{display:none;}
+.dot{width:16px;height:16px;flex-shrink:0;border-radius:50%;border:2px solid rgba(255,255,255,.2);margin-top:2px;transition:all .15s;}
+.sel .dot{background:var(--acc);border-color:var(--acc);}
+.c-ok .dot{background:#2ECC71;border-color:#2ECC71;}
+.c-no .dot{background:#E74C3C;border-color:#E74C3C;}
+.tf{display:flex;gap:9px;}
+.tfbtn{flex:1;padding:10px;border:1.5px solid rgba(255,255,255,.12);border-radius:9px;background:rgba(255,255,255,.02);color:rgba(192,204,224,.7);font-family:'Space Grotesk',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .15s;}
+.tfbtn:hover{border-color:var(--acc);color:#fff;}
+.tfbtn.sel{border-color:var(--acc);background:rgba(224,92,64,.14);color:var(--acc);}
+.tfbtn.c-ok{border-color:#2ECC71!important;background:rgba(46,204,113,.1)!important;color:#7fffc4!important;}
+.tfbtn.c-no{border-color:#E74C3C!important;background:rgba(231,76,60,.1)!important;color:#ffaaaa!important;}
+.fill-wrap{font-size:.95rem;font-weight:500;color:#fff;display:flex;align-items:baseline;flex-wrap:wrap;gap:5px 6px;line-height:2.1;}
+.blank{border:none;border-bottom:2px solid rgba(224,92,64,.4);background:transparent;color:var(--acc);font-family:'Space Grotesk',sans-serif;font-size:.95rem;font-weight:700;width:150px;padding:3px 4px;outline:none;}
+.blank.c-ok{border-bottom-color:#2ECC71;color:#2ECC71;}
+.blank.c-no{border-bottom-color:#E74C3C;color:#E74C3C;}
+.sub-wrap{margin:20px 0 8px;text-align:center;}
+.sub-btn{background:var(--acc);color:#040810;border:none;padding:13px 44px;border-radius:50px;font-family:'Exo 2',sans-serif;font-size:1.05rem;font-weight:800;cursor:pointer;transition:all .2s;}
+.sub-btn:hover{transform:translateY(-2px);}
+#score-card{display:none;background:rgba(255,255,255,.04);border:1px solid rgba(224,92,64,.25);border-top:4px solid var(--acc);border-radius:14px;padding:34px 28px;text-align:center;margin:18px 0;animation:fi .4s ease;}
+#score-card h2{font-family:'Exo 2',sans-serif;font-size:1.4rem;color:#fff;}
+#score-num{font-family:'Exo 2',sans-serif;font-size:4.5rem;font-weight:800;color:var(--acc);line-height:1;margin:10px 0 5px;}
+#score-pct,#score-msg,#score-name{font-size:.9rem;color:rgba(192,204,224,.65);margin-top:4px;}
+.retry-btn{margin-top:18px;background:transparent;color:var(--acc);border:1.5px solid var(--acc);padding:8px 28px;border-radius:50px;font-family:'Exo 2',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;}
+/* LIGHT MODE */
+body.light-mode{background:#EEF2F7!important;color:#1A2A3A!important;}
+body.light-mode .gnav{background:rgba(255,255,255,.97)!important;border-bottom-color:rgba(0,0,0,.1)!important;}
+body.light-mode .gnav-logo,body.light-mode .gnav-link,body.light-mode .gnav-mlink{color:#0D1F30!important;}
+body.light-mode .gnav-link.active,body.light-mode .gnav-mlink.active{background:rgba(0,0,0,.08)!important;}
+body.light-mode .gnav-mobile{background:#fff!important;}
+body.light-mode h1,body.light-mode h2,body.light-mode h3,body.light-mode h4,
+body.light-mode .sec-title,.hero h1,.q-text,.step-body h4,.tip-card h4,.mat-body h4,
+body.light-mode .chk-text strong{color:#0D1F30!important;}
+body.light-mode .step{background:#fff!important;border-color:rgba(0,0,0,.09)!important;}
+body.light-mode .tip-card{background:#fff!important;border-color:rgba(0,0,0,.09)!important;}
+body.light-mode .mat-item{background:#fff!important;border-color:rgba(0,0,0,.09)!important;}
+body.light-mode .card{background:#fff!important;border-color:rgba(0,0,0,.09)!important;}
+body.light-mode .qcard{background:#fff!important;border-color:rgba(0,0,0,.08)!important;}
+body.light-mode .stat-box{background:#fff!important;border-color:rgba(0,0,0,.09)!important;}
+body.light-mode .chk-item{background:#fff!important;border-color:rgba(0,0,0,.09)!important;}
+body.light-mode .slide-card{background:#fff!important;border-color:rgba(0,0,0,.09)!important;}
+body.light-mode .step-body p,body.light-mode .step-body li,body.light-mode .tip-card p,
+body.light-mode .mat-body p,body.light-mode .card p,body.light-mode .card li,
+body.light-mode .callout p,body.light-mode .callout li,body.light-mode .hero-sub,
+body.light-mode .chk-text,body.light-mode .sec-sub,body.light-mode .shop-intro,
+body.light-mode .stbl td,body.light-mode .shop-tbl td,
+body.light-mode .prog-meta,body.light-mode .shop-prog-label,
+body.light-mode .si-note,body.light-mode .si-dept{color:rgba(13,31,48,.72)!important;}
+body.light-mode .stbl td:first-child,body.light-mode .si-name{color:#0D1F30!important;}
+body.light-mode .callout{background:rgba(0,0,0,.04)!important;}
+body.light-mode .tab-nav{border-bottom-color:rgba(0,0,0,.1)!important;}
+body.light-mode .tab-btn{color:rgba(13,31,48,.45)!important;}
+body.light-mode .tab-btn.active{color:var(--acc)!important;}
+body.light-mode .opt{background:#f8fafb!important;border-color:rgba(0,0,0,.1)!important;color:rgba(13,31,48,.72)!important;}
+body.light-mode .tfbtn{background:#f8fafb!important;border-color:rgba(0,0,0,.1)!important;color:rgba(13,31,48,.65)!important;}
+body.light-mode .fill-wrap{color:#0D1F30!important;}
+body.light-mode .q-text{color:#0D1F30!important;}
+body.light-mode .test-header,body.light-mode #score-card{background:#fff!important;border-color:rgba(0,0,0,.1)!important;}
+body.light-mode .test-header h2,body.light-mode #score-card h2{color:#0D1F30!important;}
+body.light-mode .name-row{background:rgba(0,0,0,.03)!important;border-color:rgba(0,0,0,.08)!important;}
+body.light-mode .name-row input{color:#0D1F30!important;}
+body.light-mode .prog-bar{background:rgba(0,0,0,.08)!important;}
+body.light-mode .formula{background:rgba(0,0,0,.04)!important;color:#8A6000!important;}
+body.light-mode .shop-total{background:rgba(0,0,0,.04)!important;border-color:rgba(0,0,0,.08)!important;}
+body.light-mode .shop-total-label{color:rgba(13,31,48,.55)!important;}
+body.light-mode .shop-prog{background:rgba(0,0,0,.08)!important;}
+footer{text-align:center;padding:28px 0;border-top:1px solid rgba(255,255,255,.06);}
+footer p{font-size:.78rem;color:rgba(192,204,224,.25);}
+footer a{color:rgba(224,92,64,.45);}
+body.light-mode footer{border-top-color:rgba(0,0,0,.08)!important;}
+body.light-mode footer p{color:rgba(13,31,48,.3)!important;}
+@media(max-width:540px){.page{padding:0 14px 60px;}.hero{padding:36px 0 24px;}.tab-btn{padding:10px 13px;font-size:12px;}}
+</style>
+</head>
+<body>
+<nav class="gnav">
+  <div class="gnav-inner">
+    <a class="gnav-logo" href="index.html">⚗️ <span>VA</span></a>
+    <div class="gnav-links"><a class="gnav-link" href="index.html">Home</a><a class="gnav-link" href="bridge.html">🌉 Bridge</a><a class="gnav-link" href="tower.html">🏗️ Tower</a><a class="gnav-link" href="lander.html">🚀 Lander</a><a class="gnav-link" href="bungee.html">🥚 Bungee</a><a class="gnav-link" href="gravity.html">🚗 Gravity</a><a class="gnav-link active" href="castle.html">🏰 Castle</a><a class="gnav-link" href="ocean.html">🌊 Ocean</a><a class="gnav-link" href="data.html">📊 Data</a><a class="gnav-link" href="nervous.html">🧠 Nervous</a><a class="gnav-link" href="shock.html">⚡ Shock</a></div>
+    <button class="gnav-burger" onclick="document.getElementById('gnav-mob').classList.toggle('open')">☰</button>
+    <button id="theme-toggle" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+  </div>
+  <div class="gnav-mobile" id="gnav-mob"><a class="gnav-mlink" href="index.html">Home</a><a class="gnav-mlink" href="bridge.html">🌉 Bridge</a><a class="gnav-mlink" href="tower.html">🏗️ Tower</a><a class="gnav-mlink" href="lander.html">🚀 Lander</a><a class="gnav-mlink" href="bungee.html">🥚 Bungee</a><a class="gnav-mlink" href="gravity.html">🚗 Gravity</a><a class="gnav-mlink active" href="castle.html">🏰 Castle</a><a class="gnav-mlink" href="ocean.html">🌊 Ocean</a><a class="gnav-mlink" href="data.html">📊 Data</a><a class="gnav-mlink" href="nervous.html">🧠 Nervous</a><a class="gnav-mlink" href="shock.html">⚡ Shock</a></div>
+</nav>
+<div class="page">
+  <div class="hero">
+    <div class="hero-ey">VA Division A · Build Event</div>
+    <h1>🏰 <span>Storm the Castle</span></h1>
+    <p class="hero-sub">Build a freestanding catapult from a mailing box, bamboo spoons, rubber bands, and tape. Launch a Dots candy piece as close as possible to a target 150 cm away. Written assessment on catapult history and types.</p>
+    <div class="hbadges"><span class="hb">Grades 3–4</span><span class="hb hb-m">45-min session</span><span class="hb hb-m">2 students per team</span><span class="hb hb-m">ANSI Z87+ required</span></div>
+  </div>
+  <div class="tab-nav"><button class="tab-btn active" onclick="showTab('overview',this)">Overview</button><button class="tab-btn" onclick="showTab('materials',this)">Materials</button><button class="tab-btn" onclick="showTab('scoring',this)">Scoring</button><button class="tab-btn" onclick="showTab('study',this)">Study Guide</button><button class="tab-btn" onclick="showTab('build',this)">Build Strategy</button><button class="tab-btn" onclick="showTab('tips',this)">Tips</button><button class="tab-btn" onclick="showTab('shopping',this)">Shopping List</button><button class="tab-btn" onclick="showTab('checklist',this)">Checklist</button><button class="tab-btn" onclick="showTab('test',this)">Practice Test</button></div>
+  <div class="tab-panel active" id="tab-overview">
+<div class="sec-title">Event Overview</div>
+<div class="sec-sub">Official description — VA Division A Rules Manual</div>
+<div class="callout c-a"><h4>The Challenge</h4><p>Build a freestanding catapult from the provided materials that can launch a Dots candy projectile as close as possible to a target 150 cm away. A concurrent written assessment covers the history and types of catapults.</p></div>
+<div class="stats-row">
+  <div class="stat-box"><div class="stat-val">2</div><div class="stat-label">Students per team</div></div>
+  <div class="stat-box"><div class="stat-val">30</div><div class="stat-label">Min to build</div></div>
+  <div class="stat-box"><div class="stat-val">150</div><div class="stat-label">cm target distance</div></div>
+  <div class="stat-box"><div class="stat-val">2</div><div class="stat-label">Dots candy</div></div>
+  <div class="stat-box"><div class="stat-val">4</div><div class="stat-label">Rubber bands</div></div>
+  <div class="stat-box"><div class="stat-val">1m</div><div class="stat-label">Masking tape</div></div>
+</div>
+<div class="callout c-y"><h4>⚠️ Safety — Required to Compete</h4><ul><li><strong>ANSI Z87+ impact-rated safety glasses</strong> required during flight phases</li><li>Must show "Z87+" on lens — regular glasses do not qualify</li><li>Teams must bring their own — not provided</li></ul></div>
+<div class="callout c-r"><h4>🚫 Key Rules</h4><ul>
+  <li>Catapult must be <strong>freestanding</strong> — may not be attached to any table, floor, ceiling, or support</li>
+  <li>Target distance is <strong>150 cm</strong> from the launch area</li>
+  <li>Catapult may be placed <strong>anywhere inside the launch area</strong> and behind the 150 cm launch line</li>
+  <li>Teams test with permission from the Event Supervisor only</li>
+  <li>The official projectile is a <strong>Dots candy piece</strong> — judges use a separate but identical one</li>
+  <li>Teams choose which rubber band(s) to use from the assortment (#64, #33, #19)</li>
+</ul></div>
+<div class="callout c-g"><h4>📝 Written Assessment</h4><p>Taken concurrently during the 30-minute build. Topics: the history of catapults, types of catapults (Ballista, Onager, Trebuchet, Mangonel), and how they work. Teams also estimate their distance to the target in centimeters.</p></div></div><div class="tab-panel" id="tab-materials">
+<div class="sec-title">Official Materials Kit</div>
+<div class="sec-sub">Everything provided at the event</div>
+<div class="mat-list">
+  <div class="mat-item"><span class="mat-emoji">📦</span><div class="mat-body"><h4>Mailing box (~15.24 × 10.16 × 7.62 cm)</h4><p>The main structural base for your catapult. Can be cut, folded, or used as-is. This is your primary structural element.</p></div><span class="mat-qty">1 box</span></div>
+  <div class="mat-item"><span class="mat-emoji">🥄</span><div class="mat-body"><h4>Bamboo spoons (~16 cm each)</h4><p>The throwing arm of your catapult. Can be attached to the box with rubber bands and tape to create the throwing lever.</p></div><span class="mat-qty">2 spoons</span></div>
+  <div class="mat-item"><span class="mat-emoji">🩹</span><div class="mat-body"><h4>Masking tape, 2.54 cm wide</h4><p>For securing components together. Use strategically — each wrapping counts toward your build.</p></div><span class="mat-qty">1 meter</span></div>
+  <div class="mat-item"><span class="mat-emoji">🔴</span><div class="mat-body"><h4>Rubber bands — assorted sizes (#64, #33, #19)</h4><p>Your power source. #64 is the longest and stretchiest. #19 is the shortest and stiffest. Choose which ones to use based on how far you want the projectile to fly.</p></div><span class="mat-qty">4 total</span></div>
+  <div class="mat-item"><span class="mat-emoji">🍬</span><div class="mat-body"><h4>Dots candy (projectile)</h4><p>These are your official projectiles. Judges use a separate identical one for scoring. Shape and weight are consistent between teams.</p></div><span class="mat-qty">2 pieces</span></div>
+</div>
+<div class="callout c-y"><h4>🎒 What You Must Bring</h4><ul>
+  <li>ANSI Z87+ impact-rated safety glasses (mandatory — one per student)</li>
+  <li>Scissors and/or Makedo Safe Saw</li>
+  <li>A ruler</li>
+</ul></div></div><div class="tab-panel" id="tab-scoring">
+<div class="sec-title">Official Scoring Formula</div>
+<div class="sec-sub">Exact formula from the rules manual</div>
+<div class="callout c-a"><h4>📊 Formula</h4><p style="font-size:1rem;font-weight:700;color:#fff;">Final Score (FS) = Assessment Score (TAS) + Distance Score (TDS)</p></div>
+<div class="formula">
+TAS = (Team Assessment Score ÷ Highest Assessment Score)<br>
+TDS = (Competition Distance Score ÷ Team Distance Score)<br>
+CDS = closest distance to target center among all teams<br>
+Max score = 100 points
+</div>
+<div class="callout c-y"><h4>★ Worked Example</h4><p>Best team lands 0.5 cm from target center (CDS=0.5). Your team lands 25 cm away. TDS = 0.5÷25 = 0.02 pts. Best assessment = 13, yours = 6. TAS = 6÷13 = 0.46 pts. FS = 0.46 + 0.02 = 0.48. Closer = better distance score.</p></div>
+<div class="callout c-g"><h4>Tiebreakers</h4><ul>
+  <li><strong>Tiebreaker 1:</strong> Closest to the center of the target</li>
+  <li><strong>Tiebreaker 2:</strong> Answers to select questions on the written test</li>
+</ul></div></div><div class="tab-panel" id="tab-study">
+<div class="sec-title">Study Guide — Catapults</div>
+<div class="sec-sub">History, types, and mechanics — know all for the written test</div>
+<div class="callout c-a"><h4>History of Catapults</h4><ul>
+  <li>First developed in ancient <strong>Mesopotamia and Egypt</strong> as simple stone-throwing devices</li>
+  <li>Greeks and Romans greatly improved catapult technology — more accuracy and power</li>
+  <li>Used primarily in <strong>siege warfare</strong> to breach walls and fortifications</li>
+  <li>Also used in field battles to disrupt enemy formations</li>
+  <li>Led to major advances in engineering and mechanics</li>
+  <li>Medieval catapults could hurl projectiles weighing hundreds of pounds</li>
+</ul></div>
+<div class="divider"></div>
+<div class="sec-title" style="font-size:1.1rem;">Types of Catapults</div>
+<div class="grid2" style="margin-top:14px;">
+  <div class="card"><h4>🎯 Ballista</h4><ul>
+    <li>Resembles a giant crossbow</li>
+    <li>Uses <strong>torsion</strong> (twisted rope or sinew) for power</li>
+    <li>Launches heavy bolts (large arrows) in a flat trajectory</li>
+    <li>Very accurate compared to other types</li>
+    <li>Used to target soldiers and fortification defenders</li>
+  </ul></div>
+  <div class="card"><h4>🪨 Onager</h4><ul>
+    <li>Simple single-arm catapult using torsion power</li>
+    <li>The arm is pulled back against a twisted rope bundle</li>
+    <li>When released, the arm swings up and hurls the projectile</li>
+    <li>Named after the wild donkey (kicks like one)</li>
+    <li>Could hurl large stones long distances</li>
+  </ul></div>
+  <div class="card"><h4>⚔️ Trebuchet</h4><ul>
+    <li>Uses a <strong>counterweight</strong> swinging arm — not torsion</li>
+    <li>Very large and powerful — could launch boulders</li>
+    <li>Most accurate of the large catapults</li>
+    <li>Required a large crew to operate</li>
+    <li>Used heavily in medieval castle sieges</li>
+  </ul></div>
+  <div class="card"><h4>🔥 Mangonel</h4><ul>
+    <li>Torsion-powered, similar to the Ballista but single-arm</li>
+    <li>Curved spoon-shaped arm holds the projectile</li>
+    <li>Can launch a variety of items: stones, fire pots, debris</li>
+    <li>Simpler to build than a trebuchet</li>
+    <li>Less accurate but quick to reload</li>
+  </ul></div>
+</div>
+<div class="divider"></div>
+<div class="sec-title" style="font-size:1.1rem;">Physics of Projectile Motion</div>
+<div class="grid2" style="margin-top:14px;">
+  <div class="card"><h4>📐 Launch Angle</h4><ul>
+    <li>45° angle gives the maximum horizontal range on flat ground</li>
+    <li>Lower angle = flatter trajectory, shorter range</li>
+    <li>Higher angle = more height, shorter range</li>
+    <li>Adjust arm tension and position to change angle</li>
+  </ul></div>
+  <div class="card"><h4>⚡ Elastic Potential Energy</h4><ul>
+    <li>Rubber bands store energy when stretched</li>
+    <li>When released, EPE converts to kinetic energy of the arm</li>
+    <li>More stretch = more energy = farther launch</li>
+    <li>Stiffer bands (#19) store more energy per unit stretch</li>
+  </ul></div>
+</div>
+<div class="divider"></div>
+<div class="sec-title" style="font-size:1.1rem;">Key Vocabulary</div>
+<table class="stbl" style="margin-top:14px;">
+  <thead><tr><th>Term</th><th>Definition</th></tr></thead>
+  <tbody>
+    <tr><td>Catapult</td><td>A device that uses stored energy to hurl a projectile.</td></tr>
+    <tr><td>Trebuchet</td><td>A catapult using a heavy counterweight to swing a long throwing arm.</td></tr>
+    <tr><td>Ballista</td><td>A crossbow-like catapult using torsion to launch bolts with high accuracy.</td></tr>
+    <tr><td>Onager</td><td>A simple single-arm torsion catapult named for its kick.</td></tr>
+    <tr><td>Mangonel</td><td>A torsion catapult with a spoon-shaped arm that launches a variety of projectiles.</td></tr>
+    <tr><td>Torsion</td><td>Force created by twisting — used in Ballista, Onager, and Mangonel.</td></tr>
+    <tr><td>Counterweight</td><td>A heavy weight on the short end of a trebuchet arm that drives the long end upward.</td></tr>
+    <tr><td>Projectile motion</td><td>The curved path of a launched object under gravity.</td></tr>
+    <tr><td>Launch angle</td><td>The angle at which a projectile is released — 45° maximizes range.</td></tr>
+    <tr><td>Elastic potential energy</td><td>Energy stored in a stretched or compressed elastic material like a rubber band.</td></tr>
+    <tr><td>CDS</td><td>Competition Distance Score — the closest any team's projectile landed to the target.</td></tr>
+  </tbody>
+</table></div><div class="tab-panel" id="tab-build">
+<div class="sec-title">Build Strategy</div>
+<div class="sec-sub">30 minutes to build and test your catapult</div>
+<div class="steps">
+  <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Choose your catapult design</h4><div class="step-time">Minutes 0–3</div><p>Two viable designs with these materials: (1) Spoon catapult — use the box as a base, attach one bamboo spoon as a throwing arm anchored with rubber bands. (2) Double-spoon trebuchet — tape spoons together for a longer arm. Option 1 is faster to build; option 2 can be more consistent.</p></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Build the base</h4><div class="step-time">Minutes 3–8</div><p>Score and fold the mailing box into a stable L-shape or rectangular base. Stability is critical — if the catapult tips over during launch, distance is unpredictable.</p><ul><li>Use tape to reinforce corners and edges</li><li>Set it on the table and push it — it should not slide or tip</li></ul></div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Attach the throwing arm</h4><div class="step-time">Minutes 8–15</div><p>Tape or rubber-band a spoon so it can rotate and snap forward. Attach the rubber band(s) to the arm to power it — more bands or stiffer bands (#19) = more launch force.</p><ul><li>The "bowl" of the spoon holds the Dots candy projectile</li><li>Arm should swing freely without binding on the box sides</li></ul></div></div>
+  <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Test runs + calibration</h4><div class="step-time">Minutes 15–26</div><p>With supervisor permission, make test launches. Measure each one against the 150 cm target. Adjust: rubber band stretch (pull arm back more/less), launch angle, or which rubber band size you use.</p><ul><li>Overshooting: use a shorter pull-back, fewer/smaller bands</li><li>Undershooting: use a longer pull-back, more/larger bands</li></ul></div></div>
+  <div class="step"><div class="step-num">5</div><div class="step-body"><h4>Lock in and estimate</h4><div class="step-time">Minutes 26–30</div><p>Mark your launch position with a piece of tape. Record your estimate of the distance to the target (this is part of the written test and Tiebreaker 1). Aim to give a specific number in centimeters based on your test runs.</p></div></div>
+</div></div><div class="tab-panel" id="tab-tips">
+<div class="sec-title">Competition Tips</div>
+<div class="sec-sub">How to get your Dots candy to land on target</div>
+<div class="tips-grid">
+  <div class="tip-card"><span class="tip-icon">📍</span><h4>Consistency over power</h4><p>The goal is 150 cm exactly — not as far as possible. A catapult that launches 149 cm every single time beats one that averages 150 but varies by ±30 cm.</p></div>
+  <div class="tip-card"><span class="tip-icon">📏</span><h4>Mark your draw position</h4><p>Once you find a pull-back that hits 150 cm, use a small tape mark to repeat that exact position for your official launch. Inconsistent draw length = inconsistent distance.</p></div>
+  <div class="tip-card"><span class="tip-icon">🟡</span><h4>Choose rubber bands strategically</h4><p>#19 bands are short and stiff — good for shorter draws with high power. #64 bands are long and looser. Try different combinations in your test runs to find what gives 150 cm consistently.</p></div>
+  <div class="tip-card"><span class="tip-icon">🏗️</span><h4>Stable base wins</h4><p>If your catapult slides or tips during the launch, your distance will be completely different every time. Weight the base with extra cardboard or use most of your tape keeping the base down and solid.</p></div>
+  <div class="tip-card"><span class="tip-icon">🎯</span><h4>Aim for the center line</h4><p>Distance to target matters, but landing on the center line helps with Tiebreaker 1. Adjust your catapult angle left/right as well as distance.</p></div>
+  <div class="tip-card"><span class="tip-icon">📚</span><h4>Study all four catapult types</h4><p>Know Trebuchet vs. Ballista vs. Onager vs. Mangonel cold. Understand which uses counterweight (Trebuchet) vs. torsion (Ballista, Onager, Mangonel). These distinctions are very likely to appear on the test.</p></div>
+  <div class="tip-card"><span class="tip-icon">✍️</span><h4>Give a specific estimate</h4><p>Your estimate of the landing distance is Tiebreaker 1. Don't say "about 150 cm" — say "147 cm" based on your test run data. A precise estimate wins ties.</p></div>
+  <div class="tip-card"><span class="tip-icon">🥄</span><h4>Both spoons = longer arm</h4><p>Taping both bamboo spoons end-to-end creates a longer throwing arm. A longer arm moves the projectile faster at release — useful if your catapult isn't reaching 150 cm with one spoon.</p></div>
+</div></div><div class="tab-panel" id="tab-shopping">
+<div class="sec-title">Practice Shopping List</div>
+<div class="sec-sub">For home practice — all build materials provided at the competition</div>
+<div class="shop-intro">All catapult materials are <strong>provided free at the event</strong>. This list covers safety gear and optional practice supplies so you can experiment at home before competition day.</div>
+<div class="safety-warn"><h4>⚠ Safety Gear — Required</h4><p>ANSI Z87+ impact glasses required during all launch phases. Not provided at event.</p></div>
+<table class="shop-tbl">
+  <thead><tr><th></th><th>Item</th><th>Where</th><th>~Price</th></tr></thead>
+  <tbody>
+    <tr id="sr-c0"><td style="padding:10px 8px 10px 12px;"><div class="cb" onclick="toggleShop(this,'c0')"></div></td><td><span class="si-name">ANSI Z87+ safety glasses</span><span class="si-note">Required during launch phases.</span></td><td class="si-dept">Hardware / Sporting goods</td><td class="si-price">~$12</td></tr>
+    <tr id="sr-c1"><td style="padding:10px 8px 10px 12px;"><div class="cb" onclick="toggleShop(this,'c1')"></div></td><td><span class="si-name">Small mailing boxes (6×4×3 inch)</span><span class="si-note">Same size as the event box. Buy a pack to practice different base designs.</span></td><td class="si-dept">Office / Shipping aisle</td><td class="si-price">~$8</td></tr>
+    <tr id="sr-c2"><td style="padding:10px 8px 10px 12px;"><div class="cb" onclick="toggleShop(this,'c2')"></div></td><td><span class="si-name">Bamboo spoons (6-pack)</span><span class="si-note">Wooden or bamboo dessert spoons, ~16 cm. Found in kitchen or party aisle.</span></td><td class="si-dept">Kitchen / Party</td><td class="si-price">~$5</td></tr>
+    <tr id="sr-c3"><td style="padding:10px 8px 10px 12px;"><div class="cb" onclick="toggleShop(this,'c3')"></div></td><td><span class="si-name">Rubber band assortment (#19, #33, #64)</span><span class="si-note">Available in hardware or office supply. Get all three sizes used in the event.</span></td><td class="si-dept">Hardware / Office</td><td class="si-price">~$5</td></tr>
+    <tr id="sr-c4"><td style="padding:10px 8px 10px 12px;"><div class="cb" onclick="toggleShop(this,'c4')"></div></td><td><span class="si-name">Masking tape (1" wide)</span><span class="si-note">Same type used at competition. 1 meter per practice run.</span></td><td class="si-dept">Hardware / Paint</td><td class="si-price">~$6</td></tr>
+    <tr id="sr-c5"><td style="padding:10px 8px 10px 12px;"><div class="cb" onclick="toggleShop(this,'c5')"></div></td><td><span class="si-name">Dots candy box</span><span class="si-note">For practice launches — the official projectile. Consistent weight and shape.</span></td><td class="si-dept">Candy aisle</td><td class="si-price">~$2</td></tr>
+    <tr id="sr-c6"><td style="padding:10px 8px 10px 12px;"><div class="cb" onclick="toggleShop(this,'c6')"></div></td><td><span class="si-name">Tape measure</span><span class="si-note">Measure and mark 150 cm on floor for a target practice zone.</span></td><td class="si-dept">Hardware</td><td class="si-price">~$6</td></tr>
+  </tbody>
+</table>
+<div class="shop-prog"><div class="shop-prog-fill" id="shop-prog-fill" style="width:0%;"></div></div>
+<div class="shop-prog-label" id="shop-prog-label">0 of 7 items checked</div>
+<div class="shop-total"><div><div class="shop-total-label">Estimated subtotal</div></div><div class="shop-total-val" id="shop-total-val">~$44</div></div>
+<script>Object.assign(PRICES,{c0:12,c1:8,c2:5,c3:5,c4:6,c5:2,c6:6});</script></div><div class="tab-panel" id="tab-checklist">
+<div class="sec-title">Pre-Competition Checklist</div>
+<div class="sec-sub">Verify everything before your session starts</div>
+<div class="checklist">
+  <div class="chk-item"><div class="chk-box" onclick="chk(this)"></div><span class="chk-text"><strong>Safety glasses (ANSI Z87+)</strong> packed for both students</span></div>
+  <div class="chk-item"><div class="chk-box" onclick="chk(this)"></div><span class="chk-text"><strong>Scissors and ruler</strong> packed (bring yourself)</span></div>
+  <div class="chk-item"><div class="chk-box" onclick="chk(this)"></div><span class="chk-text">Know all <strong>4 types of catapults</strong>: Trebuchet, Ballista, Onager, Mangonel</span></div>
+  <div class="chk-item"><div class="chk-box" onclick="chk(this)"></div><span class="chk-text">Know which catapult uses a <strong>counterweight</strong> (Trebuchet) vs <strong>torsion</strong> (others)</span></div>
+  <div class="chk-item"><div class="chk-box" onclick="chk(this)"></div><span class="chk-text">Know the <strong>history</strong>: Mesopotamia/Egypt → Greeks/Romans → medieval siege use</span></div>
+  <div class="chk-item"><div class="chk-box" onclick="chk(this)"></div><span class="chk-text">Have a <strong>catapult design in mind</strong> before the clock starts</span></div>
+  <div class="chk-item"><div class="chk-box" onclick="chk(this)"></div><span class="chk-text">Know the target is <strong>150 cm</strong> from the launch area</span></div>
+  <div class="chk-item"><div class="chk-box" onclick="chk(this)"></div><span class="chk-text">Catapult is <strong>freestanding</strong> — not attached to table, floor, or any support</span></div>
+  <div class="chk-item"><div class="chk-box" onclick="chk(this)"></div><span class="chk-text">Ready to give a <strong>specific distance estimate in cm</strong> based on test runs</span></div>
+  <div class="chk-item"><div class="chk-box" onclick="chk(this)"></div><span class="chk-text">Know the <strong>scoring formula</strong>: FS = TAS + TDS (closer to 150 cm = better)</span></div>
+</div></div><div class="tab-panel" id="tab-test">
+<div class="test-header"><h2>🏰 Storm the Castle Practice Test</h2><div class="sub">VA Division A · Build Event · <span style="color:#E05C40;font-weight:700;">30 points</span></div><div class="prog-bar"><div class="prog-fill" id="prog-fill"></div></div><div class="prog-meta"><span id="prog-label">0 answered</span><span id="prog-pct">0%</span></div></div>
+<div class="name-row"><label>NAME</label><input id="sname" type="text" placeholder="Enter your name..." autocomplete="off"></div>
+<div class="sec-hd"><h3>⭕ Part 1 — Multiple Choice</h3><span class="pts">12 pts</span></div>
+<div class="qcard" id="qc-c1"><div class="q-num">Q1</div><div class="q-text">What is the target distance the catapult must launch the projectile in Storm the Castle?</div><div class="opts"><label class="opt"><input type="radio" name="c1" value="A"><span class="dot"></span>100 cm</label><label class="opt"><input type="radio" name="c1" value="B"><span class="dot"></span>120 cm</label><label class="opt"><input type="radio" name="c1" value="C"><span class="dot"></span>150 cm</label><label class="opt"><input type="radio" name="c1" value="D"><span class="dot"></span>200 cm</label></div></div><div class="qcard" id="qc-c2"><div class="q-num">Q2</div><div class="q-text">Which type of catapult uses a counterweight rather than torsion to power the throwing arm?</div><div class="opts"><label class="opt"><input type="radio" name="c2" value="A"><span class="dot"></span>Ballista</label><label class="opt"><input type="radio" name="c2" value="B"><span class="dot"></span>Onager</label><label class="opt"><input type="radio" name="c2" value="C"><span class="dot"></span>Mangonel</label><label class="opt"><input type="radio" name="c2" value="D"><span class="dot"></span>Trebuchet</label></div></div><div class="qcard" id="qc-c3"><div class="q-num">Q3</div><div class="q-text">The Ballista is best described as:</div><div class="opts"><label class="opt"><input type="radio" name="c3" value="A"><span class="dot"></span>A single-arm torsion catapult with a curved spoon</label><label class="opt"><input type="radio" name="c3" value="B"><span class="dot"></span>A powerful counterweight siege engine</label><label class="opt"><input type="radio" name="c3" value="C"><span class="dot"></span>A crossbow-like device that launches heavy bolts with torsion power</label><label class="opt"><input type="radio" name="c3" value="D"><span class="dot"></span>A simple device used only to hurl flaming materials</label></div></div><div class="qcard" id="qc-c4"><div class="q-num">Q4</div><div class="q-text">What is the official projectile used in the Storm the Castle competition?</div><div class="opts"><label class="opt"><input type="radio" name="c4" value="A"><span class="dot"></span>A golf ball</label><label class="opt"><input type="radio" name="c4" value="B"><span class="dot"></span>A Dots candy piece</label><label class="opt"><input type="radio" name="c4" value="C"><span class="dot"></span>A ping pong ball</label><label class="opt"><input type="radio" name="c4" value="D"><span class="dot"></span>A rolled paper ball</label></div></div><div class="qcard" id="qc-c5"><div class="q-num">Q5</div><div class="q-text">Which scoring formula describes Storm the Castle?</div><div class="opts"><label class="opt"><input type="radio" name="c5" value="A"><span class="dot"></span>FS = TAS + TDS (same as Gravity Vehicle)</label><label class="opt"><input type="radio" name="c5" value="B"><span class="dot"></span>FS = 0.5×THS + 0.5×TAS</label><label class="opt"><input type="radio" name="c5" value="C"><span class="dot"></span>FS = TAS + THS with a 1.2 bonus</label><label class="opt"><input type="radio" name="c5" value="D"><span class="dot"></span>FS = TRS + TAS (rubric)</label></div></div><div class="qcard" id="qc-c6"><div class="q-num">Q6</div><div class="q-text">Catapults were first developed by which ancient civilizations?</div><div class="opts"><label class="opt"><input type="radio" name="c6" value="A"><span class="dot"></span>Greeks and Romans</label><label class="opt"><input type="radio" name="c6" value="B"><span class="dot"></span>Chinese and Japanese</label><label class="opt"><input type="radio" name="c6" value="C"><span class="dot"></span>Mesopotamia and Egypt</label><label class="opt"><input type="radio" name="c6" value="D"><span class="dot"></span>Vikings and Celts</label></div></div><div class="qcard" id="qc-c7"><div class="q-num">Q7</div><div class="q-text">A launch angle of approximately 45° is considered optimal because:</div><div class="opts"><label class="opt"><input type="radio" name="c7" value="A"><span class="dot"></span>It travels fastest at this angle</label><label class="opt"><input type="radio" name="c7" value="B"><span class="dot"></span>It maximizes the horizontal range of a projectile</label><label class="opt"><input type="radio" name="c7" value="C"><span class="dot"></span>It minimizes air resistance</label><label class="opt"><input type="radio" name="c7" value="D"><span class="dot"></span>It keeps the projectile closest to the ground</label></div></div><div class="qcard" id="qc-c8"><div class="q-num">Q8</div><div class="q-text">What does "torsion" mean in the context of catapult design?</div><div class="opts"><label class="opt"><input type="radio" name="c8" value="A"><span class="dot"></span>A counterweight that swings down</label><label class="opt"><input type="radio" name="c8" value="B"><span class="dot"></span>The force created by twisting rope or sinew</label><label class="opt"><input type="radio" name="c8" value="C"><span class="dot"></span>A spring coiled under the throwing arm</label><label class="opt"><input type="radio" name="c8" value="D"><span class="dot"></span>The tension in a rubber band</label></div></div><div class="qcard" id="qc-c9"><div class="q-num">Q9</div><div class="q-text">Catapults must be "freestanding" — this means:</div><div class="opts"><label class="opt"><input type="radio" name="c9" value="A"><span class="dot"></span>They must stand without a frame</label><label class="opt"><input type="radio" name="c9" value="B"><span class="dot"></span>They must not be attached to a table, floor, ceiling, or other support</label><label class="opt"><input type="radio" name="c9" value="C"><span class="dot"></span>They can only be placed on the floor, not a table</label><label class="opt"><input type="radio" name="c9" value="D"><span class="dot"></span>They must be made entirely of the provided materials</label></div></div><div class="qcard" id="qc-c10"><div class="q-num">Q10</div><div class="q-text">If CDS = 2 cm and your team's projectile lands 40 cm from target, your TDS (distance score) is:</div><div class="opts"><label class="opt"><input type="radio" name="c10" value="A"><span class="dot"></span>40</label><label class="opt"><input type="radio" name="c10" value="B"><span class="dot"></span>2</label><label class="opt"><input type="radio" name="c10" value="C"><span class="dot"></span>0.05</label><label class="opt"><input type="radio" name="c10" value="D"><span class="dot"></span>20</label></div></div><div class="qcard" id="qc-c11"><div class="q-num">Q11</div><div class="q-text">The Mangonel is powered by:</div><div class="opts"><label class="opt"><input type="radio" name="c11" value="A"><span class="dot"></span>A counterweight</label><label class="opt"><input type="radio" name="c11" value="B"><span class="dot"></span>A spring mechanism</label><label class="opt"><input type="radio" name="c11" value="C"><span class="dot"></span>Torsion (twisted rope or sinew)</label><label class="opt"><input type="radio" name="c11" value="D"><span class="dot"></span>Rubber bands (historically)</label></div></div><div class="qcard" id="qc-c12"><div class="q-num">Q12</div><div class="q-text">Which tiebreaker applies first in Storm the Castle?</div><div class="opts"><label class="opt"><input type="radio" name="c12" value="A"><span class="dot"></span>Answers to selected written test questions</label><label class="opt"><input type="radio" name="c12" value="B"><span class="dot"></span>Closest distance to the center of the target</label><label class="opt"><input type="radio" name="c12" value="C"><span class="dot"></span>Team that completed the build fastest</label><label class="opt"><input type="radio" name="c12" value="D"><span class="dot"></span>Fewest materials used</label></div></div>
+<div class="sec-hd"><h3>✅ Part 2 — True or False</h3><span class="pts">10 pts</span></div>
+<div class="qcard" id="qc-tf21"><div class="q-num">Q13</div><div class="q-text">The Trebuchet uses a counterweight rather than twisted rope (torsion) to power its throwing arm.</div><div class="tf"><button class="tfbtn" onclick="doTF(21,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(21,'FALSE',this)">❌ FALSE</button></div></div><div class="qcard" id="qc-tf22"><div class="q-num">Q14</div><div class="q-text">The catapult may be attached to the tabletop to increase stability during launches.</div><div class="tf"><button class="tfbtn" onclick="doTF(22,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(22,'FALSE',this)">❌ FALSE</button></div></div><div class="qcard" id="qc-tf23"><div class="q-num">Q15</div><div class="q-text">The Ballista is the most crossbow-like of all the catapult types.</div><div class="tf"><button class="tfbtn" onclick="doTF(23,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(23,'FALSE',this)">❌ FALSE</button></div></div><div class="qcard" id="qc-tf24"><div class="q-num">Q16</div><div class="q-text">Teams may use any additional materials they bring to strengthen their catapult.</div><div class="tf"><button class="tfbtn" onclick="doTF(24,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(24,'FALSE',this)">❌ FALSE</button></div></div><div class="qcard" id="qc-tf25"><div class="q-num">Q17</div><div class="q-text">A 45° launch angle generally produces the maximum horizontal range for a projectile.</div><div class="tf"><button class="tfbtn" onclick="doTF(25,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(25,'FALSE',this)">❌ FALSE</button></div></div><div class="qcard" id="qc-tf26"><div class="q-num">Q18</div><div class="q-text">Teams may test their catapult on the target course without asking the Event Supervisor.</div><div class="tf"><button class="tfbtn" onclick="doTF(26,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(26,'FALSE',this)">❌ FALSE</button></div></div><div class="qcard" id="qc-tf27"><div class="q-num">Q19</div><div class="q-text">The first tiebreaker in Storm the Castle is the team closest to the center of the target.</div><div class="tf"><button class="tfbtn" onclick="doTF(27,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(27,'FALSE',this)">❌ FALSE</button></div></div><div class="qcard" id="qc-tf28"><div class="q-num">Q20</div><div class="q-text">Rubber bands store elastic potential energy when stretched.</div><div class="tf"><button class="tfbtn" onclick="doTF(28,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(28,'FALSE',this)">❌ FALSE</button></div></div><div class="qcard" id="qc-tf29"><div class="q-num">Q21</div><div class="q-text">The Onager is named after the wild donkey because of how it kicks when it fires.</div><div class="tf"><button class="tfbtn" onclick="doTF(29,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(29,'FALSE',this)">❌ FALSE</button></div></div><div class="qcard" id="qc-tf30"><div class="q-num">Q22</div><div class="q-text">Teams build the catapult before the written assessment begins.</div><div class="tf"><button class="tfbtn" onclick="doTF(30,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(30,'FALSE',this)">❌ FALSE</button></div></div>
+<div class="sec-hd"><h3>📝 Part 3 — Fill in the Blank</h3><span class="pts">8 pts</span></div>
+<div class="qcard" id="qc-cf1"><div class="q-num">Q23</div><div class="fill-wrap">The catapult type that uses a counterweight and a long swinging arm is the <input class="blank" id="cf1" placeholder="__________">.</div></div>
+<div class="qcard" id="qc-cf2"><div class="q-num">Q24</div><div class="fill-wrap">The target distance for the projectile in Storm the Castle is <input class="blank" id="cf2" placeholder="___"> cm.</div></div>
+<div class="qcard" id="qc-cf3"><div class="q-num">Q25</div><div class="fill-wrap">The official projectile used in this event is a piece of <input class="blank" id="cf3" placeholder="__________"> candy.</div></div>
+<div class="qcard" id="qc-cf4"><div class="q-num">Q26</div><div class="fill-wrap">The force created by twisting rope or sinew that powers the Ballista, Onager, and Mangonel is called <input class="blank" id="cf4" placeholder="__________">.</div></div>
+<div class="sub-wrap"><button class="sub-btn" onclick="submitTest()">Submit Answers</button></div>
+<div id="score-card"><h2>Test Complete! 🏰</h2><div id="score-num">--</div><div id="score-pct"></div><div id="score-emoji" style="font-size:2rem;margin-top:8px;"></div><div id="score-msg" style="margin-top:6px;"></div><div id="score-name"></div><button class="retry-btn" onclick="location.reload()">Try Again</button></div>
+<script>
+Object.assign(MC,{c1:'C',c2:'D',c3:'C',c4:'B',c5:'A',c6:'C',c7:'B',c8:'B',c9:'B',c10:'C',c11:'C',c12:'B'});
+Object.assign(TF,{21:'TRUE',22:'FALSE',23:'TRUE',24:'FALSE',25:'TRUE',26:'FALSE',27:'TRUE',28:'TRUE',29:'TRUE',30:'FALSE'});
+Object.assign(FILL,{cf1:['trebuchet'],cf2:['150'],cf3:['dots','dot'],cf4:['torsion']});
+totalQ=12+10+4;
+</script></div>
+</div>
+<footer><p>Storm the Castle — VA Division A 2025–2026 &nbsp;·&nbsp; <a href="index.html">Portal home</a></p></footer>
+<script>
+function showTab(id,btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');btn.classList.add('active');
+  window.scrollTo({top:document.querySelector('.tab-nav').offsetTop-60,behavior:'smooth'});
+}
+function chk(el){el.classList.toggle('chk-done');}
+const PRICES={};const TOTAL_ITEMS=0;
+function toggleShop(el,id){
+  el.classList.toggle('checked');
+  const row=document.getElementById('sr-'+id);if(row)row.classList.toggle('done',el.classList.contains('checked'));
+  let n=0,sum=0;
+  document.querySelectorAll('.cb.checked').forEach(cb=>{
+    const fn=cb.getAttribute('onclick')||'';const m=fn.match(/'([^']+)'/);
+    if(m&&PRICES[m[1]]!==undefined){n++;sum+=PRICES[m[1]];}
+  });
+  const pf=document.getElementById('shop-prog-fill');const pl=document.getElementById('shop-prog-label');const sv=document.getElementById('shop-total-val');
+  const ti=Object.keys(PRICES).length;
+  if(pf)pf.style.width=ti?Math.round(n/ti*100)+'%':'0%';
+  if(pl)pl.textContent=n+' of '+ti+' items checked';
+  if(sv)sv.textContent='~$'+sum;
+}
+const MC={};const TF={};const FILL={};const tfSel={};
+let totalQ=0;
+function cntAns(){let n=0;Object.keys(MC).forEach(nm=>{if(document.querySelector('input[name="'+nm+'"]:checked'))n++;});Object.keys(TF).forEach(k=>{if(tfSel[k])n++;});Object.keys(FILL).forEach(id=>{if(document.getElementById(id)?.value.trim())n++;});return n;}
+function upProg(){const n=cntAns();const t=totalQ||1;const p=Math.round(n/t*100);const pf=document.getElementById('prog-fill');const pl=document.getElementById('prog-label');const pp=document.getElementById('prog-pct');if(pf)pf.style.width=p+'%';if(pl)pl.textContent=n+' of '+t+' answered';if(pp)pp.textContent=p+'%';}
+document.addEventListener('change',e=>{if(e.target.type==='radio'){document.querySelectorAll('input[name="'+e.target.name+'"]').forEach(r=>r.closest('.opt').classList.remove('sel'));e.target.closest('.opt').classList.add('sel');upProg();}});
+document.addEventListener('input',e=>{if(e.target.classList.contains('blank'))upProg();});
+window.doTF=function(qn,val,btn){document.getElementById('qc-tf'+qn).querySelectorAll('.tfbtn').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');tfSel[qn]=val;upProg();};
+function submitTest(){
+  let score=0;
+  Object.entries(MC).forEach(([nm,c])=>{
+    const card=document.getElementById('qc-'+nm);const sel=document.querySelector('input[name="'+nm+'"]:checked');
+    document.querySelectorAll('input[name="'+nm+'"]').forEach(r=>{if(r.value===c)r.closest('.opt').classList.add('c-ok');});
+    if(sel){if(sel.value===c){score++;card.classList.add('correct');}else{sel.closest('.opt').classList.add('c-no');card.classList.add('wrong');}}else card.classList.add('wrong');
+    document.querySelectorAll('input[name="'+nm+'"]').forEach(r=>r.disabled=true);
+  });
+  Object.entries(TF).forEach(([k,c])=>{
+    const card=document.getElementById('qc-tf'+k);const given=tfSel[parseInt(k)];
+    card.querySelectorAll('.tfbtn').forEach(btn=>{const v=btn.textContent.includes('TRUE')?'TRUE':'FALSE';if(v===c)btn.classList.add('c-ok');if(v===given&&given!==c)btn.classList.add('c-no');btn.disabled=true;btn.style.cursor='default';});
+    if(given===c){score++;card.classList.add('correct');}else card.classList.add('wrong');
+  });
+  Object.entries(FILL).forEach(([id,acc])=>{
+    const el=document.getElementById(id);const card=document.getElementById('qc-'+id);const val=el.value.trim().toLowerCase();
+    if(acc.some(a=>val.includes(a))){score++;el.classList.add('c-ok');card.classList.add('correct');}else{el.classList.add('c-no');card.classList.add('wrong');}el.readOnly=true;
+  });
+  const pct=Math.round(score/totalQ*100);const name=document.getElementById('sname')?.value.trim()||'Student';
+  let emoji='📚🔄',msg='Review the study guide and try again!';
+  if(pct>=90){emoji='🏆🌟';msg='Outstanding — competition ready!';}
+  else if(pct>=75){emoji='🌟👍';msg='Great work! Review any missed questions.';}
+  else if(pct>=60){emoji='💪📖';msg='Good effort — focus on areas you missed.';}
+  document.getElementById('score-num').textContent=score+'/'+totalQ;
+  document.getElementById('score-pct').textContent=pct+'% correct';
+  document.getElementById('score-msg').textContent=msg;
+  document.getElementById('score-name').textContent=name+"'s result";
+  document.getElementById('score-emoji').textContent=emoji;
+  document.querySelector('.sub-btn').style.display='none';
+  document.getElementById('score-card').style.display='block';
+  document.getElementById('score-card').scrollIntoView({behavior:'smooth',block:'center'});
+}
+(function(){
+  const m=localStorage.getItem('va-theme')||'dark';
+  const btn=document.getElementById('theme-toggle');
+  if(m==='light'){document.body.classList.add('light-mode');if(btn)btn.textContent='🌙';}
+  else{if(btn)btn.textContent='☀️';}
+  window.toggleTheme=function(){const l=document.body.classList.toggle('light-mode');localStorage.setItem('va-theme',l?'light':'dark');document.getElementById('theme-toggle').textContent=l?'🌙':'☀️';};
+})();
+</script>
+</body>
+</html>

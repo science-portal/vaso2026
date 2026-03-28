@@ -25,19 +25,47 @@ body::before{
 .gnav-inner{display:flex;align-items:center;max-width:1100px;margin:0 auto;padding:0 24px;height:54px;gap:6px;}
 .gnav-logo{font-size:14px;font-weight:700;color:rgba(255,255,255,.9);flex-shrink:0;padding:0 12px 0 0;border-right:1px solid rgba(255,255,255,.1);margin-right:4px;text-decoration:none;}
 .gnav-logo span{color:rgba(255,255,255,.5);}
-.gnav-links{display:flex;gap:2px;flex:1;overflow-x:auto;scrollbar-width:none;}
-.gnav-links::-webkit-scrollbar{display:none;}
-.gnav-link{padding:5px 10px;border-radius:7px;font-size:12px;font-weight:600;color:rgba(200,216,232,.6);white-space:nowrap;text-decoration:none;transition:all .15s;}
+.gnav-links{display:flex;gap:2px;flex:1;align-items:center;}
+/* top-level nav items */
+.gnav-item{position:relative;}
+.gnav-link{padding:6px 12px;border-radius:7px;font-size:13px;font-weight:600;color:rgba(200,216,232,.65);white-space:nowrap;text-decoration:none;transition:all .15s;display:flex;align-items:center;gap:5px;background:none;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif;}
 .gnav-link:hover{background:rgba(255,255,255,.07);color:#fff;}
 .gnav-link.active{background:rgba(255,255,255,.1);color:#fff;}
+.gnav-link .caret{font-size:9px;opacity:.5;transition:transform .2s;}
+.gnav-item.open .caret{transform:rotate(180deg);opacity:.9;}
+/* dropdown panel */
+.gnav-drop{display:none;position:absolute;top:calc(100% + 6px);left:0;background:rgba(10,14,30,.98);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:8px;min-width:220px;box-shadow:0 16px 40px rgba(0,0,0,.5);backdrop-filter:blur(16px);z-index:400;}
+.gnav-item.open .gnav-drop{display:block;}
+.gnav-drop a{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;font-weight:600;color:rgba(200,216,232,.7);text-decoration:none;transition:all .15s;white-space:nowrap;}
+.gnav-drop a:hover{background:rgba(255,255,255,.07);color:#fff;}
+.gnav-drop a .drop-icon{font-size:1.1rem;width:22px;text-align:center;flex-shrink:0;}
+.gnav-drop-label{font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(200,216,232,.3);padding:4px 12px 6px;margin-top:2px;}
+.gnav-drop hr{border:none;border-top:1px solid rgba(255,255,255,.07);margin:6px 0;}
 .gnav-burger{display:none;background:none;border:none;color:rgba(255,255,255,.7);font-size:20px;cursor:pointer;padding:4px;}
+/* mobile nav */
 .gnav-mobile{display:none;flex-direction:column;border-top:1px solid rgba(255,255,255,.08);}
 .gnav-mobile.open{display:flex;}
 .gnav-mlink{padding:12px 20px;font-size:13px;font-weight:600;color:rgba(200,216,232,.7);border-bottom:1px solid rgba(255,255,255,.05);text-decoration:none;}
 .gnav-mlink.active{color:#fff;background:rgba(255,255,255,.06);}
+.gnav-msection{padding:8px 20px 4px;font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(200,216,232,.3);}
 #theme-toggle{width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:rgba(255,255,255,.75);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;line-height:1;}
 #theme-toggle:hover{background:rgba(255,255,255,.14);}
-@media(max-width:700px){.gnav-links{display:none;}.gnav-burger{display:block;}}
+body.light-mode #theme-toggle{border-color:rgba(0,0,0,.15)!important;background:rgba(0,0,0,.06)!important;color:rgba(0,0,0,.6)!important;}
+body.light-mode .gnav{background:rgba(255,255,255,.97)!important;border-bottom-color:rgba(0,0,0,.1)!important;}
+body.light-mode .gnav-logo{color:#0D1F30!important;}
+body.light-mode .gnav-link{color:rgba(13,31,48,.6)!important;}
+body.light-mode .gnav-link:hover{background:rgba(0,0,0,.05)!important;color:#0D1F30!important;}
+body.light-mode .gnav-link.active{background:rgba(0,0,0,.08)!important;color:#0D1F30!important;}
+body.light-mode .gnav-drop{background:rgba(250,251,255,.99)!important;border-color:rgba(0,0,0,.1)!important;box-shadow:0 16px 40px rgba(0,0,0,.12)!important;}
+body.light-mode .gnav-drop a{color:rgba(13,31,48,.65)!important;}
+body.light-mode .gnav-drop a:hover{background:rgba(0,0,0,.05)!important;color:#0D1F30!important;}
+body.light-mode .gnav-drop-label{color:rgba(13,31,48,.3)!important;}
+body.light-mode .gnav-drop hr{border-top-color:rgba(0,0,0,.07)!important;}
+body.light-mode .gnav-mobile{background:#fff!important;}
+body.light-mode .gnav-mlink{color:rgba(13,31,48,.65)!important;}
+body.light-mode .gnav-mlink.active{color:#0D1F30!important;background:rgba(0,0,0,.05)!important;}
+body.light-mode .gnav-msection{color:rgba(13,31,48,.3)!important;}
+@media(max-width:680px){.gnav-links{display:none;}.gnav-burger{display:block;}}
 
 /* ── Page wrapper ── */
 .page{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 24px 80px;}
@@ -92,6 +120,8 @@ body::before{
 .ecard-data    { --ecard-accent: #4FC3F7; }
 .ecard-nervous { --ecard-accent: #7B5EA7; }
 .ecard-shock   { --ecard-accent: #F4C430; }
+.ecard-gravity { --ecard-accent: #00C853; }
+.ecard-castle  { --ecard-accent: #E05C40; }
 
 .ecard-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:12px;}
 .ecard-icon{font-size:1.8rem;line-height:1;flex-shrink:0;}
@@ -250,25 +280,49 @@ body.light-mode .hbadge-muted { color: rgba(13,31,48,0.55) !important;
   <div class="gnav-inner">
     <a class="gnav-logo" href="index.html">⚗️ <span>VA Olympiad</span></a>
     <div class="gnav-links">
+
       <a class="gnav-link active" href="index.html">Home</a>
-      <a class="gnav-link" href="bridge.html">🌉 Bridge</a>
-      <a class="gnav-link" href="tower.html">🏗️ Tower</a>
-      <a class="gnav-link" href="lander.html">🚀 Lander</a>
-      <a class="gnav-link" href="bungee.html">🥚 Bungee</a>
-      <a class="gnav-link" href="ocean.html">🌊 Ocean</a>
-      <a class="gnav-link" href="data.html">📊 Data</a>
-      <a class="gnav-link" href="nervous.html">🧠 Nervous</a>
-      <a class="gnav-link" href="shock.html">⚡ Shock</a>
+
+      <!-- Build Events dropdown -->
+      <div class="gnav-item">
+        <button class="gnav-link" onclick="toggleDrop(this)">Build Events <span class="caret">▾</span></button>
+        <div class="gnav-drop">
+          <div class="gnav-drop-label">Build Events — ANSI Z87+ required</div>
+          <a href="bridge.html"><span class="drop-icon">🌉</span>Bridge Building</a>
+          <a href="tower.html"><span class="drop-icon">🏗️</span>Tower Building</a>
+          <a href="lander.html"><span class="drop-icon">🚀</span>Astronaut Lander</a>
+          <a href="bungee.html"><span class="drop-icon">🥚</span>Bungee Egg Drop</a>
+          <a href="gravity.html"><span class="drop-icon">🚗</span>Gravity Vehicle</a>
+          <a href="castle.html"><span class="drop-icon">🏰</span>Storm the Castle</a>
+        </div>
+      </div>
+
+      <!-- Written Events dropdown -->
+      <div class="gnav-item">
+        <button class="gnav-link" onclick="toggleDrop(this)">Written Events <span class="caret">▾</span></button>
+        <div class="gnav-drop">
+          <div class="gnav-drop-label">Written Events — 30 minutes</div>
+          <a href="ocean.html"><span class="drop-icon">🌊</span>Ocean Science</a>
+          <a href="data.html"><span class="drop-icon">📊</span>Data Investigations</a>
+          <a href="nervous.html"><span class="drop-icon">🧠</span>Nervous System</a>
+          <a href="shock.html"><span class="drop-icon">⚡</span>Shock Value</a>
+        </div>
+      </div>
+
     </div>
     <button class="gnav-burger" onclick="document.getElementById('gnav-mobile').classList.toggle('open')" aria-label="menu">☰</button>
     <button id="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode" aria-label="Toggle theme">🌙</button>
   </div>
   <div class="gnav-mobile" id="gnav-mobile">
     <a class="gnav-mlink active" href="index.html">Home</a>
+    <div class="gnav-msection">Build Events</div>
     <a class="gnav-mlink" href="bridge.html">🌉 Bridge Building</a>
     <a class="gnav-mlink" href="tower.html">🏗️ Tower Building</a>
     <a class="gnav-mlink" href="lander.html">🚀 Astronaut Lander</a>
     <a class="gnav-mlink" href="bungee.html">🥚 Bungee Egg Drop</a>
+    <a class="gnav-mlink" href="gravity.html">🚗 Gravity Vehicle</a>
+    <a class="gnav-mlink" href="castle.html">🏰 Storm the Castle</a>
+    <div class="gnav-msection">Written Events</div>
     <a class="gnav-mlink" href="ocean.html">🌊 Ocean Science</a>
     <a class="gnav-mlink" href="data.html">📊 Data Investigations</a>
     <a class="gnav-mlink" href="nervous.html">🧠 Nervous System</a>
@@ -351,6 +405,34 @@ body.light-mode .hbadge-muted { color: rgba(13,31,48,0.55) !important;
       <p class="ecard-desc">Design a rubber band bungee to stop a raw egg as close as possible to the Artificial Horizon. Written assessment on conservation of energy, GPE, KE, and EPE.</p>
       <div class="ecard-footer">
         <span class="ecard-meta">25 min build · Written test</span>
+        <span class="ecard-arrow">Open →</span>
+      </div>
+    </a>
+
+  
+    <a href="gravity.html" class="ecard ecard-gravity">
+      <div class="ecard-top">
+        <span class="ecard-icon">🚗</span>
+        <div class="ecard-tags"><span class="etag etag-build">Build</span><span class="etag etag-guide">Study Guide ✓</span></div>
+      </div>
+      <div class="ecard-name">Gravity Vehicle</div>
+      <p class="ecard-desc">Build a K'nex wheeled vehicle powered by gravity down a 1-meter ramp that stops as close as possible to a 5.0-meter target. Written assessment on simple machines, gravity, and friction.</p>
+      <div class="ecard-footer">
+        <span class="ecard-meta">25 min build · Written test</span>
+        <span class="ecard-arrow">Open →</span>
+      </div>
+    </a>
+
+  
+    <a href="castle.html" class="ecard ecard-castle">
+      <div class="ecard-top">
+        <span class="ecard-icon">🏰</span>
+        <div class="ecard-tags"><span class="etag etag-build">Build</span><span class="etag etag-guide">Study Guide ✓</span></div>
+      </div>
+      <div class="ecard-name">Storm the Castle</div>
+      <p class="ecard-desc">Build a freestanding catapult from a mailing box, bamboo spoons, rubber bands, and tape. Launch a Dots candy piece to a target 150 cm away. Written assessment on catapult history and types.</p>
+      <div class="ecard-footer">
+        <span class="ecard-meta">30 min build · Written test</span>
         <span class="ecard-arrow">Open →</span>
       </div>
     </a>
@@ -452,6 +534,27 @@ body.light-mode .hbadge-muted { color: rgba(13,31,48,0.55) !important;
 </footer>
 
 <script>
+// ── Dropdown toggle ──
+window.toggleDrop = function(btn) {
+  const item = btn.closest('.gnav-item');
+  const isOpen = item.classList.contains('open');
+  // close all dropdowns first
+  document.querySelectorAll('.gnav-item.open').forEach(el => el.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+};
+// Close dropdown when clicking outside
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.gnav-item')) {
+    document.querySelectorAll('.gnav-item.open').forEach(el => el.classList.remove('open'));
+  }
+});
+// Close dropdown when a link inside it is clicked
+document.querySelectorAll('.gnav-drop a').forEach(a => {
+  a.addEventListener('click', () => {
+    document.querySelectorAll('.gnav-item.open').forEach(el => el.classList.remove('open'));
+  });
+});
+// ── Theme ──
 (function(){
   const m = localStorage.getItem('va-theme') || 'dark';
   const btn = document.getElementById('theme-toggle');
