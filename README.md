@@ -2,7 +2,7 @@
 
 A self-contained student study portal for the **2025–2026 Virginia Association of Science Olympiad (VASO) Division A** season, built for Grades 3–4 competitors. All content is sourced directly from the official VA Division A Tournament Rules Manual v9.01.
 
-**Live site:** `https://yourusername.github.io/your-repo-name/`
+**Live site:** `[https://science-portal.github.io/vaso2026](https://science-portal.github.io/vaso2026)`
 
 ---
 
@@ -120,16 +120,7 @@ Teams compete in a morning or afternoon half-day session. Written events follow 
 
 ---
 
-## Deploying on GitHub Pages
 
-1. Create a public GitHub repository
-2. Upload all files with `index.html` at the root (not inside a subfolder)
-3. Go to **Settings → Pages**, set branch to `main`, folder to `/ (root)`
-4. Your site will be live at `https://yourusername.github.io/repo-name/` within a minute
-
-To update a page, edit the file directly in GitHub and commit — changes go live automatically.
-
----
 
 ## Source & Disclaimer
 
