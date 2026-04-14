@@ -312,7 +312,7 @@ body.light-mode #theme-toggle{border-color:rgba(0,0,0,.15);background:rgba(0,0,0
     <button class="tab-btn"         onclick="showTab('study',this)">Study Guide</button>
     <button class="tab-btn"         onclick="showTab('build',this)">Build Strategy</button>
     <button class="tab-btn"         onclick="showTab('tips',this)">Tips</button>
-    <button class="tab-btn"         onclick="showTab('slides',this)">Slides</button>
+    <button class="tab-btn"         onclick="showTab('slides',this)">Slides+Test</button>
     <button class="tab-btn"         onclick="showTab('shopping',this)">Shopping List</button>
     <button class="tab-btn"         onclick="showTab('checklist',this)">Checklist</button>
     <button class="tab-btn"         onclick="showTab('test',this)">Practice Test</button>
@@ -542,6 +542,12 @@ body.light-mode #theme-toggle{border-color:rgba(0,0,0,.15);background:rgba(0,0,0
         <p>Editable PowerPoint version. Customize for class presentations or print as handouts for study sessions.</p>
         <span class="slide-card-cta">Download .pptx ⬇</span>
       </a>
+      <div class="slide-card" onclick="showTab('test', Array.from(document.querySelectorAll('.tab-btn')).find(b=>b.textContent.trim()==='Practice Test'))" style="cursor:pointer;">
+        <span class="slide-card-icon">✏️</span>
+        <h4>Practice Test</h4>
+        <p>43-question auto-graded test: truss types, scoring formula, tension vs. compression, competition rules, and calculations. Instant feedback on every answer.</p>
+        <span class="slide-card-cta">Take the test →</span>
+      </div>
     </div>
   </div>
 
@@ -604,14 +610,14 @@ body.light-mode #theme-toggle{border-color:rgba(0,0,0,.15);background:rgba(0,0,0
   <div class="tab-panel" id="tab-test">
     <div class="test-header">
       <h2>🌉 Bridge Building Practice Test</h2>
-      <div class="sub">VA Division A · Build Event · <span style="color:#00B4FF;font-weight:700;">35 points</span></div>
+      <div class="sub">VA Division A · Build Event · <span style="color:#00B4FF;font-weight:700;">50 points · 43 questions</span></div>
       <div class="prog-bar"><div class="prog-fill" id="prog-fill"></div></div>
       <div class="prog-meta"><span id="prog-label">0 answered</span><span id="prog-pct">0%</span></div>
     </div>
     <div class="name-row"><label>NAME</label><input id="sname" type="text" placeholder="Enter your name..." autocomplete="off"></div>
 
-    <div class="sec-hd"><h3>⭕ Part 1 — Multiple Choice</h3><span class="pts">15 pts · 1 pt each</span></div>
-    
+    <div class="sec-hd"><h3>⭕ Part 1 — Multiple Choice</h3><span class="pts">20 pts · 1 pt each</span></div>
+
     <div class="qcard" id="qc-b1"><div class="q-num">Question 1</div><div class="q-text">In a Pratt Truss, which members carry tension?</div><div class="opts"><label class="opt"><input type="radio" name="b1" value="A"><span class="dot"></span>Vertical members</label><label class="opt"><input type="radio" name="b1" value="B"><span class="dot"></span>Diagonal members</label><label class="opt"><input type="radio" name="b1" value="C"><span class="dot"></span>Top chord</label><label class="opt"><input type="radio" name="b1" value="D"><span class="dot"></span>Both chords equally</label></div></div>
     <div class="qcard" id="qc-b2"><div class="q-num">Question 2</div><div class="q-text">What penalty applies if your bridge is less than 10.0 cm wide at the center?</div><div class="opts"><label class="opt"><input type="radio" name="b2" value="A"><span class="dot"></span>Height score is reduced by 20%</label><label class="opt"><input type="radio" name="b2" value="B"><span class="dot"></span>Height score is multiplied by 0.5</label><label class="opt"><input type="radio" name="b2" value="C"><span class="dot"></span>The bridge scores zero</label><label class="opt"><input type="radio" name="b2" value="D"><span class="dot"></span>You are disqualified from the event</label></div></div>
     <div class="qcard" id="qc-b3"><div class="q-num">Question 3</div><div class="q-text">What bonus multiplier applies to the height score if the bridge holds the 500g mass for 30 seconds?</div><div class="opts"><label class="opt"><input type="radio" name="b3" value="A"><span class="dot"></span>1.1×</label><label class="opt"><input type="radio" name="b3" value="B"><span class="dot"></span>1.2×</label><label class="opt"><input type="radio" name="b3" value="C"><span class="dot"></span>1.5×</label><label class="opt"><input type="radio" name="b3" value="D"><span class="dot"></span>2.0×</label></div></div>
@@ -627,26 +633,39 @@ body.light-mode #theme-toggle{border-color:rgba(0,0,0,.15);background:rgba(0,0,0
     <div class="qcard" id="qc-b13"><div class="q-num">Question 13</div><div class="q-text">What happens to the height score if the bridge cannot span the 30 cm gap?</div><div class="opts"><label class="opt"><input type="radio" name="b13" value="A"><span class="dot"></span>Height score is halved</label><label class="opt"><input type="radio" name="b13" value="B"><span class="dot"></span>Height score is multiplied by 0.5</label><label class="opt"><input type="radio" name="b13" value="C"><span class="dot"></span>Height score equals zero</label><label class="opt"><input type="radio" name="b13" value="D"><span class="dot"></span>The team uses the assessment score only</label></div></div>
     <div class="qcard" id="qc-b14"><div class="q-num">Question 14</div><div class="q-text">The bottom chord of a loaded truss bridge typically carries:</div><div class="opts"><label class="opt"><input type="radio" name="b14" value="A"><span class="dot"></span>Compression</label><label class="opt"><input type="radio" name="b14" value="B"><span class="dot"></span>Tension</label><label class="opt"><input type="radio" name="b14" value="C"><span class="dot"></span>No force</label><label class="opt"><input type="radio" name="b14" value="D"><span class="dot"></span>Equal tension and compression</label></div></div>
     <div class="qcard" id="qc-b15"><div class="q-num">Question 15</div><div class="q-text">If your assessment score is 8 and the best score among all teams is 10, what is your assessment ratio for scoring?</div><div class="opts"><label class="opt"><input type="radio" name="b15" value="A"><span class="dot"></span>0.5</label><label class="opt"><input type="radio" name="b15" value="B"><span class="dot"></span>0.8</label><label class="opt"><input type="radio" name="b15" value="C"><span class="dot"></span>0.08</label><label class="opt"><input type="radio" name="b15" value="D"><span class="dot"></span>8.0</label></div></div>
+    <div class="qcard" id="qc-b16"><div class="q-num">Question 16</div><div class="q-text">A Parker Truss is best described as which modification of a known truss type?</div><div class="opts"><label class="opt"><input type="radio" name="b16" value="A"><span class="dot"></span>A Warren Truss with added verticals</label><label class="opt"><input type="radio" name="b16" value="B"><span class="dot"></span>A Pratt Truss with a curved (polygonal) top chord</label><label class="opt"><input type="radio" name="b16" value="C"><span class="dot"></span>A Howe Truss with a straight bottom chord in tension</label><label class="opt"><input type="radio" name="b16" value="D"><span class="dot"></span>A Bowstring Truss with vertical cable hangers</label></div></div>
+    <div class="qcard" id="qc-b17"><div class="q-num">Question 17</div><div class="q-text">In a K-Truss, what is distinctive about each panel's shape?</div><div class="opts"><label class="opt"><input type="radio" name="b17" value="A"><span class="dot"></span>Each panel forms an equilateral triangle with no vertical</label><label class="opt"><input type="radio" name="b17" value="B"><span class="dot"></span>Two diagonals meet each vertical at its mid-height, forming a K shape</label><label class="opt"><input type="radio" name="b17" value="C"><span class="dot"></span>The top chord curves upward through the center of each panel</label><label class="opt"><input type="radio" name="b17" value="D"><span class="dot"></span>Each panel contains a full rectangular cross-member</label></div></div>
+    <div class="qcard" id="qc-b18"><div class="q-num">Question 18</div><div class="q-text">Which statement about the Method of Sections is correct?</div><div class="opts"><label class="opt"><input type="radio" name="b18" value="A"><span class="dot"></span>It requires solving for forces at every joint before finding a target member</label><label class="opt"><input type="radio" name="b18" value="B"><span class="dot"></span>You cut through at most 3 members and apply equilibrium to one side</label><label class="opt"><input type="radio" name="b18" value="C"><span class="dot"></span>It measures the physical deflection of a bridge under load</label><label class="opt"><input type="radio" name="b18" value="D"><span class="dot"></span>It can only be used on Pratt trusses with vertical members</label></div></div>
+    <div class="qcard" id="qc-b19"><div class="q-num">Question 19</div><div class="q-text">How many straws are provided to each team in the Bridge Building event?</div><div class="opts"><label class="opt"><input type="radio" name="b19" value="A"><span class="dot"></span>20</label><label class="opt"><input type="radio" name="b19" value="B"><span class="dot"></span>25</label><label class="opt"><input type="radio" name="b19" value="C"><span class="dot"></span>30</label><label class="opt"><input type="radio" name="b19" value="D"><span class="dot"></span>40</label></div></div>
+    <div class="qcard" id="qc-b20"><div class="q-num">Question 20</div><div class="q-text">A team's bridge height is 380 mm. The tallest bridge in the competition is 475 mm. Ignoring the assessment score, what is the team's height ratio?</div><div class="opts"><label class="opt"><input type="radio" name="b20" value="A"><span class="dot"></span>0.75</label><label class="opt"><input type="radio" name="b20" value="B"><span class="dot"></span>0.80</label><label class="opt"><input type="radio" name="b20" value="C"><span class="dot"></span>0.85</label><label class="opt"><input type="radio" name="b20" value="D"><span class="dot"></span>0.90</label></div></div>
 
-    <div class="sec-hd"><h3>✅ Part 2 — True or False</h3><span class="pts">10 pts · 1 pt each</span></div>
-    
-    <div class="qcard" id="qc-tf31"><div class="q-num">Question 16</div><div class="q-text">In a Pratt Truss, the diagonal members slope toward the center of the bridge.</div><div class="tf"><button class="tfbtn" onclick="doTF(31,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(31,'FALSE',this)">❌ FALSE</button></div></div>
-    <div class="qcard" id="qc-tf32"><div class="q-num">Question 17</div><div class="q-text">The top chord of a bridge under a center load is typically in tension.</div><div class="tf"><button class="tfbtn" onclick="doTF(32,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(32,'FALSE',this)">❌ FALSE</button></div></div>
-    <div class="qcard" id="qc-tf33"><div class="q-num">Question 18</div><div class="q-text">Unused complete straws at the end of the event are the first tiebreaker.</div><div class="tf"><button class="tfbtn" onclick="doTF(33,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(33,'FALSE',this)">❌ FALSE</button></div></div>
-    <div class="qcard" id="qc-tf34"><div class="q-num">Question 19</div><div class="q-text">The loading block must only be able to enter from one end of the bridge.</div><div class="tf"><button class="tfbtn" onclick="doTF(34,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(34,'FALSE',this)">❌ FALSE</button></div></div>
-    <div class="qcard" id="qc-tf35"><div class="q-num">Question 20</div><div class="q-text">Both the height score and the assessment score contribute equally to the final score.</div><div class="tf"><button class="tfbtn" onclick="doTF(35,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(35,'FALSE',this)">❌ FALSE</button></div></div>
-    <div class="qcard" id="qc-tf36"><div class="q-num">Question 21</div><div class="q-text">Regular prescription eyeglasses qualify as ANSI Z87+ safety glasses.</div><div class="tf"><button class="tfbtn" onclick="doTF(36,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(36,'FALSE',this)">❌ FALSE</button></div></div>
-    <div class="qcard" id="qc-tf37"><div class="q-num">Question 22</div><div class="q-text">In a Warren Truss, the basic form has no vertical members.</div><div class="tf"><button class="tfbtn" onclick="doTF(37,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(37,'FALSE',this)">❌ FALSE</button></div></div>
-    <div class="qcard" id="qc-tf38"><div class="q-num">Question 23</div><div class="q-text">If a bridge fails the width check, the height score is set to zero.</div><div class="tf"><button class="tfbtn" onclick="doTF(38,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(38,'FALSE',this)">❌ FALSE</button></div></div>
-    <div class="qcard" id="qc-tf39"><div class="q-num">Question 24</div><div class="q-text">Reinforcing the top chord by bundling straws helps resist buckling under compression.</div><div class="tf"><button class="tfbtn" onclick="doTF(39,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(39,'FALSE',this)">❌ FALSE</button></div></div>
-    <div class="qcard" id="qc-tf40"><div class="q-num">Question 25</div><div class="q-text">A Deck Truss has the roadway passing between the top and bottom chords.</div><div class="tf"><button class="tfbtn" onclick="doTF(40,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(40,'FALSE',this)">❌ FALSE</button></div></div>
+    <div class="sec-hd"><h3>✅ Part 2 — True or False</h3><span class="pts">15 pts · 1 pt each</span></div>
 
-    <div class="sec-hd"><h3>📝 Part 3 — Fill in the Blank</h3><span class="pts">10 pts · 2 pts each</span></div>
-    <div class="qcard" id="qc-bf1"><div class="q-num">Question 26</div><div class="fill-wrap">The truss type where diagonals slope toward the center and carry tension is called the <input class="blank" id="bf1" placeholder="__________"> Truss.</div></div>
-    <div class="qcard" id="qc-bf2"><div class="q-num">Question 27</div><div class="fill-wrap">The bridge scoring bonus multiplier for holding the 500g mass for 30 seconds is <input class="blank" id="bf2" placeholder="___">.</div></div>
-    <div class="qcard" id="qc-bf3"><div class="q-num">Question 28</div><div class="fill-wrap">A slender compression member that suddenly bends sideways and fails is said to have <input class="blank" id="bf3" placeholder="__________">.</div></div>
-    <div class="qcard" id="qc-bf4"><div class="q-num">Question 29</div><div class="fill-wrap">The minimum required bridge width at the center point is <input class="blank" id="bf4" placeholder="___"> cm.</div></div>
-    <div class="qcard" id="qc-bf5"><div class="q-num">Question 30</div><div class="fill-wrap">The truss analysis technique using ΣFx=0 and ΣFy=0 at each connection point is called the Method of <input class="blank" id="bf5" placeholder="__________">.</div></div>
+    <div class="qcard" id="qc-tf31"><div class="q-num">Question 21</div><div class="q-text">In a Pratt Truss, the diagonal members slope toward the center of the bridge.</div><div class="tf"><button class="tfbtn" onclick="doTF(31,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(31,'FALSE',this)">❌ FALSE</button></div></div>
+    <div class="qcard" id="qc-tf32"><div class="q-num">Question 22</div><div class="q-text">The top chord of a bridge under a center load is typically in tension.</div><div class="tf"><button class="tfbtn" onclick="doTF(32,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(32,'FALSE',this)">❌ FALSE</button></div></div>
+    <div class="qcard" id="qc-tf33"><div class="q-num">Question 23</div><div class="q-text">Unused complete straws at the end of the event are the first tiebreaker.</div><div class="tf"><button class="tfbtn" onclick="doTF(33,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(33,'FALSE',this)">❌ FALSE</button></div></div>
+    <div class="qcard" id="qc-tf34"><div class="q-num">Question 24</div><div class="q-text">The loading block must only be able to enter from one end of the bridge.</div><div class="tf"><button class="tfbtn" onclick="doTF(34,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(34,'FALSE',this)">❌ FALSE</button></div></div>
+    <div class="qcard" id="qc-tf35"><div class="q-num">Question 25</div><div class="q-text">Both the height score and the assessment score contribute equally to the final score.</div><div class="tf"><button class="tfbtn" onclick="doTF(35,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(35,'FALSE',this)">❌ FALSE</button></div></div>
+    <div class="qcard" id="qc-tf36"><div class="q-num">Question 26</div><div class="q-text">Regular prescription eyeglasses qualify as ANSI Z87+ safety glasses.</div><div class="tf"><button class="tfbtn" onclick="doTF(36,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(36,'FALSE',this)">❌ FALSE</button></div></div>
+    <div class="qcard" id="qc-tf37"><div class="q-num">Question 27</div><div class="q-text">In a Warren Truss, the basic form has no vertical members.</div><div class="tf"><button class="tfbtn" onclick="doTF(37,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(37,'FALSE',this)">❌ FALSE</button></div></div>
+    <div class="qcard" id="qc-tf38"><div class="q-num">Question 28</div><div class="q-text">If a bridge fails the width check, the height score is set to zero.</div><div class="tf"><button class="tfbtn" onclick="doTF(38,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(38,'FALSE',this)">❌ FALSE</button></div></div>
+    <div class="qcard" id="qc-tf39"><div class="q-num">Question 29</div><div class="q-text">Reinforcing the top chord by bundling straws helps resist buckling under compression.</div><div class="tf"><button class="tfbtn" onclick="doTF(39,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(39,'FALSE',this)">❌ FALSE</button></div></div>
+    <div class="qcard" id="qc-tf40"><div class="q-num">Question 30</div><div class="q-text">A Deck Truss has the roadway passing between the top and bottom chords.</div><div class="tf"><button class="tfbtn" onclick="doTF(40,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(40,'FALSE',this)">❌ FALSE</button></div></div>
+    <div class="qcard" id="qc-tf41"><div class="q-num">Question 31</div><div class="q-text">Masking tape may touch the top or sides of the bridge support structures during testing.</div><div class="tf"><button class="tfbtn" onclick="doTF(41,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(41,'FALSE',this)">❌ FALSE</button></div></div>
+    <div class="qcard" id="qc-tf42"><div class="q-num">Question 32</div><div class="q-text">The written assessment is completed during the same 25-minute window as the build phase.</div><div class="tf"><button class="tfbtn" onclick="doTF(42,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(42,'FALSE',this)">❌ FALSE</button></div></div>
+    <div class="qcard" id="qc-tf43"><div class="q-num">Question 33</div><div class="q-text">The loading block itself (20g) is included in the 300g or 500g test mass measurement.</div><div class="tf"><button class="tfbtn" onclick="doTF(43,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(43,'FALSE',this)">❌ FALSE</button></div></div>
+    <div class="qcard" id="qc-tf44"><div class="q-num">Question 34</div><div class="q-text">The Method of Sections is most useful when you need to find the force in just one or two specific members without solving the entire truss.</div><div class="tf"><button class="tfbtn" onclick="doTF(44,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(44,'FALSE',this)">❌ FALSE</button></div></div>
+    <div class="qcard" id="qc-tf45"><div class="q-num">Question 35</div><div class="q-text">A team earns the 1.2× height bonus only if the bridge holds the 500g mass for at least 15 seconds.</div><div class="tf"><button class="tfbtn" onclick="doTF(45,'TRUE',this)">✅ TRUE</button><button class="tfbtn" onclick="doTF(45,'FALSE',this)">❌ FALSE</button></div></div>
+
+    <div class="sec-hd"><h3>📝 Part 3 — Fill in the Blank</h3><span class="pts">15 pts · ~2 pts each</span></div>
+    <div class="qcard" id="qc-bf1"><div class="q-num">Question 36</div><div class="fill-wrap">The truss type where diagonals slope toward the center and carry tension is called the <input class="blank" id="bf1" placeholder="__________"> Truss.</div></div>
+    <div class="qcard" id="qc-bf2"><div class="q-num">Question 37</div><div class="fill-wrap">The bridge scoring bonus multiplier for holding the 500g mass for 30 seconds is <input class="blank" id="bf2" placeholder="___">.</div></div>
+    <div class="qcard" id="qc-bf3"><div class="q-num">Question 38</div><div class="fill-wrap">A slender compression member that suddenly bends sideways and fails is said to have <input class="blank" id="bf3" placeholder="__________">.</div></div>
+    <div class="qcard" id="qc-bf4"><div class="q-num">Question 39</div><div class="fill-wrap">The minimum required bridge width at the center point is <input class="blank" id="bf4" placeholder="___"> cm.</div></div>
+    <div class="qcard" id="qc-bf5"><div class="q-num">Question 40</div><div class="fill-wrap">The truss analysis technique using ΣFx=0 and ΣFy=0 at each connection point is called the Method of <input class="blank" id="bf5" placeholder="__________">.</div></div>
+    <div class="qcard" id="qc-bf6"><div class="q-num">Question 41</div><div class="fill-wrap">Each team is provided <input class="blank" id="bf6" placeholder="___"> paper straws and 1 meter of masking tape to build their bridge.</div></div>
+    <div class="qcard" id="qc-bf7"><div class="q-num">Question 42</div><div class="fill-wrap">The truss type whose diagonals slope <em>away</em> from the center, with diagonals in compression and verticals in tension, is called the <input class="blank" id="bf7" placeholder="__________"> Truss.</div></div>
+    <div class="qcard" id="qc-bf8"><div class="q-num">Question 43</div><div class="fill-wrap">In ideal truss analysis, all external forces are assumed to act only at the <input class="blank" id="bf8" placeholder="__________"> of the truss.</div></div>
 
     <div class="sub-wrap"><button class="sub-btn" onclick="submitBridge()">Submit Answers</button></div>
     <div id="score-card">
@@ -671,7 +690,7 @@ function showTab(id,btn){
   document.getElementById('tab-'+id).classList.add('active');btn.classList.add('active');
   window.scrollTo({top:document.querySelector('.tab-nav').offsetTop-60,behavior:'smooth'});
 }
-function chk(el){el.classList.toggle('chk-done');el.textContent=el.classList.contains('chk-done')?'':'';}
+function chk(el){el.classList.toggle('chk-done');}
 
 /* Shopping list */
 const PRICES={s0:12,p0:6,p1:6,p2:5,p3:3,p4:0,p5:2,p6:8};
@@ -690,9 +709,9 @@ function toggleShop(el,id){
 }
 
 /* Quiz */
-const MC={b1:'B',b2:'B',b3:'B',b4:'B',b5:'C',b6:'B',b7:'B',b8:'C',b9:'B',b10:'C',b11:'B',b12:'C',b13:'C',b14:'B',b15:'B'};
-const TF={31:'TRUE',32:'FALSE',33:'TRUE',34:'FALSE',35:'TRUE',36:'FALSE',37:'TRUE',38:'FALSE',39:'TRUE',40:'FALSE'};
-const FILL={bf1:['pratt'],bf2:['1.2','1.2x','x1.2'],bf3:['buckled','buckling'],bf4:['10'],bf5:['joints']};
+const MC={b1:'B',b2:'B',b3:'B',b4:'B',b5:'C',b6:'B',b7:'B',b8:'C',b9:'B',b10:'C',b11:'B',b12:'C',b13:'C',b14:'B',b15:'B',b16:'B',b17:'B',b18:'B',b19:'C',b20:'B'};
+const TF={31:'TRUE',32:'FALSE',33:'TRUE',34:'FALSE',35:'TRUE',36:'FALSE',37:'TRUE',38:'FALSE',39:'TRUE',40:'FALSE',41:'FALSE',42:'TRUE',43:'FALSE',44:'TRUE',45:'FALSE'};
+const FILL={bf1:['pratt'],bf2:['1.2','1.2x','x1.2'],bf3:['buckled','buckling'],bf4:['10'],bf5:['joints'],bf6:['30'],bf7:['howe'],bf8:['joints','nodes']};
 const tfSel={};let totalQ=Object.keys(MC).length+Object.keys(TF).length+Object.keys(FILL).length;
 function countAns(){let n=0;Object.keys(MC).forEach(nm=>{if(document.querySelector('input[name="'+nm+'"]:checked'))n++;});Object.keys(TF).forEach(k=>{if(tfSel[k])n++;});Object.keys(FILL).forEach(id=>{if(document.getElementById(id)?.value.trim())n++;});return n;}
 function upProg(){const n=countAns();const p=Math.round(n/totalQ*100);document.getElementById('prog-fill').style.width=p+'%';document.getElementById('prog-label').textContent=n+' of '+totalQ+' answered';document.getElementById('prog-pct').textContent=p+'%';}
@@ -737,6 +756,21 @@ function submitBridge(){
   if(m==='light'){document.body.classList.add('light-mode');if(btn)btn.textContent='🌙';}
   else{if(btn)btn.textContent='☀️';}
   window.toggleTheme=function(){const l=document.body.classList.toggle('light-mode');localStorage.setItem('va-theme',l?'light':'dark');document.getElementById('theme-toggle').textContent=l?'🌙':'☀️';};
+})();
+/* Open tab from URL hash */
+(function(){
+  const hash = window.location.hash.replace('#','');
+  if(hash){
+    const panel = document.getElementById('tab-'+hash);
+    const btn = Array.from(document.querySelectorAll('.tab-btn')).find(b=>b.getAttribute('onclick')&&b.getAttribute('onclick').includes("'"+hash+"'"));
+    if(panel && btn){
+      document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      panel.classList.add('active');
+      btn.classList.add('active');
+      setTimeout(()=>panel.scrollIntoView({behavior:'smooth',block:'start'}),100);
+    }
+  }
 })();
 </script>
 </body>
